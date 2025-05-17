@@ -1,5 +1,5 @@
-// Fonction serverless Vercel pour l'envoi d'emails
-const nodemailer = require('nodemailer');
+// Fonction serverless Vercel pour l'envoi d'emails avec Resend
+const { Resend } = require('resend');
 
 module.exports = async (req, res) => {
   // Configuration CORS
@@ -22,26 +22,16 @@ module.exports = async (req, res) => {
   try {
     const { type, data } = req.body;
 
-    // Configurer le transporteur d'emails
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER, // Définir dans les variables d'environnement Vercel
-        pass: process.env.EMAIL_PASS  // Définir dans les variables d'environnement Vercel
-      }
-    });
+    // Initialiser Resend avec votre clé API
+    const resend = new Resend('re_MGTakVER_FbJar1nyUTCP6DggzkkqsVB8');
 
     // Préparer le contenu de l'email selon le type
-    let mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: data.email,
-      subject: '',
-      html: ''
-    };
+    let subject = '';
+    let htmlContent = '';
 
     if (type === 'bus') {
-      mailOptions.subject = 'Confirmation de votre inscription au bus - CGT Aveyron';
-      mailOptions.html = `
+      subject = 'Confirmation de votre inscription au bus - CGT Aveyron';
+      htmlContent = `
         <h1>Confirmation d'inscription</h1>
         <p>Bonjour ${data.prenom} ${data.nom},</p>
         <p>Nous confirmons votre inscription au bus pour la mobilisation CGT Aveyron du 5 juin 2025.</p>
@@ -56,8 +46,8 @@ module.exports = async (req, res) => {
         <p>Cordialement,<br>L'équipe CGT Aveyron</p>
       `;
     } else if (type === 'repas') {
-      mailOptions.subject = 'Confirmation de votre réservation de repas - CGT Aveyron';
-      mailOptions.html = `
+      subject = 'Confirmation de votre réservation de repas - CGT Aveyron';
+      htmlContent = `
         <h1>Confirmation de réservation</h1>
         <p>Bonjour ${data.prenom} ${data.nom},</p>
         <p>Nous confirmons votre réservation de repas pour la mobilisation CGT Aveyron du 5 juin 2025.</p>
@@ -72,12 +62,21 @@ module.exports = async (req, res) => {
       `;
     }
 
-    // Envoyer l'email
-    const info = await transporter.sendMail(mailOptions);
+    // Envoyer l'email avec Resend
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'CGT Aveyron <inscriptions@cgt-aveyron.fr>',
+      to: [data.email],
+      subject: subject,
+      html: htmlContent
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
     
     return res.status(200).json({ 
       success: true, 
-      messageId: info.messageId 
+      messageId: emailData.id 
     });
   } catch (error) {
     console.error('Erreur lors de l\'envoi de l\'email:', error);

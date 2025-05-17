@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Confirmation d'inscription au repas - CGT Aveyron</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #ed1c24;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+        }
+        .details {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .important {
+            color: #ed1c24;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            background-color: #ed1c24;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CGT Aveyron</h1>
+        <h2>Confirmation d'inscription au repas</h2>
+    </div>
+    
+    <div class="content">
+        <p>Bonjour {{to_name}},</p>
+        
+        <p>Nous confirmons votre inscription au repas organisé par l'UL de Rodez le 5 juin 2025 à 12h30 à la gare.</p>
+        
+        <div class="details">
+            <h3>Détails de votre réservation :</h3>
+            <p><strong>Nombre de repas :</strong> {{nombre_repas}}</p>
+            <p><strong>Option végétarienne :</strong> {{option_vegetarienne}}</p>
+            <p><strong>Commentaires :</strong> {{commentaires}}</p>
+            <p><strong>Date d'inscription :</strong> {{date_inscription}}</p>
+        </div>
+        
+        {{#if is_cancellation}}
+        <p class="important">Votre réservation de repas a été annulée.</p>
+        {{else}}
+        <p>Le repas sera servi à 12h30 à la gare de Rodez, avant le début de la manifestation prévue à 14h00.</p>
+        
+        <p class="important">Important : Si vous souhaitez modifier ou annuler votre réservation, vous pouvez le faire en vous rendant sur notre site et en utilisant la page "Gérer mon inscription".</p>
+        {{/if}}
+        
+        {{#if message}}
+        <p>{{message}}</p>
+        {{/if}}
+        
+        <p>Pour toute question concernant le repas, n'hésitez pas à contacter l'Union Locale de Rodez.</p>
+        
+        <a href="https://cgt-aveyron.fr" class="button">Site CGT Aveyron</a>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
+        <p>Ce message a été envoyé automatiquement, merci de ne pas y répondre.</p>
+    </div>
+</body>
+</html>

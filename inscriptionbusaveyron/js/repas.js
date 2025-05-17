@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Base de données locale (IndexedDB)
     let db;
-    const request = indexedDB.open('CGTAveyronDB', 2);
+    const request = indexedDB.open('InscriptionsCGT', 2);
 
     request.onerror = function(event) {
         console.error('Erreur d\'ouverture de la base de données:', event.target.error);
@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
     request.onupgradeneeded = function(event) {
         db = event.target.result;
         
-        // Création de la table Repas si elle n'existe pas
-        if (!db.objectStoreNames.contains('repas')) {
-            const objectStore = db.createObjectStore('repas', { keyPath: 'id', autoIncrement: true });
+        // Création de la table Inscriptions Repas si elle n'existe pas
+        if (!db.objectStoreNames.contains('inscriptionsRepas')) {
+            const objectStore = db.createObjectStore('inscriptionsRepas', { keyPath: 'id', autoIncrement: true });
             
             // Définition des colonnes
             objectStore.createIndex('nom', 'nom', { unique: false });
@@ -60,9 +60,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Vérifier si la base de données est initialisée
+        if (!db) {
+            alert('La base de données n\'est pas encore prête. Veuillez réessayer dans quelques instants.');
+            return;
+        }
+        
         // Enregistrement dans la base de données
-        const transaction = db.transaction(['repas'], 'readwrite');
-        const objectStore = transaction.objectStore('repas');
+        const transaction = db.transaction(['inscriptionsRepas'], 'readwrite');
+        const objectStore = transaction.objectStore('inscriptionsRepas');
         
         const inscription = {
             nom: nom,
@@ -79,9 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         request.onsuccess = function() {
             console.log('Réservation de repas ajoutée à la base de données');
-            
-            // Afficher un message de confirmation
-            showConfirmation();
             
             // Envoyer un email de confirmation si le service est disponible
             if (window.emailService) {

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Base de données locale (IndexedDB)
     let db;
     const DBName = 'InscriptionsCGT';
-    const DBVersion = 1;
+    const DBVersion = 2; // Mise à jour de la version pour correspondre aux autres fichiers
     
     // Initialisation de la base de données
     const request = indexedDB.open(DBName, DBVersion);

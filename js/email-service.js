@@ -1,15 +1,22 @@
 /**
  * Service d'envoi d'emails pour les inscriptions
  * CGT Aveyron - Inscription mobilisation 5 juin 2025
- * Utilise l'API serverless de Vercel pour l'envoi d'emails
+ * Utilise EmailJS pour l'envoi d'emails directement depuis le frontend
  */
 
 class EmailService {
     constructor() {
-        // URL de l'API serverless pour l'envoi d'emails
-        this.apiUrl = '/api/send-email';
+        // Configuration EmailJS
+        this.serviceID = 'service_5esf8fj';
+        this.userID = 'KtRTUdZw0Ysj4Vhkt'; // Clé publique EmailJS
         
-        console.log('Service d\'email initialisé avec l\'API Vercel');
+        // Initialiser EmailJS
+        if (window.emailjs) {
+            emailjs.init(this.userID);
+            console.log('Service d\'email initialisé avec EmailJS');
+        } else {
+            console.error('EmailJS non disponible');
+        }
     }
     
     /**
@@ -206,49 +213,48 @@ class EmailService {
                 return;
             }
             
-            // Préparer le contenu de l'email en fonction du type
-            let subject, html;
+            // Vérifier que EmailJS est disponible
+            if (!window.emailjs) {
+                reject(new Error('EmailJS n\'est pas disponible'));
+                return;
+            }
+            
+            // Préparer les paramètres du template en fonction du type
+            let templateId, templateParams;
             
             if (type === 'bus') {
-                subject = 'Confirmation d\'inscription - Bus CGT Aveyron - 5 juin 2025';
-                html = this.getBusEmailTemplate(data);
+                templateId = 'template_g5gcva4';
+                templateParams = {
+                    to_name: `${data.prenom} ${data.nom}`,
+                    to_email: data.email,
+                    lieu_depart: data.lieuDepart,
+                    heure_depart: data.heureDepart,
+                    nombre_personnes: data.nombrePersonnes,
+                    date_mobilisation: '5 juin 2025'
+                };
             } else if (type === 'repas') {
-                subject = 'Confirmation d\'inscription - Repas CGT Aveyron - 5 juin 2025';
-                html = this.getRepasEmailTemplate(data);
+                templateId = 'template_ja9wvwp';
+                templateParams = {
+                    to_name: `${data.prenom} ${data.nom}`,
+                    to_email: data.email,
+                    nombre_personnes: data.nombrePersonnes,
+                    date_mobilisation: '5 juin 2025'
+                };
             } else {
                 reject(new Error('Type d\'email non reconnu'));
                 return;
             }
             
-            // Envoyer l'email via l'API serverless de Vercel
-            fetch(this.apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    type,
-                    data: {
-                        ...data,
-                        subject,
-                        html
-                    }
+            // Envoyer l'email via EmailJS
+            emailjs.send(this.serviceID, templateId, templateParams)
+                .then(response => {
+                    console.log('Email envoyé avec succès:', response);
+                    resolve(response);
                 })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(result => {
-                console.log('Email envoyé avec succès:', result);
-                resolve(result);
-            })
-            .catch(error => {
-                console.error('Erreur lors de l\'envoi de l\'email:', error);
-                reject(error);
-            });
+                .catch(error => {
+                    console.error('Erreur lors de l\'envoi de l\'email:', error);
+                    reject(error);
+                });
         });
     }
 }

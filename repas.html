@@ -87,7 +87,78 @@
         </footer>
     </div>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Templates EmailJS -->
+    <script type="text/template" id="template_bus">
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background-color: #e30613; color: white; padding: 20px; text-align: center;">
+                <h1 style="margin: 0;">CGT Aveyron</h1>
+                <p>Mobilisation du 5 juin 2025</p>
+            </div>
+            <div style="padding: 20px;">
+                <p>Bonjour {{to_name}},</p>
+                
+                <p>Nous confirmons votre inscription au bus pour la mobilisation CGT du 5 juin 2025.</p>
+                
+                <p><span style="font-weight: bold; color: #e30613;">Détails de votre inscription :</span></p>
+                <ul>
+                    <li><strong>Lieu de départ :</strong> {{lieu_depart}}</li>
+                    <li><strong>Heure de départ :</strong> {{heure_depart}}</li>
+                    <li><strong>Date :</strong> {{date_mobilisation}}</li>
+                    <li><strong>Nombre de personnes :</strong> {{nombre_personnes}}</li>
+                </ul>
+                
+                <p>Le retour est prévu vers 18h00.</p>
+                
+                <p>N'oubliez pas de vous présenter au lieu de départ au moins 15 minutes avant l'heure indiquée.</p>
+                
+                <p>Pour toute question, vous pouvez contacter votre Union Locale.</p>
+                
+                <p>Solidairement,<br>
+                L'équipe CGT Aveyron</p>
+            </div>
+            <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px;">
+                <p> 2025 CGT Aveyron - Tous droits réservés</p>
+                <p>Ce message a été envoyé automatiquement, merci de ne pas y répondre.</p>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/template" id="template_repas">
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background-color: #e30613; color: white; padding: 20px; text-align: center;">
+                <h1 style="margin: 0;">CGT Aveyron</h1>
+                <p>Repas du 5 juin 2025</p>
+            </div>
+            <div style="padding: 20px;">
+                <p>Bonjour {{to_name}},</p>
+                
+                <p>Nous confirmons votre inscription au repas organisé par l'UL de Rodez dans le cadre de la mobilisation CGT du 5 juin 2025.</p>
+                
+                <p><span style="font-weight: bold; color: #e30613;">Détails de votre inscription :</span></p>
+                <ul>
+                    <li><strong>Date :</strong> {{date_mobilisation}}</li>
+                    <li><strong>Heure :</strong> 12h30</li>
+                    <li><strong>Lieu :</strong> Gare de Rodez</li>
+                    <li><strong>Nombre de personnes :</strong> {{nombre_personnes}}</li>
+                </ul>
+                
+                <p>Pour toute question, vous pouvez contacter l'Union Locale de Rodez.</p>
+                
+                <p>Solidairement,<br>
+                L'équipe CGT Aveyron</p>
+            </div>
+            <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px;">
+                <p> 2025 CGT Aveyron - Tous droits réservés</p>
+                <p>Ce message a été envoyé automatiquement, merci de ne pas y répondre.</p>
+            </div>
+        </div>
+    </script>
+    
     <script src="js/email-service.js"></script>
     <script src="js/repas.js"></script>
+    <script src="js/accessibility.js"></script>
 </body>
 </html>

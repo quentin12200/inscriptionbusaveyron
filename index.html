@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="img/favico.png" type="image/png">
+    <meta name="description" content="Inscription à la mobilisation CGT Aveyron du 5 juin 2025 - Réservez votre place dans les bus organisés par les Unions Locales">
+    <meta name="theme-color" content="#ed1c24">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <div class="container" role="main">
+        <header>
+            <img src="img/banniere-bus-aveyron.png" alt="Bannière CGT Aveyron" class="banniere">
+            <div class="header-content">
+                <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
+                <h1>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</h1>
+                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche, Decazeville ou Millau. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche & Millau) et 13h15 (Decazeville).</p>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Inscription bus</a></li>
+                <li><a href="repas.html">Inscription repas</a></li>
+                <li><a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a></li>
+            </ul>
+        </nav>
+
+        <main id="main-content">
+            <form id="inscriptionForm" aria-labelledby="form-title">
+                <h2 id="form-title" class="form-title">Inscription au bus pour la mobilisation</h2>
+                <p class="form-instructions">Tous les champs marqués d'un astérisque (*) sont obligatoires</p>
+                <div class="form-group">
+                    <label for="nom">Nom <span class="required" aria-hidden="true">*</span></label>
+                    <input type="text" id="nom" name="nom" required aria-required="true" autocomplete="family-name">
+                    <span id="nom-error" class="error-message" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="prenom">Prénom <span class="required" aria-hidden="true">*</span></label>
+                    <input type="text" id="prenom" name="prenom" required aria-required="true" autocomplete="given-name">
+                    <span id="prenom-error" class="error-message" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone <span class="required" aria-hidden="true">*</span></label>
+                    <input type="tel" id="telephone" name="telephone" required aria-required="true" autocomplete="tel" pattern="[0-9]{10}" placeholder="0612345678">
+                    <span id="telephone-error" class="error-message" aria-live="polite"></span>
+                    <small class="field-hint">Format : 10 chiffres sans espaces</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email (facultatif)</label>
+                    <input type="email" id="email" name="email" autocomplete="email">
+                    <span id="email-error" class="error-message" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="lieuDepart">Lieu de départ <span class="required" aria-hidden="true">*</span></label>
+                    <select id="lieuDepart" name="lieuDepart" required aria-required="true">
+                        <option value="" disabled selected>Choisir un lieu de départ</option>
+                        <option value="Villefranche-de-Rouergue">Villefranche-de-Rouergue</option>
+                        <option value="Decazeville">Decazeville</option>
+                        <option value="Millau">Millau</option>
+                    </select>
+                    <span id="lieuDepart-error" class="error-message" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="heureDepart">Heure de départ</label>
+                    <input type="text" id="heureDepart" name="heureDepart" readonly aria-readonly="true" aria-description="Ce champ est automatiquement rempli en fonction du lieu de départ sélectionné">
+                    <small class="field-hint">Ce champ est automatiquement rempli en fonction du lieu de départ sélectionné</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="nombrePersonnes">Nombre de personnes <span class="required" aria-hidden="true">*</span></label>
+                    <input type="number" id="nombrePersonnes" name="nombrePersonnes" min="1" max="20" value="1" required aria-required="true" aria-valuemin="1" aria-valuemax="20">
+                    <span id="nombrePersonnes-error" class="error-message" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="besoinRappel" name="besoinRappel" aria-describedby="rappel-description">
+                    <label for="besoinRappel">Besoin d'être rappelé ?</label>
+                    <span id="rappel-description" class="field-hint">Cochez cette case si vous souhaitez être contacté par téléphone avant la mobilisation</span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit" aria-label="Valider l'inscription au bus">S'inscrire</button>
+                </div>
+            </form>
+        </main>
+
+        <div id="confirmation" class="hidden" style="display: none;">
+            <div class="confirmation-content">
+                <i class="fas fa-check-circle"></i>
+                <h2>Merci pour ton inscription camarade !</h2>
+                <p>Tu recevras un message de ton Union Locale si besoin. RDV à l'heure du départ indiquée !</p>
+                <button id="newInscription" class="btn-submit">Nouvelle inscription</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
+            <div class="admin-link">
+                <a href="admin.html">Administration</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/email-service.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/accessibility.js"></script>
+</body>
+</html>

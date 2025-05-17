@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="img/favico.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="img/banniere-bus-aveyron.png" alt="Bannière CGT Aveyron" class="banniere">
+            <div class="header-content">
+                <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
+                <h1>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</h1>
+                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche, Decazeville ou Millau. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche & Millau) et 13h15 (Decazeville).</p>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Inscription</a></li>
+                <li><a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <form id="inscriptionForm">
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone</label>
+                    <input type="tel" id="telephone" name="telephone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email (facultatif)</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="lieuDepart">Lieu de départ</label>
+                    <select id="lieuDepart" name="lieuDepart" required>
+                        <option value="" disabled selected>Choisir un lieu de départ</option>
+                        <option value="Villefranche-de-Rouergue">Villefranche-de-Rouergue</option>
+                        <option value="Decazeville">Decazeville</option>
+                        <option value="Millau">Millau</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="heureDepart">Heure de départ</label>
+                    <input type="text" id="heureDepart" name="heureDepart" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="nombrePersonnes">Nombre de personnes</label>
+                    <input type="number" id="nombrePersonnes" name="nombrePersonnes" min="1" value="1" required>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="besoinRappel" name="besoinRappel">
+                    <label for="besoinRappel">Besoin d'être rappelé ?</label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">S'inscrire</button>
+                </div>
+            </form>
+        </main>
+
+        <div id="confirmation" class="hidden" style="display: none;">
+            <div class="confirmation-content">
+                <i class="fas fa-check-circle"></i>
+                <h2>Merci pour ton inscription camarade !</h2>
+                <p>Tu recevras un message de ton Union Locale si besoin. RDV à l'heure du départ indiquée !</p>
+                <button id="newInscription" class="btn-submit">Nouvelle inscription</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
+            <div class="admin-link">
+                <a href="admin.html">Administration</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

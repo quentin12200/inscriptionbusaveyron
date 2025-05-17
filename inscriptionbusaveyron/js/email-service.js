@@ -10,8 +10,10 @@ class EmailService {
         this.serviceID = 'service_fi5i0ec'; // Service ID Gmail correct
         // Utilisation du service ID fourni par le dashboard EmailJS
         // this.serviceID = 'gmail';
-        this.templateIDBus = 'template_g8evo4t'; // Template ID pour les bus
-        this.templateIDRepas = 'template_j2fwwwp'; // Template ID pour les repas
+        
+        // Templates de votre compte EmailJS
+        this.templateIDBus = 'template_bus'; // Template ID pour les bus
+        this.templateIDRepas = 'template_repas'; // Template ID pour les repas
         this.userID = 'KtRTUdZw0Ysj4Vhkt'; // Public Key EmailJS
         
         // Chargement du script EmailJS

@@ -7,10 +7,10 @@
 class EmailService {
     constructor() {
         // Configuration EmailJS
-        // Essai avec 'default' comme service ID
-        this.serviceID = 'default';
-        // Autres options si 'default' ne fonctionne pas :
-        // this.serviceID = 'service_femq5ft';
+        // Utilisation du service ID fourni
+        this.serviceID = 'service_5esf8fj';
+        // Autres options si cela ne fonctionne pas :
+        // this.serviceID = 'default';
         // this.serviceID = 'gmail';
         
         // Templates de votre compte EmailJS

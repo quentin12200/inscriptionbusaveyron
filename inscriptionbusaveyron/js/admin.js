@@ -8,12 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const inscriptionsTableBody = document.getElementById('inscriptionsTableBody');
     const currentULSpan = document.getElementById('currentUL');
 
-    // Mots de passe pour chaque Union Locale (en pratique, utiliser un système plus sécurisé)
-    const passwords = {
-        'Villefranche-de-Rouergue': 'cgt12villefranche',
-        'Decazeville': 'cgt12decazeville',
-        'Millau': 'cgt12millau'
-    };
+    // Utilisation du système d'authentification sécurisé
+    // Le module auth-security.js doit être chargé avant ce script
 
     // Base de données locale (IndexedDB)
     let db;
@@ -27,36 +23,75 @@ document.addEventListener('DOMContentLoaded', function() {
         db = event.target.result;
         console.log('Base de données ouverte avec succès');
         
-        // Vérifier si l'utilisateur est déjà connecté
-        const currentUL = localStorage.getItem('currentUL');
-        if (currentUL) {
-            showAdminSection(currentUL);
+        // Vérifier si l'utilisateur est déjà connecté avec un token valide
+        const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+        const tokenData = window.authSecurity.verifyToken(authToken);
+        
+        if (tokenData && tokenData.role === 'admin-bus') {
+            showAdminSection(tokenData.unionLocale);
         }
     };
 
-    // Gestion de la connexion
-    loginForm.addEventListener('submit', function(e) {
+    // Gestion de la connexion sécurisée
+    loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const unionLocale = document.getElementById('unionLocale').value;
         const password = document.getElementById('password').value;
+        const rememberMe = document.getElementById('rememberMe')?.checked || false;
         
-        // Vérification du mot de passe
-        if (passwords[unionLocale] === password) {
-            // Stockage de l'Union Locale connectée
-            localStorage.setItem('currentUL', unionLocale);
-            showAdminSection(unionLocale);
-        } else {
-            alert('Mot de passe incorrect');
+        // Afficher un indicateur de chargement
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.textContent = 'Connexion en cours...';
+        submitBtn.disabled = true;
+        
+        try {
+            // Vérification sécurisée des identifiants
+            const authResult = await window.authSecurity.verifyCredentials(unionLocale, password);
+            
+            if (authResult.success) {
+                // Stockage du token d'authentification
+                if (rememberMe) {
+                    localStorage.setItem('authToken', authResult.token);
+                } else {
+                    sessionStorage.setItem('authToken', authResult.token);
+                }
+                
+                // Pour la compatibilité avec le code existant
+                localStorage.setItem('currentUL', unionLocale);
+                
+                // Afficher la section d'administration
+                showAdminSection(unionLocale);
+                
+                // Journalisation de la connexion
+                console.log(`Connexion réussie pour ${unionLocale} (${authResult.role})`);
+            } else {
+                // Afficher un message d'erreur
+                alert(authResult.message || 'Identifiants incorrects');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la connexion:', error);
+            alert('Une erreur est survenue lors de la connexion');
+        } finally {
+            // Rétablir le bouton
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
         }
     });
 
-    // Gestion de la déconnexion
+    // Gestion de la déconnexion sécurisée
     logoutBtn.addEventListener('click', function() {
-        localStorage.removeItem('currentUL');
+        // Utiliser la fonction de déconnexion du module de sécurité
+        window.authSecurity.logout();
+        
+        // Masquer la section d'administration et afficher le formulaire de connexion
         adminSection.classList.add('hidden');
         loginSection.classList.remove('hidden');
         document.getElementById('password').value = '';
+        
+        // Journalisation de la déconnexion
+        console.log('Déconnexion réussie');
     });
 
     // Exportation des données en CSV

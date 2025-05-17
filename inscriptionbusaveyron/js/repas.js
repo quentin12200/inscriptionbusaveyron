@@ -80,7 +80,21 @@ document.addEventListener('DOMContentLoaded', function() {
         request.onsuccess = function() {
             console.log('Réservation de repas ajoutée à la base de données');
             
-            // Réinitialisation du formulaire
+            // Afficher un message de confirmation
+            showConfirmation();
+            
+            // Envoyer un email de confirmation si le service est disponible
+            if (window.emailService) {
+                window.emailService.sendRepasConfirmation(inscription)
+                    .then(() => {
+                        console.log('Email de confirmation envoyé avec succès');
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de l\'envoi de l\'email de confirmation:', error);
+                    });
+            }
+            
+            // Réinitialiser le formulaire
             form.reset();
             
             // Affichage du message de confirmation

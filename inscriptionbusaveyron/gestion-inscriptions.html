@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des inscriptions - CGT Aveyron Mobilisation 5 juin 2025</title>
+    <meta name="description" content="Modifier ou annuler votre inscription à la mobilisation CGT Aveyron du 5 juin 2025">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Lien d'évitement pour l'accessibilité -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="img/logo-cgt.png" alt="Logo CGT Aveyron" width="100">
+                <h1>CGT Aveyron - Mobilisation 5 juin 2025</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" aria-current="false">Accueil</a></li>
+                    <li><a href="pourquoi-se-mobiliser.html" aria-current="false">Pourquoi se mobiliser</a></li>
+                    <li><a href="repas.html" aria-current="false">Inscription repas</a></li>
+                    <li><a href="gestion-inscriptions.html" aria-current="true">Gérer mon inscription</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <section class="section-intro">
+                <h2>Gérer mon inscription</h2>
+                <p>Vous pouvez modifier ou annuler votre inscription à la mobilisation du 5 juin 2025. Veuillez saisir votre email ou votre numéro de téléphone pour retrouver votre inscription.</p>
+            </section>
+
+            <div id="messageContainer" class="message hidden" role="alert" aria-live="polite"></div>
+
+            <section class="section-search">
+                <form id="searchForm" aria-labelledby="search-heading">
+                    <h3 id="search-heading">Rechercher mon inscription</h3>
+                    <div class="form-group">
+                        <label for="searchEmail">Email</label>
+                        <input type="email" id="searchEmail" name="searchEmail" placeholder="Votre email">
+                    </div>
+                    <div class="form-group">
+                        <label for="searchPhone">Téléphone</label>
+                        <input type="tel" id="searchPhone" name="searchPhone" placeholder="Votre numéro de téléphone">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">Rechercher</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="resultSection" class="section-results hidden">
+                <h3>Résultats de la recherche</h3>
+                <ul id="resultList" class="result-list"></ul>
+            </section>
+
+            <section id="inscriptionDetails" class="section-details hidden">
+                <h3>Modifier mon inscription</h3>
+                <form id="modificationForm" aria-labelledby="modification-heading">
+                    <h4 id="modification-heading">Informations personnelles</h4>
+                    <div class="form-group">
+                        <label for="modifNom">Nom <span class="required">*</span></label>
+                        <input type="text" id="modifNom" name="modifNom" required>
+                        <div id="modifNom-error" class="error-message" role="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modifPrenom">Prénom <span class="required">*</span></label>
+                        <input type="text" id="modifPrenom" name="modifPrenom" required>
+                        <div id="modifPrenom-error" class="error-message" role="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modifEmail">Email <span class="required">*</span></label>
+                        <input type="email" id="modifEmail" name="modifEmail" required>
+                        <div id="modifEmail-error" class="error-message" role="alert"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modifTelephone">Téléphone <span class="required">*</span></label>
+                        <input type="tel" id="modifTelephone" name="modifTelephone" required>
+                        <div id="modifTelephone-error" class="error-message" role="alert"></div>
+                    </div>
+
+                    <!-- Champs spécifiques pour les inscriptions bus -->
+                    <div id="busFields" class="specific-fields hidden">
+                        <h4>Informations sur le transport</h4>
+                        <div class="form-group">
+                            <label for="modifLieuDepart">Lieu de départ <span class="required">*</span></label>
+                            <select id="modifLieuDepart" name="modifLieuDepart" required>
+                                <option value="">Sélectionnez un lieu</option>
+                                <option value="Villefranche-de-Rouergue">Villefranche-de-Rouergue</option>
+                                <option value="Decazeville">Decazeville</option>
+                                <option value="Millau">Millau</option>
+                            </select>
+                            <div id="modifLieuDepart-error" class="error-message" role="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modifHeureDepart">Heure de départ <span class="required">*</span></label>
+                            <select id="modifHeureDepart" name="modifHeureDepart" required>
+                                <option value="">Sélectionnez une heure</option>
+                                <option value="8h00">8h00</option>
+                                <option value="9h00">9h00</option>
+                                <option value="10h00">10h00</option>
+                            </select>
+                            <div id="modifHeureDepart-error" class="error-message" role="alert"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modifNombrePersonnes">Nombre de personnes <span class="required">*</span></label>
+                            <input type="number" id="modifNombrePersonnes" name="modifNombrePersonnes" min="1" max="10" required>
+                            <div id="modifNombrePersonnes-error" class="error-message" role="alert"></div>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="modifRappel" name="modifRappel">
+                            <label for="modifRappel">Je souhaite être rappelé(e) avant le départ</label>
+                        </div>
+                    </div>
+
+                    <!-- Champs spécifiques pour les inscriptions repas -->
+                    <div id="repasFields" class="specific-fields hidden">
+                        <h4>Informations sur le repas</h4>
+                        <div class="form-group">
+                            <label for="modifNombreRepas">Nombre de repas <span class="required">*</span></label>
+                            <input type="number" id="modifNombreRepas" name="modifNombreRepas" min="1" max="10" required>
+                            <div id="modifNombreRepas-error" class="error-message" role="alert"></div>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="modifOptionVegetarienne" name="modifOptionVegetarienne">
+                            <label for="modifOptionVegetarienne">Option végétarienne</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="modifCommentaires">Commentaires ou allergies</label>
+                            <textarea id="modifCommentaires" name="modifCommentaires" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">Enregistrer les modifications</button>
+                        <button type="button" id="cancelInscription" class="btn-danger">Annuler mon inscription</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
+            <div class="footer-links">
+                <a href="#">Mentions légales</a>
+                <a href="#">Politique de confidentialité</a>
+                <a href="#">Contact</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/email-service.js"></script>
+    <script src="js/gestion-inscriptions.js"></script>
+</body>
+</html>

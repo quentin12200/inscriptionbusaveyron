@@ -7,7 +7,7 @@
 class EmailService {
     constructor() {
         // Configuration EmailJS
-        this.serviceID = 'service_fi5i0ec'; // Service ID Gmail correct
+        this.serviceID = 'service_femq5ft'; // Service ID Gmail correct
         // Utilisation du service ID fourni par le dashboard EmailJS
         // this.serviceID = 'gmail';
         

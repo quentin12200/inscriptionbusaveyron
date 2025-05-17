@@ -1,16 +1,15 @@
 /**
  * Service d'envoi d'emails pour les inscriptions
  * CGT Aveyron - Inscription mobilisation 5 juin 2025
- * Utilise l'API Resend directement depuis le frontend
+ * Utilise l'API serverless de Vercel pour l'envoi d'emails
  */
 
 class EmailService {
     constructor() {
-        // Clé API Resend (utilisation directe depuis le frontend)
-        this.apiKey = 're_MGTakVER_FbJar1nyUTCP6DggzkkqsVB8';
-        this.apiUrl = 'https://api.resend.com/emails';
+        // URL de l'API serverless pour l'envoi d'emails
+        this.apiUrl = '/api/send-email';
         
-        console.log('Service d\'email initialisé avec l\'API Resend');
+        console.log('Service d\'email initialisé avec l\'API Vercel');
     }
     
     /**
@@ -221,18 +220,19 @@ class EmailService {
                 return;
             }
             
-            // En production, envoyer l'email directement via l'API Resend
+            // Envoyer l'email via l'API serverless de Vercel
             fetch(this.apiUrl, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.apiKey}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    from: 'CGT Aveyron <inscriptions@cgt-aveyron.fr>',
-                    to: [data.email],
-                    subject: subject,
-                    html: html
+                    type,
+                    data: {
+                        ...data,
+                        subject,
+                        html
+                    }
                 })
             })
             .then(response => {

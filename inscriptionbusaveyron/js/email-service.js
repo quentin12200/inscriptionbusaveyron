@@ -7,7 +7,9 @@
 class EmailService {
     constructor() {
         // Configuration EmailJS
-        this.serviceID = 'service_f0i8oc'; // Service ID Gmail
+        this.serviceID = 'service_fi5i0ec'; // Service ID Gmail correct
+        // Utilisation du service ID fourni par le dashboard EmailJS
+        // this.serviceID = 'gmail';
         this.templateIDBus = 'template_g8evo4t'; // Template ID pour les bus
         this.templateIDRepas = 'template_j2fwwwp'; // Template ID pour les repas
         this.userID = 'KtRTUdZw0Ysj4Vhkt'; // Public Key EmailJS

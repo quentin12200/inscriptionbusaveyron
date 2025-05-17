@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Tentative d\'envoi d\'email, service disponible:', !!window.emailService);
             if (window.emailService) {
                 console.log('Données d\'inscription pour email:', JSON.stringify(inscription));
-                window.emailService.sendRepasConfirmation(inscription)
+                window.emailService.sendRepasConfirmationEmail(inscription)
                     .then((response) => {
                         console.log('Email de confirmation envoyé avec succès:', response);
                     })

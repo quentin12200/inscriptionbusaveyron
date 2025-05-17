@@ -1,35 +1,153 @@
 /**
  * Service d'envoi d'emails pour les inscriptions
  * CGT Aveyron - Inscription mobilisation 5 juin 2025
- * Utilise l'API Vercel pour envoyer des emails depuis le backend
+ * Utilise l'API Resend directement depuis le frontend
  */
 
 class EmailService {
     constructor() {
-        // URL de l'API Vercel pour l'envoi d'emails
-        this.apiUrl = '/api/send-email';
+        // Clé API Resend (utilisation directe depuis le frontend)
+        this.apiKey = 're_MGTakVER_FbJar1nyUTCP6DggzkkqsVB8';
+        this.apiUrl = 'https://api.resend.com/emails';
         
-        console.log('Service d\'email initialisé avec l\'API Vercel');
+        console.log('Service d\'email initialisé avec l\'API Resend');
     }
     
     /**
-     * Envoie un email de confirmation pour une inscription bus
-     * @param {Object} inscription - Les données de l'inscription
-     * @returns {Promise} - Promesse résolue si l'email est envoyé avec succès
+     * Envoie un email de confirmation pour une inscription au bus
+     * @param {Object} data - Données de l'inscription
+     * @returns {Promise} - Promesse résolue avec le résultat de l'envoi
      */
-    sendBusConfirmation(inscription) {
-        console.log('Envoi email bus pour:', inscription);
-        return this.sendEmail('bus', inscription);
+    sendBusConfirmationEmail(data) {
+        console.log('Envoi email bus pour: ', data);
+        return this.sendEmail('bus', data);
+    }
+
+    /**
+     * Envoie un email de confirmation pour une inscription au repas
+     * @param {Object} data - Données de l'inscription
+     * @returns {Promise} - Promesse résolue avec le résultat de l'envoi
+     */
+    sendRepasConfirmationEmail(data) {
+        console.log('Envoi email repas pour: ', data);
+        return this.sendEmail('repas', data);
     }
     
     /**
-     * Envoie un email de confirmation pour une inscription repas
-     * @param {Object} inscription - Les données de l'inscription
-     * @returns {Promise} - Promesse résolue si l'email est envoyé avec succès
+     * Génère le template HTML pour un email de confirmation de bus
+     * @param {Object} data - Données de l'inscription
+     * @returns {string} - Template HTML
      */
-    sendRepasConfirmation(inscription) {
-        console.log('Envoi email repas pour:', inscription);
-        return this.sendEmail('repas', inscription);
+    getBusEmailTemplate(data) {
+        const dateDepart = '5 juin 2025';
+        const heureRetour = '18h00';
+        
+        return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Confirmation d'inscription - Bus CGT Aveyron</title>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; }
+                .header { background-color: #e30613; color: white; padding: 20px; text-align: center; }
+                .content { padding: 20px; }
+                .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; }
+                h1 { margin: 0; }
+                .important { font-weight: bold; color: #e30613; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>CGT Aveyron</h1>
+                <p>Mobilisation du 5 juin 2025</p>
+            </div>
+            <div class="content">
+                <p>Bonjour ${data.prenom} ${data.nom},</p>
+                
+                <p>Nous confirmons votre inscription au bus pour la mobilisation CGT du 5 juin 2025.</p>
+                
+                <p><span class="important">Détails de votre inscription :</span></p>
+                <ul>
+                    <li><strong>Lieu de départ :</strong> ${data.lieuDepart}</li>
+                    <li><strong>Heure de départ :</strong> ${data.heureDepart}</li>
+                    <li><strong>Date :</strong> ${dateDepart}</li>
+                    <li><strong>Nombre de personnes :</strong> ${data.nombrePersonnes}</li>
+                </ul>
+                
+                <p>Le retour est prévu vers ${heureRetour}.</p>
+                
+                <p>N'oubliez pas de vous présenter au lieu de départ au moins 15 minutes avant l'heure indiquée.</p>
+                
+                <p>Pour toute question, vous pouvez contacter votre Union Locale.</p>
+                
+                <p>Solidairement,<br>
+                L'équipe CGT Aveyron</p>
+            </div>
+            <div class="footer">
+                <p> 2025 CGT Aveyron - Tous droits réservés</p>
+                <p>Ce message a été envoyé automatiquement, merci de ne pas y répondre.</p>
+            </div>
+        </body>
+        </html>
+        `;
+    }
+    
+    /**
+     * Génère le template HTML pour un email de confirmation de repas
+     * @param {Object} data - Données de l'inscription
+     * @returns {string} - Template HTML
+     */
+    getRepasEmailTemplate(data) {
+        const dateRepas = '5 juin 2025';
+        const lieuRepas = 'Gare de Rodez';
+        const heureRepas = '12h30';
+        
+        return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Confirmation d'inscription - Repas CGT Aveyron</title>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; }
+                .header { background-color: #e30613; color: white; padding: 20px; text-align: center; }
+                .content { padding: 20px; }
+                .footer { background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; }
+                h1 { margin: 0; }
+                .important { font-weight: bold; color: #e30613; }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>CGT Aveyron</h1>
+                <p>Repas du 5 juin 2025</p>
+            </div>
+            <div class="content">
+                <p>Bonjour ${data.prenom} ${data.nom},</p>
+                
+                <p>Nous confirmons votre inscription au repas organisé par l'UL de Rodez dans le cadre de la mobilisation CGT du 5 juin 2025.</p>
+                
+                <p><span class="important">Détails de votre inscription :</span></p>
+                <ul>
+                    <li><strong>Date :</strong> ${dateRepas}</li>
+                    <li><strong>Heure :</strong> ${heureRepas}</li>
+                    <li><strong>Lieu :</strong> ${lieuRepas}</li>
+                    <li><strong>Nombre de personnes :</strong> ${data.nombrePersonnes}</li>
+                </ul>
+                
+                <p>Pour toute question, vous pouvez contacter l'Union Locale de Rodez.</p>
+                
+                <p>Solidairement,<br>
+                L'équipe CGT Aveyron</p>
+            </div>
+            <div class="footer">
+                <p> 2025 CGT Aveyron - Tous droits réservés</p>
+                <p>Ce message a été envoyé automatiquement, merci de ne pas y répondre.</p>
+            </div>
+        </body>
+        </html>
+        `;
     }
     
     /**
@@ -89,13 +207,33 @@ class EmailService {
                 return;
             }
             
-            // En production, envoyer l'email via l'API
+            // Préparer le contenu de l'email en fonction du type
+            let subject, html;
+            
+            if (type === 'bus') {
+                subject = 'Confirmation d\'inscription - Bus CGT Aveyron - 5 juin 2025';
+                html = this.getBusEmailTemplate(data);
+            } else if (type === 'repas') {
+                subject = 'Confirmation d\'inscription - Repas CGT Aveyron - 5 juin 2025';
+                html = this.getRepasEmailTemplate(data);
+            } else {
+                reject(new Error('Type d\'email non reconnu'));
+                return;
+            }
+            
+            // En production, envoyer l'email directement via l'API Resend
             fetch(this.apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.apiKey}`
                 },
-                body: JSON.stringify({ type, data })
+                body: JSON.stringify({
+                    from: 'CGT Aveyron <inscriptions@cgt-aveyron.fr>',
+                    to: [data.email],
+                    subject: subject,
+                    html: html
+                })
             })
             .then(response => {
                 if (!response.ok) {

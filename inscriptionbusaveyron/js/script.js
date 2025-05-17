@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Envoyer un email de confirmation si le service est disponible
             if (window.emailService && email) {
-                window.emailService.sendBusConfirmation(inscription)
+                window.emailService.sendBusConfirmationEmail(inscription)
                     .then(() => {
                         console.log('Email de confirmation envoyé avec succès à', email);
                     })

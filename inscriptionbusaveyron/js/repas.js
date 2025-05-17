@@ -87,14 +87,19 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Réservation de repas ajoutée à la base de données');
             
             // Envoyer un email de confirmation si le service est disponible
+            console.log('Tentative d\'envoi d\'email, service disponible:', !!window.emailService);
             if (window.emailService) {
+                console.log('Données d\'inscription pour email:', JSON.stringify(inscription));
                 window.emailService.sendRepasConfirmation(inscription)
-                    .then(() => {
-                        console.log('Email de confirmation envoyé avec succès');
+                    .then((response) => {
+                        console.log('Email de confirmation envoyé avec succès:', response);
                     })
                     .catch(error => {
                         console.error('Erreur lors de l\'envoi de l\'email de confirmation:', error);
+                        alert('L\'email de confirmation n\'a pas pu être envoyé, mais votre inscription a bien été enregistrée.');
                     });
+            } else {
+                console.error('Service d\'email non disponible');
             }
             
             // Réinitialiser le formulaire

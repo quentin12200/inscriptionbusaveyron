@@ -56,12 +56,13 @@ class EmailService {
      * @returns {Promise} - Promesse résolue si l'email est envoyé avec succès
      */
     sendRepasConfirmation(inscription) {
+        console.log('Envoi email repas pour:', inscription);
         return this.sendEmail(this.templateIDRepas, {
             to_email: inscription.email,
             to_name: `${inscription.prenom} ${inscription.nom}`,
-            nombre_repas: inscription.nombreRepas,
-            option_vegetarienne: inscription.optionVegetarienne ? 'Oui' : 'Non',
-            commentaires: inscription.commentaires || 'Aucun',
+            nombre_repas: inscription.nombrePersonnes,
+            option_vegetarienne: inscription.vegetarien ? 'Oui' : 'Non',
+            commentaires: inscription.commentaire || 'Aucun',
             date_inscription: new Date(inscription.dateInscription).toLocaleDateString('fr-FR')
         });
     }
@@ -128,6 +129,11 @@ class EmailService {
                 return;
             }
             
+            console.log('Tentative d\'envoi d\'email avec les paramètres suivants:');
+            console.log('Service ID:', this.serviceID);
+            console.log('Template ID:', templateId);
+            console.log('Paramètres:', JSON.stringify(templateParams));
+            
             window.emailjs.send(this.serviceID, templateId, templateParams)
                 .then(response => {
                     console.log('Email envoyé avec succès:', response);
@@ -135,6 +141,7 @@ class EmailService {
                 })
                 .catch(error => {
                     console.error('Erreur lors de l\'envoi de l\'email:', error);
+                    console.error('Détails de l\'erreur:', JSON.stringify(error));
                     reject(error);
                 });
         });

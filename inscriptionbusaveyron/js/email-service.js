@@ -1,42 +1,15 @@
 /**
  * Service d'envoi d'emails pour les inscriptions
  * CGT Aveyron - Inscription mobilisation 5 juin 2025
- * Utilise EmailJS pour envoyer des emails depuis le frontend
+ * Utilise l'API Vercel pour envoyer des emails depuis le backend
  */
 
 class EmailService {
     constructor() {
-        // Configuration EmailJS
-        // Utilisation du service ID fourni
-        this.serviceID = 'service_5esf8fj';
-        // Autres options si cela ne fonctionne pas :
-        // this.serviceID = 'default';
-        // this.serviceID = 'gmail';
+        // URL de l'API Vercel pour l'envoi d'emails
+        this.apiUrl = '/api/send-email';
         
-        // Templates de votre compte EmailJS
-        this.templateIDBus = 'template_bus'; // Template ID pour les bus
-        this.templateIDRepas = 'template_repas'; // Template ID pour les repas
-        this.userID = 'KtRTUdZw0Ysj4Vhkt'; // Public Key EmailJS
-        
-        // Chargement du script EmailJS
-        this.loadEmailJSScript();
-    }
-    
-    /**
-     * Charge le script EmailJS
-     */
-    loadEmailJSScript() {
-        if (window.emailjs) return;
-        
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-        script.async = true;
-        document.head.appendChild(script);
-        
-        script.onload = () => {
-            window.emailjs.init(this.userID);
-            console.log('EmailJS chargé avec succès');
-        };
+        console.log('Service d\'email initialisé avec l\'API Vercel');
     }
     
     /**
@@ -45,15 +18,8 @@ class EmailService {
      * @returns {Promise} - Promesse résolue si l'email est envoyé avec succès
      */
     sendBusConfirmation(inscription) {
-        return this.sendEmail(this.templateIDBus, {
-            to_email: inscription.email,
-            to_name: `${inscription.prenom} ${inscription.nom}`,
-            lieu_depart: inscription.lieuDepart,
-            heure_depart: inscription.heureDepart,
-            nombre_personnes: inscription.nombrePersonnes,
-            rappel: inscription.rappel ? 'Oui' : 'Non',
-            date_inscription: new Date(inscription.dateInscription).toLocaleDateString('fr-FR')
-        });
+        console.log('Envoi email bus pour:', inscription);
+        return this.sendEmail('bus', inscription);
     }
     
     /**
@@ -63,14 +29,7 @@ class EmailService {
      */
     sendRepasConfirmation(inscription) {
         console.log('Envoi email repas pour:', inscription);
-        return this.sendEmail(this.templateIDRepas, {
-            to_email: inscription.email,
-            to_name: `${inscription.prenom} ${inscription.nom}`,
-            nombre_repas: inscription.nombrePersonnes,
-            option_vegetarienne: inscription.vegetarien ? 'Oui' : 'Non',
-            commentaires: inscription.commentaire || 'Aucun',
-            date_inscription: new Date(inscription.dateInscription).toLocaleDateString('fr-FR')
-        });
+        return this.sendEmail('repas', inscription);
     }
     
     /**
@@ -80,28 +39,11 @@ class EmailService {
      * @returns {Promise} - Promesse résolue si l'email est envoyé avec succès
      */
     sendModificationConfirmation(inscription, type) {
-        const templateID = type === 'bus' ? this.templateIDBus : this.templateIDRepas;
-        const templateParams = {
-            to_email: inscription.email,
-            to_name: `${inscription.prenom} ${inscription.nom}`,
-            subject: 'Modification de votre inscription - CGT Aveyron',
-            message: `Votre inscription a été modifiée avec succès le ${new Date().toLocaleDateString('fr-FR')}.`,
-            date_inscription: new Date(inscription.dateInscription).toLocaleDateString('fr-FR')
-        };
+        // Ajouter une indication que c'est une modification
+        inscription.isModification = true;
+        inscription.modificationDate = new Date().toLocaleDateString('fr-FR');
         
-        // Ajouter les paramètres spécifiques selon le type
-        if (type === 'bus') {
-            templateParams.lieu_depart = inscription.lieuDepart;
-            templateParams.heure_depart = inscription.heureDepart;
-            templateParams.nombre_personnes = inscription.nombrePersonnes;
-            templateParams.rappel = inscription.rappel ? 'Oui' : 'Non';
-        } else {
-            templateParams.nombre_repas = inscription.nombreRepas;
-            templateParams.option_vegetarienne = inscription.optionVegetarienne ? 'Oui' : 'Non';
-            templateParams.commentaires = inscription.commentaires || 'Aucun';
-        }
-        
-        return this.sendEmail(templateID, templateParams);
+        return this.sendEmail(type, inscription);
     }
     
     /**
@@ -111,45 +53,45 @@ class EmailService {
      * @returns {Promise} - Promesse résolue si l'email est envoyé avec succès
      */
     sendCancellationConfirmation(inscription, type) {
-        const templateID = type === 'bus' ? this.templateIDBus : this.templateIDRepas;
-        return this.sendEmail(templateID, {
-            to_email: inscription.email,
-            to_name: `${inscription.prenom} ${inscription.nom}`,
-            subject: 'Annulation de votre inscription - CGT Aveyron',
-            message: `Votre inscription a été annulée avec succès le ${new Date().toLocaleDateString('fr-FR')}.`,
-            is_cancellation: true
-        });
+        // Ajouter une indication que c'est une annulation
+        inscription.isCancellation = true;
+        inscription.cancellationDate = new Date().toLocaleDateString('fr-FR');
+        
+        return this.sendEmail(type, inscription);
     }
     
     /**
-     * Envoie un email via EmailJS
-     * @param {string} templateId - L'ID du template EmailJS
-     * @param {Object} templateParams - Les paramètres du template
+     * Envoie un email via l'API Vercel
+     * @param {string} type - Le type d'email (bus ou repas)
+     * @param {Object} data - Les données de l'inscription
      * @returns {Promise} - Promesse résolue si l'email est envoyé avec succès
      */
-    sendEmail(templateId, templateParams) {
+    sendEmail(type, data) {
         return new Promise((resolve, reject) => {
-            if (!window.emailjs) {
-                console.error('EmailJS n\'est pas chargé');
-                reject(new Error('EmailJS n\'est pas chargé'));
-                return;
-            }
+            console.log(`Tentative d'envoi d'email ${type} avec les données suivantes:`);
+            console.log('Données:', JSON.stringify(data));
             
-            console.log('Tentative d\'envoi d\'email avec les paramètres suivants:');
-            console.log('Service ID:', this.serviceID);
-            console.log('Template ID:', templateId);
-            console.log('Paramètres:', JSON.stringify(templateParams));
-            
-            window.emailjs.send(this.serviceID, templateId, templateParams)
-                .then(response => {
-                    console.log('Email envoyé avec succès:', response);
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.error('Erreur lors de l\'envoi de l\'email:', error);
-                    console.error('Détails de l\'erreur:', JSON.stringify(error));
-                    reject(error);
-                });
+            fetch(this.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ type, data })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(result => {
+                console.log('Email envoyé avec succès:', result);
+                resolve(result);
+            })
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi de l\'email:', error);
+                reject(error);
+            });
         });
     }
 }

@@ -1,0 +1,9 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "API pour l'envoi d'emails - CGT Aveyron",
+  "main": "send-email.js",
+  "dependencies": {
+    "nodemailer": "^6.9.1"
+  }
+}

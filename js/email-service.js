@@ -224,10 +224,29 @@ class EmailService {
             
             if (type === 'bus') {
                 templateId = 'template_g5gcva4';
-                templateParams = data;
+                // Adapter les paramètres pour correspondre aux variables du template
+                templateParams = {
+                    name: `${data.prenom} ${data.nom}`,
+                    email: data.email,
+                    lieuDepart: data.lieuDepart,
+                    heureDepart: data.heureDepart,
+                    nombrePersonnes: data.nombrePersonnes,
+                    rappel: data.besoinRappel ? 'Oui' : 'Non',
+                    date_inscription: new Date(data.dateInscription).toLocaleDateString('fr-FR'),
+                    is_cancellation: false,
+                    message: ''
+                };
             } else if (type === 'repas') {
                 templateId = 'template_ja9wvwp';
-                templateParams = data;
+                // Adapter les paramètres pour correspondre aux variables du template
+                templateParams = {
+                    name: `${data.prenom} ${data.nom}`,
+                    email: data.email,
+                    nombrePersonnes: data.nombrePersonnes,
+                    date_inscription: new Date(data.dateInscription).toLocaleDateString('fr-FR'),
+                    is_cancellation: false,
+                    message: ''
+                };
             } else {
                 reject(new Error('Type d\'email non reconnu'));
                 return;

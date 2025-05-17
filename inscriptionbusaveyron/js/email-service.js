@@ -71,6 +71,25 @@ class EmailService {
             console.log(`Tentative d'envoi d'email ${type} avec les données suivantes:`);
             console.log('Données:', JSON.stringify(data));
             
+            // Détecter si nous sommes en environnement local (localhost ou fichier)
+            const isLocalEnvironment = window.location.hostname === 'localhost' || 
+                                       window.location.hostname === '127.0.0.1' ||
+                                       window.location.protocol === 'file:';
+            
+            if (isLocalEnvironment) {
+                // En local, simuler un envoi d'email réussi
+                console.log('Environnement local détecté - Simulation d\'envoi d\'email');
+                console.log(`Un email de type "${type}" serait envoyé à ${data.email} en production`);
+                
+                // Afficher une alerte pour informer l'utilisateur
+                alert(`En environnement de production, un email de confirmation serait envoyé à ${data.email}`);
+                
+                // Résoudre la promesse avec un faux ID de message
+                resolve({ messageId: 'local-test-' + Date.now() });
+                return;
+            }
+            
+            // En production, envoyer l'email via l'API
             fetch(this.apiUrl, {
                 method: 'POST',
                 headers: {

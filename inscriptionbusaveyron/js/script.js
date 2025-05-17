@@ -118,6 +118,21 @@ document.addEventListener('DOMContentLoaded', function() {
         request.onsuccess = function() {
             console.log('Inscription ajoutée à la base de données');
             
+            // Envoyer un email de confirmation si le service est disponible
+            if (window.emailService && email) {
+                window.emailService.sendBusConfirmation(inscription)
+                    .then(() => {
+                        console.log('Email de confirmation envoyé avec succès à', email);
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de l\'envoi de l\'email de confirmation:', error);
+                    });
+            } else if (!email) {
+                console.log('Pas d\'email fourni, aucun email de confirmation envoyé');
+            } else if (!window.emailService) {
+                console.error('Service d\'email non disponible');
+            }
+            
             // Réinitialisation du formulaire
             form.reset();
             heureDepartInput.value = '';

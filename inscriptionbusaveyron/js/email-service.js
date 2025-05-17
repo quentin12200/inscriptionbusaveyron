@@ -8,8 +8,8 @@ class EmailService {
     constructor() {
         // Configuration EmailJS
         this.serviceID = 'default_service'; // Service ID EmailJS
-        this.templateIDBus = 'template_bus'; // Template ID pour les bus
-        this.templateIDRepas = 'template_repas'; // Template ID pour les repas
+        this.templateIDBus = 'template_g8evo4t'; // Template ID pour les bus
+        this.templateIDRepas = 'template_j2fwwwp'; // Template ID pour les repas
         this.userID = 'KtRTUdZw0Ysj4Vhkt'; // Public Key EmailJS
         
         // Chargement du script EmailJS

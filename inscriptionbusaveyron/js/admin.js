@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginSection = document.getElementById('login-section');
     const adminSection = document.getElementById('admin-section');
     const loginForm = document.getElementById('loginForm');
-    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutBtn = document.getElementById('logout');
     const exportBtn = document.getElementById('exportBtn');
     const inscriptionsTableBody = document.getElementById('inscriptionsTableBody');
     const currentULSpan = document.getElementById('currentUL');
@@ -13,10 +13,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Base de données locale (IndexedDB)
     let db;
-    const request = indexedDB.open('CGTAveyronDB', 1);
+    const request = indexedDB.open('InscriptionsCGT', 2);
 
     request.onerror = function(event) {
         console.error('Erreur d\'ouverture de la base de données:', event.target.error);
+    };
+
+    request.onupgradeneeded = function(event) {
+        db = event.target.result;
+        const oldVersion = event.oldVersion;
+        console.log('Mise à jour de la base de données de la version', oldVersion, 'à la version 2');
+        
+        // Migration des données si nécessaire
+        if (oldVersion < 2) {
+            // Supprimer l'ancien objectStore s'il existe
+            if (db.objectStoreNames.contains('inscriptions')) {
+                console.log('Migration des données de "inscriptions" vers "inscriptionsBus"');
+                db.deleteObjectStore('inscriptions');
+            }
+            
+            // Création du nouvel objectStore
+            if (!db.objectStoreNames.contains('inscriptionsBus')) {
+                const objectStore = db.createObjectStore('inscriptionsBus', { keyPath: 'id', autoIncrement: true });
+                
+                // Définition des colonnes
+                objectStore.createIndex('nom', 'nom', { unique: false });
+                objectStore.createIndex('prenom', 'prenom', { unique: false });
+                objectStore.createIndex('telephone', 'telephone', { unique: false });
+                objectStore.createIndex('email', 'email', { unique: false });
+                objectStore.createIndex('lieuDepart', 'lieuDepart', { unique: false });
+                objectStore.createIndex('heureDepart', 'heureDepart', { unique: false });
+                objectStore.createIndex('nombrePersonnes', 'nombrePersonnes', { unique: false });
+                objectStore.createIndex('besoinRappel', 'besoinRappel', { unique: false });
+                objectStore.createIndex('dateInscription', 'dateInscription', { unique: false });
+                
+                console.log('Nouvel objectStore "inscriptionsBus" créé avec succès');
+            }
+        }
     };
 
     request.onsuccess = function(event) {
@@ -136,25 +169,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fonction pour charger les inscriptions filtrées par Union Locale
     function loadInscriptions(unionLocale) {
-        const transaction = db.transaction(['inscriptions'], 'readonly');
-        const objectStore = transaction.objectStore('inscriptions');
-        const request = objectStore.getAll();
+        if (!db) {
+            console.error('La base de données n\'est pas initialisée');
+            return;
+        }
         
-        request.onsuccess = function() {
-            const inscriptions = request.result;
+        try {
+            const transaction = db.transaction(['inscriptionsBus'], 'readonly');
+            const objectStore = transaction.objectStore('inscriptionsBus');
+            const request = objectStore.getAll();
             
-            // Filtrage par Union Locale
-            const filteredInscriptions = inscriptions.filter(inscription => 
-                inscription.lieuDepart === unionLocale
-            );
+            request.onsuccess = function() {
+                const inscriptions = request.result;
+                
+                // Filtrage par Union Locale
+                const filteredInscriptions = inscriptions.filter(inscription => 
+                    inscription.lieuDepart === unionLocale
+                );
+                
+                // Affichage des inscriptions
+                displayInscriptions(filteredInscriptions);
+                console.log(`${filteredInscriptions.length} inscriptions trouvées pour ${unionLocale}`);
+            };
             
-            // Affichage des inscriptions
-            displayInscriptions(filteredInscriptions);
-        };
-        
-        request.onerror = function(event) {
-            console.error('Erreur lors du chargement des inscriptions:', event.target.error);
-        };
+            request.onerror = function(event) {
+                console.error('Erreur lors du chargement des inscriptions:', event.target.error);
+            };
+        } catch (error) {
+            console.error('Erreur lors de l\'accès à la base de données:', error);
+        }
     }
 
     // Fonction pour afficher les inscriptions dans le tableau
@@ -200,32 +243,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fonction pour exporter les inscriptions en CSV
     function exportInscriptions(lieuFilter) {
         return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['inscriptions'], 'readonly');
-            const objectStore = transaction.objectStore('inscriptions');
-            const request = objectStore.getAll();
+            if (!db) {
+                reject(new Error('La base de données n\'est pas initialisée'));
+                return;
+            }
             
-            request.onsuccess = function() {
-                let inscriptions = request.result;
+            try {
+                const transaction = db.transaction(['inscriptionsBus'], 'readonly');
+                const objectStore = transaction.objectStore('inscriptionsBus');
+                const request = objectStore.getAll();
                 
-                // Filtrage par lieu si nécessaire
-                if (lieuFilter) {
-                    inscriptions = inscriptions.filter(inscription => inscription.lieuDepart === lieuFilter);
-                }
+                request.onsuccess = function() {
+                    let inscriptions = request.result;
+                    
+                    // Filtrage par lieu si nécessaire
+                    if (lieuFilter) {
+                        inscriptions = inscriptions.filter(inscription => inscription.lieuDepart === lieuFilter);
+                    }
+                    
+                    // Conversion en CSV
+                    let csv = 'Nom,Prénom,Téléphone,Email,Lieu de départ,Heure de départ,Nombre de personnes,Besoin d\'être rappelé,Date d\'inscription\n';
+                    
+                    inscriptions.forEach(inscription => {
+                        const dateFormatted = formatDate(new Date(inscription.dateInscription));
+                        csv += `"${inscription.nom}","${inscription.prenom}","${inscription.telephone}","${inscription.email || ''}","${inscription.lieuDepart}","${inscription.heureDepart}",${inscription.nombrePersonnes},${inscription.besoinRappel ? 'Oui' : 'Non'},"${dateFormatted}"\n`;
+                    });
+                    
+                    resolve(csv);
+                };
                 
-                // Conversion en CSV
-                let csv = 'Nom,Prénom,Téléphone,Email,Lieu de départ,Heure de départ,Nombre de personnes,Besoin d\'être rappelé,Date d\'inscription\n';
-                
-                inscriptions.forEach(inscription => {
-                    const dateFormatted = formatDate(new Date(inscription.dateInscription));
-                    csv += `"${inscription.nom}","${inscription.prenom}","${inscription.telephone}","${inscription.email || ''}","${inscription.lieuDepart}","${inscription.heureDepart}",${inscription.nombrePersonnes},${inscription.besoinRappel ? 'Oui' : 'Non'},"${dateFormatted}"\n`;
-                });
-                
-                resolve(csv);
-            };
-            
-            request.onerror = function(event) {
-                reject(event.target.error);
-            };
+                request.onerror = function(event) {
+                    reject(event.target.error);
+                };
+            } catch (error) {
+                console.error('Erreur lors de l\'accès à la base de données pour l\'exportation:', error);
+                reject(error);
+            }
         });
     }
 });

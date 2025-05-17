@@ -224,22 +224,10 @@ class EmailService {
             
             if (type === 'bus') {
                 templateId = 'template_g5gcva4';
-                templateParams = {
-                    to_name: `${data.prenom} ${data.nom}`,
-                    to_email: data.email,
-                    lieu_depart: data.lieuDepart,
-                    heure_depart: data.heureDepart,
-                    nombre_personnes: data.nombrePersonnes,
-                    date_mobilisation: '5 juin 2025'
-                };
+                templateParams = data;
             } else if (type === 'repas') {
                 templateId = 'template_ja9wvwp';
-                templateParams = {
-                    to_name: `${data.prenom} ${data.nom}`,
-                    to_email: data.email,
-                    nombre_personnes: data.nombrePersonnes,
-                    date_mobilisation: '5 juin 2025'
-                };
+                templateParams = data;
             } else {
                 reject(new Error('Type d\'email non reconnu'));
                 return;

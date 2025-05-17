@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration - Inscriptions CGT Aveyron</title>
+    <title>Administration des repas - CGT Aveyron</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="img/favico.png" type="image/png">
@@ -14,17 +14,9 @@
             <img src="img/banniere-bus-aveyron.png" alt="Bannière CGT Aveyron" class="banniere">
             <div class="header-content">
                 <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
-                <h1>Administration des inscriptions à la mobilisation du 5 juin</h1>
+                <h1>Administration des repas du 5 juin</h1>
             </div>
         </header>
-
-        <nav class="main-nav">
-            <ul>
-                <li><a href="index.html">Inscription</a></li>
-                <li><a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a></li>
-                <li><a href="admin.html" class="active">Administration</a></li>
-            </ul>
-        </nav>
 
         <div id="login-section">
             <div class="login-form">
@@ -33,10 +25,7 @@
                     <div class="form-group">
                         <label for="unionLocale">Union Locale</label>
                         <select id="unionLocale" name="unionLocale" required>
-                            <option value="" disabled selected>Sélectionner votre Union Locale</option>
-                            <option value="Villefranche-de-Rouergue">Villefranche-de-Rouergue</option>
-                            <option value="Decazeville">Decazeville</option>
-                            <option value="Millau">Millau</option>
+                            <option value="Rodez" selected>Rodez</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -52,8 +41,19 @@
 
         <div id="admin-section" class="hidden">
             <div class="admin-header">
-                <h2 id="ulTitle">Union Locale de <span id="currentUL"></span></h2>
+                <h2 id="ulTitle">Union Locale de Rodez</h2>
                 <button id="logoutBtn" class="btn-submit">Déconnexion</button>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3>Total des réservations</h3>
+                    <p id="totalReservations">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Repas végétariens</h3>
+                    <p id="vegetarienCount">0</p>
+                </div>
             </div>
 
             <a href="#" id="exportBtn" class="export-btn">
@@ -68,13 +68,13 @@
                             <th>Prénom</th>
                             <th>Téléphone</th>
                             <th>Email</th>
-                            <th>Heure de départ</th>
-                            <th>Nombre de personnes</th>
-                            <th>Besoin d'être rappelé</th>
+                            <th>Nombre de repas</th>
+                            <th>Option végétarienne</th>
+                            <th>Commentaire</th>
                             <th>Date d'inscription</th>
                         </tr>
                     </thead>
-                    <tbody id="inscriptionsTableBody">
+                    <tbody id="repasTableBody">
                         <!-- Les inscriptions seront ajoutées ici dynamiquement -->
                     </tbody>
                 </table>
@@ -84,11 +84,11 @@
         <footer>
             <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
             <div class="admin-link">
-                <a href="index.html">Retour au formulaire d'inscription</a>
+                <a href="repas.html">Retour au formulaire d'inscription repas</a>
             </div>
         </footer>
     </div>
 
-    <script src="js/admin.js"></script>
+    <script src="js/admin-repas.js"></script>
 </body>
 </html>

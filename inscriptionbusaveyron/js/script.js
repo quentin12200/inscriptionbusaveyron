@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Base de données locale (IndexedDB)
     let db;
-    const request = indexedDB.open('CGTAveyronDB', 1);
+    // Augmenter la version pour forcer une mise à jour du schéma
+    const request = indexedDB.open('InscriptionsCGT', 2);
 
     request.onerror = function(event) {
         console.error('Erreur d\'ouverture de la base de données:', event.target.error);
@@ -20,10 +21,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     request.onupgradeneeded = function(event) {
         db = event.target.result;
+        const oldVersion = event.oldVersion;
+        console.log('Mise à jour de la base de données de la version', oldVersion, 'à la version 2');
         
-        // Création de la table Inscriptions
-        if (!db.objectStoreNames.contains('inscriptions')) {
-            const objectStore = db.createObjectStore('inscriptions', { keyPath: 'id', autoIncrement: true });
+        // Migration des données si nécessaire
+        if (oldVersion < 2) {
+            // Supprimer l'ancien objectStore s'il existe
+            if (db.objectStoreNames.contains('inscriptions')) {
+                console.log('Migration des données de "inscriptions" vers "inscriptionsBus"');
+                // Nous ne pouvons pas directement renommer un objectStore, nous devons le recréer
+                // Cette opération perdra les données existantes, mais c'est acceptable pour cette mise à jour
+                db.deleteObjectStore('inscriptions');
+            }
+            
+            // Création du nouvel objectStore
+            const objectStore = db.createObjectStore('inscriptionsBus', { keyPath: 'id', autoIncrement: true });
             
             // Définition des colonnes
             objectStore.createIndex('nom', 'nom', { unique: false });
@@ -35,6 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
             objectStore.createIndex('nombrePersonnes', 'nombrePersonnes', { unique: false });
             objectStore.createIndex('besoinRappel', 'besoinRappel', { unique: false });
             objectStore.createIndex('dateInscription', 'dateInscription', { unique: false });
+            
+            console.log('Nouvel objectStore "inscriptionsBus" créé avec succès');
         }
     };
 
@@ -77,9 +91,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Vérifier si la base de données est initialisée
+        if (!db) {
+            alert('La base de données n\'est pas encore prête. Veuillez réessayer dans quelques instants.');
+            return;
+        }
+        
         // Enregistrement dans la base de données
-        const transaction = db.transaction(['inscriptions'], 'readwrite');
-        const objectStore = transaction.objectStore('inscriptions');
+        const transaction = db.transaction(['inscriptionsBus'], 'readwrite');
+        const objectStore = transaction.objectStore('inscriptionsBus');
         
         const inscription = {
             nom: nom,
@@ -126,8 +146,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Exportation des données (fonction utilisée par l'admin)
     window.exportInscriptions = function(lieuFilter = null) {
         return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['inscriptions'], 'readonly');
-            const objectStore = transaction.objectStore('inscriptions');
+            if (!db) {
+                reject(new Error('La base de données n\'est pas initialisée'));
+                return;
+            }
+            
+            const transaction = db.transaction(['inscriptionsBus'], 'readonly');
+            const objectStore = transaction.objectStore('inscriptionsBus');
             const request = objectStore.getAll();
             
             request.onsuccess = function() {

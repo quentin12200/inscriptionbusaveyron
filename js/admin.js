@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginSection = document.getElementById('login-section');
     const adminSection = document.getElementById('admin-section');
     const loginForm = document.getElementById('loginForm');
-    const logoutBtn = document.getElementById('logout');
+    const logoutBtn = document.getElementById('logoutBtn');
     const exportBtn = document.getElementById('exportBtn');
     const inscriptionsTableBody = document.getElementById('inscriptionsTableBody');
-    const currentULSpan = document.getElementById('currentUL');
 
     // Utilisation du système d'authentification sécurisé
     // Le module auth-security.js doit être chargé avant ce script
@@ -60,8 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
         const tokenData = window.authSecurity.verifyToken(authToken);
         
-        if (tokenData && tokenData.role === 'admin-bus') {
-            showAdminSection(tokenData.unionLocale);
+        if (tokenData && tokenData.role === 'admin') {
+            showAdminSection();
         }
     };
 
@@ -69,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const unionLocale = document.getElementById('unionLocale').value;
         const password = document.getElementById('password').value;
         const rememberMe = document.getElementById('rememberMe')?.checked || false;
         
@@ -81,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             // Vérification sécurisée des identifiants
-            const authResult = await window.authSecurity.verifyCredentials(unionLocale, password);
+            const authResult = await window.authSecurity.verifyCredentials(password);
             
             if (authResult.success) {
                 // Stockage du token d'authentification
@@ -91,17 +89,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     sessionStorage.setItem('authToken', authResult.token);
                 }
                 
-                // Pour la compatibilité avec le code existant
-                localStorage.setItem('currentUL', unionLocale);
-                
                 // Afficher la section d'administration
-                showAdminSection(unionLocale);
+                showAdminSection();
                 
                 // Journalisation de la connexion
-                console.log(`Connexion réussie pour ${unionLocale} (${authResult.role})`);
+                console.log(`Connexion réussie (${authResult.role})`);
             } else {
                 // Afficher un message d'erreur
-                alert(authResult.message || 'Identifiants incorrects');
+                alert(authResult.message || 'Mot de passe incorrect');
             }
         } catch (error) {
             console.error('Erreur lors de la connexion:', error);
@@ -129,14 +124,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Exportation des données en CSV
     exportBtn.addEventListener('click', function() {
-        const currentUL = localStorage.getItem('currentUL');
-        
-        if (!currentUL) {
+        const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+        if (!authToken) {
             alert('Veuillez vous connecter');
             return;
         }
         
-        exportInscriptions(currentUL)
+        exportInscriptions()
             .then(csv => {
                 // Création d'un blob et téléchargement du fichier CSV
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -144,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const url = URL.createObjectURL(blob);
                 
                 link.setAttribute('href', url);
-                link.setAttribute('download', `inscriptions_${currentUL}_${formatDate(new Date())}.csv`);
+                link.setAttribute('download', `inscriptions_CGT_Aveyron_${formatDate(new Date())}.csv`);
                 link.style.visibility = 'hidden';
                 
                 document.body.appendChild(link);
@@ -158,17 +152,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Fonction pour afficher la section d'administration
-    function showAdminSection(unionLocale) {
+    function showAdminSection() {
         loginSection.classList.add('hidden');
         adminSection.classList.remove('hidden');
-        currentULSpan.textContent = unionLocale;
         
-        // Chargement des inscriptions pour cette Union Locale
-        loadInscriptions(unionLocale);
+        // Chargement de toutes les inscriptions
+        loadInscriptions();
     }
 
-    // Fonction pour charger les inscriptions filtrées par Union Locale
-    function loadInscriptions(unionLocale) {
+    // Fonction pour charger toutes les inscriptions
+    function loadInscriptions() {
         if (!db) {
             console.error('La base de données n\'est pas initialisée');
             return;
@@ -182,14 +175,9 @@ document.addEventListener('DOMContentLoaded', function() {
             request.onsuccess = function() {
                 const inscriptions = request.result;
                 
-                // Filtrage par Union Locale
-                const filteredInscriptions = inscriptions.filter(inscription => 
-                    inscription.lieuDepart === unionLocale
-                );
-                
                 // Affichage des inscriptions
-                displayInscriptions(filteredInscriptions);
-                console.log(`${filteredInscriptions.length} inscriptions trouvées pour ${unionLocale}`);
+                displayInscriptions(inscriptions);
+                console.log(`${inscriptions.length} inscriptions trouvées au total`);
             };
             
             request.onerror = function(event) {
@@ -241,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Fonction pour exporter les inscriptions en CSV
-    function exportInscriptions(lieuFilter) {
+    function exportInscriptions() {
         return new Promise((resolve, reject) => {
             if (!db) {
                 reject(new Error('La base de données n\'est pas initialisée'));
@@ -256,17 +244,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 request.onsuccess = function() {
                     let inscriptions = request.result;
                     
-                    // Filtrage par lieu si nécessaire
-                    if (lieuFilter) {
-                        inscriptions = inscriptions.filter(inscription => inscription.lieuDepart === lieuFilter);
-                    }
-                    
                     // Conversion en CSV
                     let csv = 'Nom,Prénom,Téléphone,Email,Lieu de départ,Heure de départ,Nombre de personnes,Besoin d\'être rappelé,Date d\'inscription\n';
                     
                     inscriptions.forEach(inscription => {
-                        const dateFormatted = formatDate(new Date(inscription.dateInscription));
-                        csv += `"${inscription.nom}","${inscription.prenom}","${inscription.telephone}","${inscription.email || ''}","${inscription.lieuDepart}","${inscription.heureDepart}",${inscription.nombrePersonnes},${inscription.besoinRappel ? 'Oui' : 'Non'},"${dateFormatted}"\n`;
+                        const dateFormatted = new Date(inscription.dateInscription).toLocaleString('fr-FR');
+                        csv += `"${inscription.nom}","${inscription.prenom}","${inscription.telephone}","${inscription.email}","${inscription.lieuDepart}","${inscription.heureDepart}",${inscription.nombrePersonnes},${inscription.besoinRappel ? 'Oui' : 'Non'},"${dateFormatted}"\n`;
                     });
                     
                     resolve(csv);
@@ -276,7 +259,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     reject(event.target.error);
                 };
             } catch (error) {
-                console.error('Erreur lors de l\'accès à la base de données pour l\'exportation:', error);
                 reject(error);
             }
         });

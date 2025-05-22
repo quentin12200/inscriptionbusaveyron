@@ -10,6 +10,58 @@
     <link rel="icon" href="img/favico.png" type="image/png">
     <meta name="description" content="Inscription à la mobilisation CGT Aveyron du 5 juin 2025 - Réservez votre place dans les bus organisés par les Unions Locales">
     <meta name="theme-color" content="#ed1c24">
+    <style>
+        .form-selection {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .location-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #e30613;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .location-button:hover {
+            background-color: #b30000;
+        }
+        
+        .form-iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .back-button {
+            display: none;
+            margin: 10px 0;
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .back-button:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
@@ -19,90 +71,49 @@
             <div class="header-content">
                 <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
                 <h1>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</h1>
-                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche, Decazeville ou Millau. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche & Millau) et 13h15 (Decazeville).</p>
+                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche, Decazeville ou Millau. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche), 12h45 (Millau) et 11h30 (Decazeville).</p>
             </div>
         </header>
 
         <nav class="main-nav">
             <ul>
-                <li><a href="index.html" class="active">Inscription bus</a></li>
-                <li><a href="repas.html">Inscription repas</a></li>
+                <li><a href="index.html" class="active">Inscription</a></li>
                 <li><a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a></li>
             </ul>
         </nav>
 
         <main id="main-content">
-            <form id="inscriptionForm" aria-labelledby="form-title">
-                <h2 id="form-title" class="form-title">Inscription au bus pour la mobilisation</h2>
-                <p class="form-instructions">Tous les champs marqués d'un astérisque (*) sont obligatoires</p>
-                <div class="form-group">
-                    <label for="nom">Nom <span class="required" aria-hidden="true">*</span></label>
-                    <input type="text" id="nom" name="nom" required aria-required="true" autocomplete="family-name">
-                    <span id="nom-error" class="error-message" aria-live="polite"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="prenom">Prénom <span class="required" aria-hidden="true">*</span></label>
-                    <input type="text" id="prenom" name="prenom" required aria-required="true" autocomplete="given-name">
-                    <span id="prenom-error" class="error-message" aria-live="polite"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="telephone">Téléphone <span class="required" aria-hidden="true">*</span></label>
-                    <input type="tel" id="telephone" name="telephone" required aria-required="true" autocomplete="tel" pattern="[0-9]{10}" placeholder="0612345678">
-                    <span id="telephone-error" class="error-message" aria-live="polite"></span>
-                    <small class="field-hint">Format : 10 chiffres sans espaces</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email (facultatif)</label>
-                    <input type="email" id="email" name="email" autocomplete="email">
-                    <span id="email-error" class="error-message" aria-live="polite"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="lieuDepart">Lieu de départ <span class="required" aria-hidden="true">*</span></label>
-                    <select id="lieuDepart" name="lieuDepart" required aria-required="true">
-                        <option value="" disabled selected>Choisir un lieu de départ</option>
-                        <option value="Villefranche-de-Rouergue">Villefranche-de-Rouergue</option>
-                        <option value="Decazeville">Decazeville</option>
-                        <option value="Millau">Millau</option>
-                    </select>
-                    <span id="lieuDepart-error" class="error-message" aria-live="polite"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="heureDepart">Heure de départ</label>
-                    <input type="text" id="heureDepart" name="heureDepart" readonly aria-readonly="true" aria-description="Ce champ est automatiquement rempli en fonction du lieu de départ sélectionné">
-                    <small class="field-hint">Ce champ est automatiquement rempli en fonction du lieu de départ sélectionné</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="nombrePersonnes">Nombre de personnes <span class="required" aria-hidden="true">*</span></label>
-                    <input type="number" id="nombrePersonnes" name="nombrePersonnes" min="1" max="20" value="1" required aria-required="true" aria-valuemin="1" aria-valuemax="20">
-                    <span id="nombrePersonnes-error" class="error-message" aria-live="polite"></span>
-                </div>
-
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="besoinRappel" name="besoinRappel" aria-describedby="rappel-description">
-                    <label for="besoinRappel">Besoin d'être rappelé ?</label>
-                    <span id="rappel-description" class="field-hint">Cochez cette case si vous souhaitez être contacté par téléphone avant la mobilisation</span>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-submit" aria-label="Valider l'inscription au bus">S'inscrire</button>
-                </div>
-            </form>
-        </main>
-
-        <div id="confirmation" class="hidden" style="display: none;">
-            <div class="confirmation-content">
-                <i class="fas fa-check-circle"></i>
-                <h2>Merci pour ton inscription camarade !</h2>
-                <p>Tu recevras un message de ton Union Locale si besoin. RDV à l'heure du départ indiquée !</p>
-                <button id="newInscription" class="btn-submit">Nouvelle inscription</button>
+            <div class="form-selection" id="typeSelection">
+                <h2 id="form-title" class="form-title">Inscription pour la mobilisation</h2>
+                <p class="form-instructions">Veuillez sélectionner votre type d'inscription</p>
+                
+                <button type="button" class="type-button" data-type="bus">Inscription au bus</button>
+                <button type="button" class="type-button" data-type="repas">Inscription au repas</button>
             </div>
-        </div>
+            
+            <div class="form-selection" id="locationSelection" style="display: none;">
+                <h2 id="form-title" class="form-title">Inscription au bus pour la mobilisation</h2>
+                <p class="form-instructions">Veuillez sélectionner votre lieu de départ</p>
+                
+                <button type="button" class="location-button" data-location="decazeville">Decazeville</button>
+                <button type="button" class="location-button" data-location="villefranche">Villefranche-de-Rouergue</button>
+                <button type="button" class="location-button" data-location="millau">Millau</button>
+                
+                <button id="backToTypeBtn" class="back-button">← Retour à la sélection</button>
+            </div>
+            
+            <div id="formContainer">
+                <button id="backButton" class="back-button">← Retour à la sélection</button>
+                
+                <iframe id="decazevilleForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSe2fBNWmoQPFdhTZ_lEGZ2CrAAuTVYRixwoEIKM987LAcTwQg/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+                
+                <iframe id="millauForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSes9bPVSRq7UyGgsXDb6Eodg2_DZnLdrlSq1BfAk7spL8aatg/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+                
+                <iframe id="villefrancheForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+                
+                <iframe id="repasForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfoCW14kLt3PmeQ-sQ_U87AukQXYY5cr3HPa8IYfl6nyeePMA/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+            </div>
+        </main>
 
         <footer>
             <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
@@ -112,78 +123,127 @@
         </footer>
     </div>
 
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+    .type-button {
+        display: block;
+        width: 100%;
+        padding: 20px;
+        margin: 15px 0;
+        background-color: #e30613;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
     
-    <!-- Templates EmailJS -->
-    <script type="text/template" id="template_bus">
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <div style="background-color: #e30613; color: white; padding: 20px; text-align: center;">
-                <h1 style="margin: 0;">CGT Aveyron</h1>
-                <p>Mobilisation du 5 juin 2025</p>
-            </div>
-            <div style="padding: 20px;">
-                <p>Bonjour {{to_name}},</p>
+    .type-button:hover {
+        background-color: #b30000;
+    }
+    </style>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const typeButtons = document.querySelectorAll('.type-button');
+        const locationButtons = document.querySelectorAll('.location-button');
+        const typeSelection = document.getElementById('typeSelection');
+        const locationSelection = document.getElementById('locationSelection');
+        const formContainer = document.getElementById('formContainer');
+        const backButton = document.getElementById('backButton');
+        const backToTypeBtn = document.getElementById('backToTypeBtn');
+        const iframes = {
+            decazeville: document.getElementById('decazevilleForm'),
+            villefranche: document.getElementById('villefrancheForm'),
+            millau: document.getElementById('millauForm'),
+            repas: document.getElementById('repasForm')
+        };
+        
+        // Hide all forms initially
+        Object.values(iframes).forEach(iframe => {
+            iframe.style.display = 'none';
+        });
+        
+        // Type selection buttons
+        typeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
                 
-                <p>Nous confirmons votre inscription au bus pour la mobilisation CGT du 5 juin 2025.</p>
+                if (type === 'bus') {
+                    // Show location selection
+                    typeSelection.style.display = 'none';
+                    locationSelection.style.display = 'block';
+                } else if (type === 'repas') {
+                    // Show repas form directly
+                    typeSelection.style.display = 'none';
+                    formContainer.style.display = 'block';
+                    backButton.style.display = 'block';
+                    
+                    // Hide all forms except repas
+                    Object.entries(iframes).forEach(([key, iframe]) => {
+                        if (key === 'repas') {
+                            iframe.style.display = 'block';
+                        } else {
+                            iframe.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Add click event to all location buttons
+        locationButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const location = this.getAttribute('data-location');
                 
-                <p><span style="font-weight: bold; color: #e30613;">Détails de votre inscription :</span></p>
-                <ul>
-                    <li><strong>Lieu de départ :</strong> {{lieu_depart}}</li>
-                    <li><strong>Heure de départ :</strong> {{heure_depart}}</li>
-                    <li><strong>Date :</strong> {{date_mobilisation}}</li>
-                    <li><strong>Nombre de personnes :</strong> {{nombre_personnes}}</li>
-                </ul>
+                // Hide location selection and show form container
+                locationSelection.style.display = 'none';
+                formContainer.style.display = 'block';
+                backButton.style.display = 'block';
                 
-                <p>Le retour est prévu vers 18h00.</p>
-                
-                <p>N'oubliez pas de vous présenter au lieu de départ au moins 15 minutes avant l'heure indiquée.</p>
-                
-                <p>Pour toute question, vous pouvez contacter votre Union Locale.</p>
-                
-                <p>Solidairement,<br>
-                L'équipe CGT Aveyron</p>
-            </div>
-            <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px;">
-                <p>© 2025 CGT Aveyron - Tous droits réservés</p>
-                <p>Ce message a été envoyé automatiquement, merci de ne pas y répondre.</p>
-            </div>
-        </div>
+                // Display the selected form
+                Object.entries(iframes).forEach(([key, iframe]) => {
+                    if (key === location) {
+                        iframe.style.display = 'block';
+                    } else {
+                        iframe.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Back button in form container
+        backButton.addEventListener('click', function() {
+            // Check which form is currently displayed
+            const visibleFormKey = Object.entries(iframes).find(([key, iframe]) => 
+                iframe.style.display === 'block'
+            )?.[0];
+            
+            if (visibleFormKey === 'repas') {
+                // If repas form is shown, go back to type selection
+                typeSelection.style.display = 'block';
+            } else {
+                // If bus form is shown, go back to location selection
+                locationSelection.style.display = 'block';
+            }
+            
+            formContainer.style.display = 'none';
+            backButton.style.display = 'none';
+            
+            // Hide all forms
+            Object.values(iframes).forEach(iframe => {
+                iframe.style.display = 'none';
+            });
+        });
+        
+        // Back to type selection button
+        backToTypeBtn.addEventListener('click', function() {
+            locationSelection.style.display = 'none';
+            typeSelection.style.display = 'block';
+        });
+    });
     </script>
-    
-    <script type="text/template" id="template_repas">
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <div style="background-color: #e30613; color: white; padding: 20px; text-align: center;">
-                <h1 style="margin: 0;">CGT Aveyron</h1>
-                <p>Repas du 5 juin 2025</p>
-            </div>
-            <div style="padding: 20px;">
-                <p>Bonjour {{to_name}},</p>
-                
-                <p>Nous confirmons votre inscription au repas organisé par l'UL de Rodez dans le cadre de la mobilisation CGT du 5 juin 2025.</p>
-                
-                <p><span style="font-weight: bold; color: #e30613;">Détails de votre inscription :</span></p>
-                <ul>
-                    <li><strong>Date :</strong> {{date_mobilisation}}</li>
-                    <li><strong>Heure :</strong> 12h30</li>
-                    <li><strong>Lieu :</strong> Gare de Rodez</li>
-                    <li><strong>Nombre de personnes :</strong> {{nombre_personnes}}</li>
-                </ul>
-                
-                <p>Pour toute question, vous pouvez contacter l'Union Locale de Rodez.</p>
-                
-                <p>Solidairement,<br>
-                L'équipe CGT Aveyron</p>
-            </div>
-            <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px;">
-                <p>© 2025 CGT Aveyron - Tous droits réservés</p>
-                <p>Ce message a été envoyé automatiquement, merci de ne pas y répondre.</p>
-            </div>
-        </div>
-    </script>
-    
-    <script src="js/email-service.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/accessibility.js"></script>
 </body>
 </html>

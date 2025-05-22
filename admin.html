@@ -7,6 +7,59 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="img/favico.png" type="image/png">
+    <style>
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+        
+        .tab-button.active {
+            background-color: #e30613;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .google-sheet-container {
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .admin-info {
+            margin-bottom: 15px;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -31,17 +84,9 @@
                 <h2>Connexion</h2>
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="unionLocale">Union Locale</label>
-                        <select id="unionLocale" name="unionLocale" required>
-                            <option value="" disabled selected>Sélectionner votre Union Locale</option>
-                            <option value="Villefranche-de-Rouergue">Villefranche-de-Rouergue</option>
-                            <option value="Decazeville">Decazeville</option>
-                            <option value="Millau">Millau</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="password">Mot de passe</label>
                         <input type="password" id="password" name="password" required>
+                        <small class="field-hint">Mot de passe pour accéder à l'administration</small>
                     </div>
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="rememberMe" name="rememberMe">
@@ -56,32 +101,31 @@
 
         <div id="admin-section" class="hidden">
             <div class="admin-header">
-                <h2 id="ulTitle">Union Locale de <span id="currentUL"></span></h2>
+                <h2>Administration des inscriptions</h2>
                 <button id="logoutBtn" class="btn-submit">Déconnexion</button>
             </div>
 
-            <a href="#" id="exportBtn" class="export-btn">
-                <i class="fas fa-file-csv"></i> Exporter en CSV
-            </a>
+            <div class="admin-tabs">
+                <button class="tab-button active" data-tab="bus-data">Inscriptions Bus</button>
+                <button class="tab-button" data-tab="repas-data">Inscriptions Repas</button>
+            </div>
 
-            <div class="admin-table-container">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Téléphone</th>
-                            <th>Email</th>
-                            <th>Heure de départ</th>
-                            <th>Nombre de personnes</th>
-                            <th>Besoin d'être rappelé</th>
-                            <th>Date d'inscription</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inscriptionsTableBody">
-                        <!-- Les inscriptions seront ajoutées ici dynamiquement -->
-                    </tbody>
-                </table>
+            <div id="bus-data-tab" class="tab-content active">
+                <h3>Données des inscriptions aux bus</h3>
+                <p class="admin-info">Ces données proviennent des formulaires Google Forms et sont mises à jour automatiquement.</p>
+                <div class="google-sheet-container">
+                    <iframe src="https://docs.google.com/spreadsheets/d/1eiQvq8l7XgWwhl878QqS6K9jjDEcMDKPF2CcE0M6pTE/edit?usp=sharing&embedded=true" 
+                            width="100%" height="600" frameborder="0"></iframe>
+                </div>
+            </div>
+
+            <div id="repas-data-tab" class="tab-content">
+                <h3>Données des inscriptions aux repas</h3>
+                <p class="admin-info">Formulaire d'inscription pour les repas.</p>
+                <div class="google-form-container">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfoCW14kLt3PmeQ-sQ_U87AukQXYY5cr3HPa8IYfl6nyeePMA/viewform?embedded=true" 
+                            width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+                </div>
             </div>
         </div>
 
@@ -95,5 +139,33 @@
 
     <script src="js/auth-security.js"></script>
     <script src="js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show the corresponding tab content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId + '-tab').classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

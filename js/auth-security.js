@@ -19,12 +19,9 @@ class AuthSecurity {
     async initSecureStorage() {
         // Vérifier si les identifiants sécurisés existent déjà
         if (!localStorage.getItem('secureCredentials')) {
-            // Identifiants par défaut (à ne définir qu'une seule fois)
+            // Un seul identifiant administrateur avec le mot de passe simplifié
             const defaultCredentials = [
-                { unionLocale: 'Villefranche-de-Rouergue', passwordHash: await this.hashPassword('cgt12villefranche'), role: 'admin-bus' },
-                { unionLocale: 'Decazeville', passwordHash: await this.hashPassword('cgt12decazeville'), role: 'admin-bus' },
-                { unionLocale: 'Millau', passwordHash: await this.hashPassword('cgt12millau'), role: 'admin-bus' },
-                { unionLocale: 'Rodez', passwordHash: await this.hashPassword('cgt12rodez'), role: 'admin-repas' }
+                { passwordHash: await this.hashPassword('cgt12aveyron'), role: 'admin' }
             ];
             
             // Stocker les identifiants de manière sécurisée
@@ -36,29 +33,23 @@ class AuthSecurity {
 
     /**
      * Vérifie les identifiants de l'utilisateur
-     * @param {string} unionLocale - L'union locale
      * @param {string} password - Le mot de passe
      * @returns {Promise<Object>} - Résultat de l'authentification
      */
-    async verifyCredentials(unionLocale, password) {
+    async verifyCredentials(password) {
         try {
             const credentials = JSON.parse(this.decryptData(localStorage.getItem('secureCredentials')));
-            const userCredential = credentials.find(cred => cred.unionLocale === unionLocale);
-            
-            if (!userCredential) {
-                return { success: false, message: 'Union locale non reconnue' };
-            }
+            const userCredential = credentials[0]; // Il n'y a qu'un seul identifiant maintenant
             
             const passwordMatch = await this.verifyPassword(password, userCredential.passwordHash);
             
             if (passwordMatch) {
                 // Générer un token d'authentification
-                const token = this.generateAuthToken(unionLocale, userCredential.role);
+                const token = this.generateAuthToken(userCredential.role);
                 return { 
                     success: true, 
                     token: token,
                     role: userCredential.role,
-                    unionLocale: unionLocale,
                     expiresAt: new Date(Date.now() + this.tokenExpiration).toISOString()
                 };
             } else {
@@ -98,13 +89,11 @@ class AuthSecurity {
 
     /**
      * Génère un token d'authentification
-     * @param {string} unionLocale - L'union locale
      * @param {string} role - Le rôle de l'utilisateur
      * @returns {string} - Le token d'authentification
      */
-    generateAuthToken(unionLocale, role) {
+    generateAuthToken(role) {
         const tokenData = {
-            unionLocale: unionLocale,
             role: role,
             timestamp: Date.now(),
             expiresAt: Date.now() + this.tokenExpiration,
@@ -164,8 +153,6 @@ class AuthSecurity {
      */
     logout() {
         localStorage.removeItem('authToken');
-        localStorage.removeItem('currentUL');
-        localStorage.removeItem('currentULRepas');
         sessionStorage.removeItem('authToken');
     }
 }

@@ -61,10 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
     lieuDepartSelect.addEventListener('change', function() {
         const selectedLieu = this.value;
         
-        if (selectedLieu === 'Villefranche-de-Rouergue' || selectedLieu === 'Millau') {
+        if (selectedLieu === 'Villefranche-de-Rouergue') {
             heureDepartInput.value = '13h00';
+        } else if (selectedLieu === 'Millau') {
+            heureDepartInput.value = '12h45';
         } else if (selectedLieu === 'Decazeville') {
-            heureDepartInput.value = '13h15';
+            heureDepartInput.value = '11h30';
         } else {
             heureDepartInput.value = '';
         }

@@ -65,8 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
             heureDepartInput.value = '13h00';
         } else if (selectedLieu === 'Millau') {
             heureDepartInput.value = '12h45';
-        } else if (selectedLieu === 'Decazeville') {
-            heureDepartInput.value = '11h30';
         } else {
             heureDepartInput.value = '';
         }

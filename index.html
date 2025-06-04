@@ -71,7 +71,7 @@
             <div class="header-content">
                 <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
                 <h1>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</h1>
-                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche, Decazeville ou Millau. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche), 12h45 (Millau) et 11h30 (Decazeville).</p>
+                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche ou Millau. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche) et 12h45 (Millau).</p>
             </div>
         </header>
 
@@ -79,6 +79,8 @@
             <ul>
                 <li><a href="index.html" class="active">Inscription</a></li>
                 <li><a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a></li>
+                <li><a href="videos.html">Vidéos</a></li>
+                <li><a href="affiches.html">Affiches</a></li>
             </ul>
         </nav>
 
@@ -95,17 +97,18 @@
                 <h2 id="form-title" class="form-title">Inscription au bus pour la mobilisation</h2>
                 <p class="form-instructions">Veuillez sélectionner votre lieu de départ</p>
                 
-                <button type="button" class="location-button" data-location="decazeville">Decazeville</button>
+                <!-- Le bus de Decazeville est annulé -->
                 <button type="button" class="location-button" data-location="villefranche">Villefranche-de-Rouergue</button>
                 <button type="button" class="location-button" data-location="millau">Millau</button>
                 
                 <button id="backToTypeBtn" class="back-button">← Retour à la sélection</button>
             </div>
             
-            <div id="formContainer">
+            <div id="formContainer" style="display: none;">
                 <button id="backButton" class="back-button">← Retour à la sélection</button>
                 
-                <iframe id="decazevilleForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSe2fBNWmoQPFdhTZ_lEGZ2CrAAuTVYRixwoEIKM987LAcTwQg/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+                <!-- Le bus de Decazeville est annulé -->
+                <!-- <iframe id="decazevilleForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSe2fBNWmoQPFdhTZ_lEGZ2CrAAuTVYRixwoEIKM987LAcTwQg/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe> -->
                 
                 <iframe id="millauForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSes9bPVSRq7UyGgsXDb6Eodg2_DZnLdrlSq1BfAk7spL8aatg/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
                 
@@ -115,6 +118,17 @@
             </div>
         </main>
 
+        <div class="social-share">
+            <h3>Partagez cette page</h3>
+            <div class="social-buttons">
+                <a href="#" class="social-button share-facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#" class="social-button share-twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#" class="social-button share-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="#" class="social-button share-linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                <a href="#" class="social-button share-email"><i class="fas fa-envelope"></i> Email</a>
+            </div>
+        </div>
+        
         <footer>
             <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
             <div class="admin-link">
@@ -146,104 +160,98 @@
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const typeButtons = document.querySelectorAll('.type-button');
-        const locationButtons = document.querySelectorAll('.location-button');
+        // Éléments DOM
         const typeSelection = document.getElementById('typeSelection');
         const locationSelection = document.getElementById('locationSelection');
         const formContainer = document.getElementById('formContainer');
         const backButton = document.getElementById('backButton');
         const backToTypeBtn = document.getElementById('backToTypeBtn');
-        const iframes = {
-            decazeville: document.getElementById('decazevilleForm'),
-            villefranche: document.getElementById('villefrancheForm'),
-            millau: document.getElementById('millauForm'),
-            repas: document.getElementById('repasForm')
-        };
         
-        // Hide all forms initially
-        Object.values(iframes).forEach(iframe => {
-            iframe.style.display = 'none';
+        // Boutons
+        const busButton = document.querySelector('.type-button[data-type="bus"]');
+        const repasButton = document.querySelector('.type-button[data-type="repas"]');
+        const villefrancheButton = document.querySelector('.location-button[data-location="villefranche"]');
+        const millauButton = document.querySelector('.location-button[data-location="millau"]');
+        
+        // Iframes
+        const villefrancheForm = document.getElementById('villefrancheForm');
+        const millauForm = document.getElementById('millauForm');
+        const repasForm = document.getElementById('repasForm');
+        
+        // S'assurer que tous les formulaires sont cachés au départ
+        formContainer.style.display = 'none';
+        villefrancheForm.style.display = 'none';
+        millauForm.style.display = 'none';
+        repasForm.style.display = 'none';
+        locationSelection.style.display = 'none';
+        backButton.style.display = 'none';
+        
+        // Inscription au bus
+        busButton.addEventListener('click', function() {
+            console.log('Bus button clicked');
+            typeSelection.style.display = 'none';
+            locationSelection.style.display = 'block';
         });
         
-        // Type selection buttons
-        typeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const type = this.getAttribute('data-type');
-                
-                if (type === 'bus') {
-                    // Show location selection
-                    typeSelection.style.display = 'none';
-                    locationSelection.style.display = 'block';
-                } else if (type === 'repas') {
-                    // Show repas form directly
-                    typeSelection.style.display = 'none';
-                    formContainer.style.display = 'block';
-                    backButton.style.display = 'block';
-                    
-                    // Hide all forms except repas
-                    Object.entries(iframes).forEach(([key, iframe]) => {
-                        if (key === 'repas') {
-                            iframe.style.display = 'block';
-                        } else {
-                            iframe.style.display = 'none';
-                        }
-                    });
-                }
-            });
+        // Inscription au repas
+        repasButton.addEventListener('click', function() {
+            console.log('Repas button clicked');
+            typeSelection.style.display = 'none';
+            formContainer.style.display = 'block';
+            repasForm.style.display = 'block';
+            backButton.style.display = 'block';
         });
         
-        // Add click event to all location buttons
-        locationButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const location = this.getAttribute('data-location');
-                
-                // Hide location selection and show form container
-                locationSelection.style.display = 'none';
-                formContainer.style.display = 'block';
-                backButton.style.display = 'block';
-                
-                // Display the selected form
-                Object.entries(iframes).forEach(([key, iframe]) => {
-                    if (key === location) {
-                        iframe.style.display = 'block';
-                    } else {
-                        iframe.style.display = 'none';
-                    }
-                });
-            });
+        // Sélection Villefranche
+        villefrancheButton.addEventListener('click', function() {
+            console.log('Villefranche button clicked');
+            locationSelection.style.display = 'none';
+            formContainer.style.display = 'block';
+            villefrancheForm.style.display = 'block';
+            backButton.style.display = 'block';
         });
         
-        // Back button in form container
+        // Sélection Millau
+        millauButton.addEventListener('click', function() {
+            console.log('Millau button clicked');
+            locationSelection.style.display = 'none';
+            formContainer.style.display = 'block';
+            millauForm.style.display = 'block';
+            backButton.style.display = 'block';
+        });
+        
+        // Bouton retour dans le formulaire
         backButton.addEventListener('click', function() {
-            // Check which form is currently displayed
-            const visibleFormKey = Object.entries(iframes).find(([key, iframe]) => 
-                iframe.style.display === 'block'
-            )?.[0];
+            console.log('Back button clicked');
             
-            if (visibleFormKey === 'repas') {
-                // If repas form is shown, go back to type selection
+            // Détermine quel formulaire est affiché
+            if (repasForm.style.display === 'block') {
+                // Si c'est le formulaire repas, retour à la sélection du type
                 typeSelection.style.display = 'block';
             } else {
-                // If bus form is shown, go back to location selection
+                // Si c'est un formulaire bus, retour à la sélection du lieu
                 locationSelection.style.display = 'block';
             }
             
+            // Cache le conteneur de formulaire et tous les formulaires
             formContainer.style.display = 'none';
+            villefrancheForm.style.display = 'none';
+            millauForm.style.display = 'none';
+            repasForm.style.display = 'none';
             backButton.style.display = 'none';
-            
-            // Hide all forms
-            Object.values(iframes).forEach(iframe => {
-                iframe.style.display = 'none';
-            });
         });
         
-        // Back to type selection button
+        // Bouton retour à la sélection du type
         backToTypeBtn.addEventListener('click', function() {
+            console.log('Back to type button clicked');
             locationSelection.style.display = 'none';
             typeSelection.style.display = 'block';
         });
+        
+        console.log('Event listeners initialized');
     });
     </script>
     <script src="js/accessibility.js"></script>
+    <script src="js/social-share.js"></script>
 </body>
 </html>

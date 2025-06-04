@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiches - Mobilisation du 5 juin – CGT Aveyron</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="img/favico.png" type="image/png">
+    <meta name="description" content="Affiches de la mobilisation CGT Aveyron du 5 juin 2025">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <div class="container" role="main">
+        <header>
+            <img src="img/banniere-bus-aveyron.png" alt="Bannière CGT Aveyron" class="banniere">
+            <div class="header-content">
+                <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
+                <h1>Affiches - Mobilisation du 5 juin</h1>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inscription</a></li>
+                <li><a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a></li>
+                <li><a href="videos.html">Vidéos</a></li>
+                <li><a href="affiches.html" class="active">Affiches</a></li>
+            </ul>
+        </nav>
+
+        <main id="main-content" class="content-page">
+            <section class="mobilisation-section">
+                <h2>Affiches de la mobilisation</h2>
+                
+                <div class="mobilisation-content">
+                    <p>Retrouvez ci-dessous les affiches de la mobilisation du 5 juin. N'hésitez pas à les partager et à les diffuser autour de vous.</p>
+                    
+                    <div class="affiches-container">
+                        <div class="affiche-item">
+                            <img src="img/489960343_1276055764524836_4670343200953488117_n.jpg" alt="Affiche CGT mobilisation" class="affiche-image">
+                            <p>Affiche mobilisation CGT</p>
+                        </div>
+                        <div class="affiche-item">
+                            <img src="img/495295604_1276267911170288_5716460054695528789_n.jpg" alt="Affiche CGT mobilisation" class="affiche-image">
+                            <p>Affiche mobilisation CGT</p>
+                        </div>
+                        <div class="affiche-item">
+                            <img src="img/tract5juinnational.png" alt="Tract CGT - 5 juin 2025" class="affiche-image">
+                            <p>Tract national - 5 juin 2025</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="social-share">
+                <h3>Partagez cette page</h3>
+                <div class="social-buttons">
+                    <a href="#" class="social-button share-facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="#" class="social-button share-twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                    <a href="#" class="social-button share-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="#" class="social-button share-linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                    <a href="#" class="social-button share-email"><i class="fas fa-envelope"></i> Email</a>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <a href="index.html" class="btn-submit">S'inscrire à la mobilisation du 5 juin</a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
+            <div class="footer-links">
+                <a href="index.html">Accueil</a>
+                <a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a>
+                <a href="videos.html">Vidéos</a>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ajouter la possibilité de cliquer sur les affiches pour les agrandir
+        const affiches = document.querySelectorAll('.affiche-image');
+        
+        affiches.forEach(function(affiche) {
+            affiche.addEventListener('click', function() {
+                window.open(this.src, '_blank');
+            });
+            affiche.style.cursor = 'pointer';
+        });
+    });
+    </script>
+    <script src="js/accessibility.js"></script>
+    <script src="js/social-share.js"></script>
+</body>
+</html>

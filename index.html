@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</title>
+    <title>Inscription à la mobilisation du 18 septembre 2025 à Rodez – CGT Aveyron</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="img/favico.png" type="image/png">
-    <meta name="description" content="Inscription à la mobilisation CGT Aveyron du 5 juin 2025 - Réservez votre place dans les bus organisés par les Unions Locales">
+    <meta name="description" content="Inscription à la mobilisation CGT Aveyron du 18 septembre 2025 - Réservez votre place dans les bus organisés par les Unions Locales">
     <meta name="theme-color" content="#ed1c24">
     <style>
         .form-selection {
@@ -70,8 +70,8 @@
             <img src="img/banniere-bus-aveyron.png" alt="Bannière CGT Aveyron" class="banniere">
             <div class="header-content">
                 <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
-                <h1>Inscription à la mobilisation du 5 juin à Rodez – CGT Aveyron</h1>
-                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche ou Millau. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche) et 12h45 (Millau).</p>
+                <h1>Inscription à la mobilisation du 18 septembre 2025 à Rodez – CGT Aveyron</h1>
+                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche).</p>
             </div>
         </header>
 
@@ -79,8 +79,6 @@
             <ul>
                 <li><a href="index.html" class="active">Inscription</a></li>
                 <li><a href="pourquoi-se-mobiliser.html">Pourquoi se mobiliser</a></li>
-                <li><a href="videos.html">Vidéos</a></li>
-                <li><a href="affiches.html">Affiches</a></li>
             </ul>
         </nav>
 
@@ -90,45 +88,22 @@
                 <p class="form-instructions">Veuillez sélectionner votre type d'inscription</p>
                 
                 <button type="button" class="type-button" data-type="bus">Inscription au bus</button>
-                <button type="button" class="type-button" data-type="repas">Inscription au repas</button>
             </div>
+            <!-- Plus de sélection d'emplacement, on affiche directement le formulaire -->
             
-            <div class="form-selection" id="locationSelection" style="display: none;">
-                <h2 id="form-title" class="form-title">Inscription au bus pour la mobilisation</h2>
-                <p class="form-instructions">Veuillez sélectionner votre lieu de départ</p>
-                
-                <!-- Le bus de Decazeville est annulé -->
-                <button type="button" class="location-button" data-location="villefranche">Villefranche-de-Rouergue</button>
-                <button type="button" class="location-button" data-location="millau">Millau</button>
-                
-                <button id="backToTypeBtn" class="back-button">← Retour à la sélection</button>
+            <div id="formContainer">
+                <button id="backButton" class="back-button">← Retour à la sélection</button>
+                <iframe id="villefrancheForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true" width="640" height="721" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+                <div class="tract-mobilisation" style="text-align:center; margin: 30px 0;">
+                    <img src="img/202509_18SEPT_Page_1.jpg" alt="Tract mobilisation du 18 septembre 2025" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.12);">
+                </div>
             </div>
-            
-            <div id="formContainer" style="display: none;">
                 <button id="backButton" class="back-button">← Retour à la sélection</button>
                 
-                <!-- Le bus de Decazeville est annulé -->
-                <!-- <iframe id="decazevilleForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSe2fBNWmoQPFdhTZ_lEGZ2CrAAuTVYRixwoEIKM987LAcTwQg/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe> -->
-                
-                <iframe id="millauForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSes9bPVSRq7UyGgsXDb6Eodg2_DZnLdrlSq1BfAk7spL8aatg/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
-                
-                <iframe id="villefrancheForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
-                
-                <iframe id="repasForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfoCW14kLt3PmeQ-sQ_U87AukQXYY5cr3HPa8IYfl6nyeePMA/viewform?embedded=true" width="640" height="678" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
+                <iframe id="villefrancheForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true" width="640" height="721" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
             </div>
         </main>
 
-        <div class="social-share">
-            <h3>Partagez cette page</h3>
-            <div class="social-buttons">
-                <a href="#" class="social-button share-facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
-                <a href="#" class="social-button share-twitter"><i class="fab fa-twitter"></i> Twitter</a>
-                <a href="#" class="social-button share-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a href="#" class="social-button share-linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                <a href="#" class="social-button share-email"><i class="fas fa-envelope"></i> Email</a>
-            </div>
-        </div>
-        
         <footer>
             <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
             <div class="admin-link">
@@ -160,98 +135,53 @@
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Éléments DOM
+        const typeButtons = document.querySelectorAll('.type-button');
+        const locationButtons = document.querySelectorAll('.location-button');
         const typeSelection = document.getElementById('typeSelection');
         const locationSelection = document.getElementById('locationSelection');
         const formContainer = document.getElementById('formContainer');
         const backButton = document.getElementById('backButton');
         const backToTypeBtn = document.getElementById('backToTypeBtn');
+        const iframes = {
+            villefranche: document.getElementById('villefrancheForm')
+        };
         
-        // Boutons
-        const busButton = document.querySelector('.type-button[data-type="bus"]');
-        const repasButton = document.querySelector('.type-button[data-type="repas"]');
-        const villefrancheButton = document.querySelector('.location-button[data-location="villefranche"]');
-        const millauButton = document.querySelector('.location-button[data-location="millau"]');
-        
-        // Iframes
-        const villefrancheForm = document.getElementById('villefrancheForm');
-        const millauForm = document.getElementById('millauForm');
-        const repasForm = document.getElementById('repasForm');
-        
-        // S'assurer que tous les formulaires sont cachés au départ
-        formContainer.style.display = 'none';
-        villefrancheForm.style.display = 'none';
-        millauForm.style.display = 'none';
-        repasForm.style.display = 'none';
-        locationSelection.style.display = 'none';
-        backButton.style.display = 'none';
-        
-        // Inscription au bus
-        busButton.addEventListener('click', function() {
-            console.log('Bus button clicked');
-            typeSelection.style.display = 'none';
-            locationSelection.style.display = 'block';
+        // Hide all forms initially
+        Object.values(iframes).forEach(iframe => {
+            iframe.style.display = 'none';
         });
         
-        // Inscription au repas
-        repasButton.addEventListener('click', function() {
-            console.log('Repas button clicked');
-            typeSelection.style.display = 'none';
-            formContainer.style.display = 'block';
-            repasForm.style.display = 'block';
-            backButton.style.display = 'block';
+        // Type selection buttons
+        typeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+                if (type === 'bus') {
+                    typeSelection.style.display = 'none';
+                    formContainer.style.display = 'block';
+                    backButton.style.display = 'block';
+                    document.getElementById('villefrancheForm').style.display = 'block';
+                }
+            });
         });
         
-        // Sélection Villefranche
-        villefrancheButton.addEventListener('click', function() {
-            console.log('Villefranche button clicked');
-            locationSelection.style.display = 'none';
-            formContainer.style.display = 'block';
-            villefrancheForm.style.display = 'block';
-            backButton.style.display = 'block';
-        });
+        // Plus de sélection de lieu, le bouton bus affiche directement le formulaire
         
-        // Sélection Millau
-        millauButton.addEventListener('click', function() {
-            console.log('Millau button clicked');
-            locationSelection.style.display = 'none';
-            formContainer.style.display = 'block';
-            millauForm.style.display = 'block';
-            backButton.style.display = 'block';
-        });
-        
-        // Bouton retour dans le formulaire
+        // Back button in form container
         backButton.addEventListener('click', function() {
-            console.log('Back button clicked');
-            
-            // Détermine quel formulaire est affiché
-            if (repasForm.style.display === 'block') {
-                // Si c'est le formulaire repas, retour à la sélection du type
-                typeSelection.style.display = 'block';
-            } else {
-                // Si c'est un formulaire bus, retour à la sélection du lieu
-                locationSelection.style.display = 'block';
-            }
-            
-            // Cache le conteneur de formulaire et tous les formulaires
             formContainer.style.display = 'none';
-            villefrancheForm.style.display = 'none';
-            millauForm.style.display = 'none';
-            repasForm.style.display = 'none';
             backButton.style.display = 'none';
+            typeSelection.style.display = 'block';
+            // Hide all forms initially
+            document.getElementById('villefrancheForm').style.display = 'none';
         });
         
-        // Bouton retour à la sélection du type
+        // Back to type selection button
         backToTypeBtn.addEventListener('click', function() {
-            console.log('Back to type button clicked');
             locationSelection.style.display = 'none';
             typeSelection.style.display = 'block';
         });
-        
-        console.log('Event listeners initialized');
     });
     </script>
     <script src="js/accessibility.js"></script>
-    <script src="js/social-share.js"></script>
 </body>
 </html>

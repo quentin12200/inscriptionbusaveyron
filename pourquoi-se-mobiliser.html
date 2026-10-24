@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pourquoi se mobiliser le 5 novembre 2026 ? – CGT Aveyron</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme-2026.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="img/favico.png" type="image/png">
 </head>
-<body>
+<body class="theme-2026">
+    <header class="hero">
+        <div class="hero-content">
+            <img src="img/logo-cgt.png" alt="Logo CGT Aveyron" class="hero-logo">
+            <div class="hero-kicker">Actualités de la CGT</div>
+            <h1>Pourquoi se mobiliser le <span class="surligne">5 novembre</span>&nbsp;?</h1>
+            <p>Tout augmente, pas nos salaires. Suis l'actualité des luttes en direct de cgt.fr.</p>
+        </div>
+    </header>
+
     <div class="container">
-        <header>
-            <div class="header-content">
-                <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
-                <h1>Pourquoi se mobiliser le jeudi 5 novembre 2026&nbsp;?</h1>
-            </div>
-        </header>
 
         <nav class="main-nav">
             <ul>
@@ -25,14 +32,14 @@
         </nav>
 
         <main class="content-page">
-            <section class="mobilisation-section">
-                <div class="mobilisation-content">
-                    <p>Retrouvez ci-dessous les dernières actualités publiées par la CGT sur <a href="https://www.cgt.fr" target="_blank" rel="noopener">cgt.fr</a>, et toutes les manifestations et rassemblements sur <a href="https://carte.cgt.fr" target="_blank" rel="noopener">carte.cgt.fr</a>.</p>
+            <section class="carte">
+                <div>
+                    <p>Retrouvez ci-dessous les dernières actualités publiées par la CGT sur <a href="https://www.cgt.fr" target="_blank" rel="noopener" class="lien">cgt.fr</a>, et toutes les manifestations et rassemblements sur <a href="https://carte.cgt.fr" target="_blank" rel="noopener" class="lien">carte.cgt.fr</a>.</p>
                 </div>
             </section>
 
-            <section class="rss-section">
-                <h2>Actualités de la CGT</h2>
+            <section class="rss-section carte">
+                <h2 class="titre-section">Actualités de la CGT</h2>
                 <div class="cgt-rss" data-limit="15"></div>
             </section>
 

@@ -22,8 +22,14 @@ body.theme-2026 {
         radial-gradient(circle at 0% 30%, rgba(247, 194, 46, 0.18), transparent 40%),
         radial-gradient(circle at 100% 60%, rgba(230, 25, 122, 0.12), transparent 40%),
         radial-gradient(circle at 20% 100%, rgba(52, 214, 176, 0.15), transparent 40%);
+    background-repeat: no-repeat;
+    min-height: 100vh;
     color: var(--texte);
     font-family: 'Inter', Arial, sans-serif;
+}
+
+html:has(body.theme-2026) {
+    background-color: var(--creme);
 }
 
 .theme-2026 * {

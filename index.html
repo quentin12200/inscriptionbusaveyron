@@ -4,7 +4,7 @@
     <!-- Balises Open Graph pour Facebook -->
     <meta property="og:title" content="Mobilisation du jeudi 5 novembre 2026 – Inscription aux bus CGT Aveyron">
     <meta property="og:description" content="Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville, Millau et Villefranche-de-Rouergue">
-    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/logo-cgt.png">
+    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/bandeau-salaires.jpg">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://inscriptioncgtbusaveyron.vercel.app/">
 
@@ -13,21 +13,27 @@
     <title>Mobilisation du 5 novembre 2026 – Inscription aux bus CGT Aveyron</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/theme-2026.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="img/favico.png" type="image/png">
     <meta name="description" content="Inscription à la mobilisation CGT Aveyron du jeudi 5 novembre 2026 - Réservez votre place dans les bus organisés par les Unions Locales">
     <meta name="theme-color" content="#ed1c24">
 </head>
-<body>
+<body class="theme-2026">
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <header class="hero">
+        <div class="hero-content">
+            <img src="img/logo-cgt.png" alt="Logo CGT Aveyron" class="hero-logo">
+            <div class="hero-kicker">CGT Aveyron · Bus départementaux</div>
+            <h1>Tous mobilisés le <span class="surligne">jeudi 5 novembre</span></h1>
+            <p>Réserve ta place dans le bus de ton Union Locale : Decazeville, Millau ou Villefranche-de-Rouergue.</p>
+        </div>
+    </header>
+
     <div class="container" role="main">
-        <header>
-            <div class="header-content">
-                <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
-                <h1>Mobilisation du jeudi 5 novembre 2026 – Inscription aux bus CGT Aveyron</h1>
-                <p class="description">Choisis ton Union Locale de départ et remplis le formulaire pour réserver ta place dans le bus.</p>
-            </div>
-        </header>
 
         <nav class="main-nav">
             <ul>
@@ -37,32 +43,34 @@
         </nav>
 
         <main id="main-content">
+            <h2 class="titre-section">Je m'inscris au bus</h2>
+            <p class="sous-titre">Choisis ton lieu de départ :</p>
             <div class="ul-tabs" role="tablist" aria-label="Lieu de départ du bus">
-                <button type="button" class="ul-tab" role="tab" id="tab-decazeville" aria-controls="panel-decazeville" data-ul="decazeville">Decazeville</button>
-                <button type="button" class="ul-tab" role="tab" id="tab-millau" aria-controls="panel-millau" data-ul="millau">Millau</button>
-                <button type="button" class="ul-tab" role="tab" id="tab-villefranche" aria-controls="panel-villefranche" data-ul="villefranche">Villefranche-de-Rouergue</button>
+                <button type="button" class="ul-tab" role="tab" id="tab-decazeville" aria-controls="panel-decazeville" data-ul="decazeville"><i class="fas fa-bus" aria-hidden="true"></i>Decazeville<small>Départ en bus</small></button>
+                <button type="button" class="ul-tab" role="tab" id="tab-millau" aria-controls="panel-millau" data-ul="millau"><i class="fas fa-bus" aria-hidden="true"></i>Millau<small>Départ en bus</small></button>
+                <button type="button" class="ul-tab" role="tab" id="tab-villefranche" aria-controls="panel-villefranche" data-ul="villefranche"><i class="fas fa-bus" aria-hidden="true"></i>Villefranche-de-Rouergue<small>Départ en bus</small></button>
             </div>
 
-            <section class="ul-panel" role="tabpanel" id="panel-decazeville" aria-labelledby="tab-decazeville" data-ul="decazeville" hidden>
+            <section class="ul-panel carte" role="tabpanel" id="panel-decazeville" aria-labelledby="tab-decazeville" data-ul="decazeville" hidden>
                 <h2>Bus au départ de Decazeville</h2>
-                <p class="ul-infos"></p>
+                <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
                 <div class="ul-form-container"></div>
             </section>
 
-            <section class="ul-panel" role="tabpanel" id="panel-millau" aria-labelledby="tab-millau" data-ul="millau" hidden>
+            <section class="ul-panel carte" role="tabpanel" id="panel-millau" aria-labelledby="tab-millau" data-ul="millau" hidden>
                 <h2>Bus au départ de Millau</h2>
-                <p class="ul-infos"></p>
+                <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
                 <div class="ul-form-container"></div>
             </section>
 
-            <section class="ul-panel" role="tabpanel" id="panel-villefranche" aria-labelledby="tab-villefranche" data-ul="villefranche" hidden>
+            <section class="ul-panel carte" role="tabpanel" id="panel-villefranche" aria-labelledby="tab-villefranche" data-ul="villefranche" hidden>
                 <h2>Bus au départ de Villefranche-de-Rouergue</h2>
-                <p class="ul-infos"></p>
+                <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
                 <div class="ul-form-container"></div>
             </section>
 
-            <section class="rss-section">
-                <h2>Les dernières actualités de la CGT</h2>
+            <section class="rss-section carte">
+                <h2 class="titre-section">Les dernières actus de la CGT</h2>
                 <div class="cgt-rss" data-limit="5"></div>
                 <p class="rss-more"><a href="pourquoi-se-mobiliser.html">Toutes les actualités →</a></p>
             </section>
@@ -89,7 +97,7 @@
             infos: 'Lieu et horaire de départ communiqués prochainement.'
         },
         villefranche: {
-            form: 'https://forms.gle/Kdy8KTbzfdssi7579',
+            form: 'https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true',
             infos: 'Lieu et horaire de départ communiqués prochainement.'
         }
     };
@@ -101,7 +109,7 @@
         // Prépare le contenu de chaque onglet
         panels.forEach(function(panel) {
             const ul = UNIONS_LOCALES[panel.dataset.ul];
-            panel.querySelector('.ul-infos').textContent = ul.infos;
+            panel.querySelector('.ul-infos span').textContent = ul.infos;
             const container = panel.querySelector('.ul-form-container');
             if (ul.form && ul.form.includes('forms.gle')) {
                 // Les liens courts forms.gle ne s'intègrent pas : on ouvre le formulaire dans un nouvel onglet

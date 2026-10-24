@@ -2,83 +2,30 @@
 <html lang="fr">
 <head>
     <!-- Balises Open Graph pour Facebook -->
-    <meta property="og:title" content="Inscription à la mobilisation du 18 septembre 2025 à Rodez – CGT Aveyron">
-    <meta property="og:description" content="Inscris-toi pour réserver ta place dans les bus CGT au départ de Villefranche, Decazeville et Millau">
-    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/banniere-bus-aveyron.png">
+    <meta property="og:title" content="Mobilisation du jeudi 5 novembre 2026 – Inscription aux bus CGT Aveyron">
+    <meta property="og:description" content="Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville, Millau et Villefranche-de-Rouergue">
+    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/logo-cgt.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://inscriptioncgtbusaveyron.vercel.app/">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription à la mobilisation du 18 septembre 2025 à Rodez – CGT Aveyron</title>
+    <title>Mobilisation du 5 novembre 2026 – Inscription aux bus CGT Aveyron</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="img/favico.png" type="image/png">
-    <meta name="description" content="Inscription à la mobilisation CGT Aveyron du 18 septembre 2025 - Réservez votre place dans les bus organisés par les Unions Locales">
+    <meta name="description" content="Inscription à la mobilisation CGT Aveyron du jeudi 5 novembre 2026 - Réservez votre place dans les bus organisés par les Unions Locales">
     <meta name="theme-color" content="#ed1c24">
-    <style>
-        .form-selection {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .location-button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            background-color: #e30613;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .location-button:hover {
-            background-color: #b30000;
-        }
-        
-        .form-iframe {
-            width: 100%;
-            height: 700px;
-            border: none;
-            margin-top: 20px;
-            display: none;
-        }
-        
-        .back-button {
-            display: none;
-            margin: 10px 0;
-            padding: 10px 15px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .back-button:hover {
-            background-color: #555;
-        }
-    </style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     <div class="container" role="main">
         <header>
-            <img src="img/banniere-bus-aveyron.png" alt="Bannière CGT Aveyron" class="banniere">
             <div class="header-content">
                 <img src="img/logo-cgt.png" alt="Logo CGT" class="logo">
-                <h1>Inscription à la mobilisation du 18 septembre 2025 à Rodez – CGT Aveyron</h1>
-                <p class="description">Merci de remplir ce formulaire pour réserver votre place dans un des bus organisés par les Unions Locales de Villefranche. La manifestation débute à 14h00 à Rodez. Les départs se feront à 13h00 (Villefranche).</p>
+                <h1>Mobilisation du jeudi 5 novembre 2026 – Inscription aux bus CGT Aveyron</h1>
+                <p class="description">Choisis ton Union Locale de départ et remplis le formulaire pour réserver ta place dans le bus.</p>
             </div>
         </header>
 
@@ -90,105 +37,120 @@
         </nav>
 
         <main id="main-content">
-            <div class="form-selection" id="typeSelection">
-                <h2 id="form-title" class="form-title">Inscription pour la mobilisation</h2>
-                <p class="form-instructions">Veuillez sélectionner votre type d'inscription</p>
-                
-                <button type="button" class="type-button" data-type="bus">Inscription au bus</button>
+            <div class="ul-tabs" role="tablist" aria-label="Lieu de départ du bus">
+                <button type="button" class="ul-tab" role="tab" id="tab-decazeville" aria-controls="panel-decazeville" data-ul="decazeville">Decazeville</button>
+                <button type="button" class="ul-tab" role="tab" id="tab-millau" aria-controls="panel-millau" data-ul="millau">Millau</button>
+                <button type="button" class="ul-tab" role="tab" id="tab-villefranche" aria-controls="panel-villefranche" data-ul="villefranche">Villefranche-de-Rouergue</button>
             </div>
-            <!-- Plus de sélection d'emplacement, on affiche directement le formulaire -->
-            
-            <div id="formContainer">
-                <button id="backButton" class="back-button">← Retour à la sélection</button>
-                <iframe id="villefrancheForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true" width="640" height="721" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
-                <div class="tract-mobilisation" style="text-align:center; margin: 30px 0;">
-                    <img src="img/202509_18SEPT_Page_1.jpg" alt="Tract mobilisation du 18 septembre 2025" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.12);">
-                </div>
-            </div>
-                <button id="backButton" class="back-button">← Retour à la sélection</button>
-                
-                <iframe id="villefrancheForm" class="form-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true" width="640" height="721" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>
-            </div>
+
+            <section class="ul-panel" role="tabpanel" id="panel-decazeville" aria-labelledby="tab-decazeville" data-ul="decazeville" hidden>
+                <h2>Bus au départ de Decazeville</h2>
+                <p class="ul-infos"></p>
+                <div class="ul-form-container"></div>
+            </section>
+
+            <section class="ul-panel" role="tabpanel" id="panel-millau" aria-labelledby="tab-millau" data-ul="millau" hidden>
+                <h2>Bus au départ de Millau</h2>
+                <p class="ul-infos"></p>
+                <div class="ul-form-container"></div>
+            </section>
+
+            <section class="ul-panel" role="tabpanel" id="panel-villefranche" aria-labelledby="tab-villefranche" data-ul="villefranche" hidden>
+                <h2>Bus au départ de Villefranche-de-Rouergue</h2>
+                <p class="ul-infos"></p>
+                <div class="ul-form-container"></div>
+            </section>
+
+            <section class="rss-section">
+                <h2>Les dernières actualités de la CGT</h2>
+                <div class="cgt-rss" data-limit="5"></div>
+                <p class="rss-more"><a href="pourquoi-se-mobiliser.html">Toutes les actualités →</a></p>
+            </section>
         </main>
 
         <footer>
-            <p>&copy; 2025 CGT Aveyron - Tous droits réservés</p>
+            <p>&copy; 2026 CGT Aveyron - Tous droits réservés</p>
             <div class="admin-link">
                 <a href="admin.html">Administration</a>
             </div>
         </footer>
     </div>
 
-    <style>
-    .type-button {
-        display: block;
-        width: 100%;
-        padding: 20px;
-        margin: 15px 0;
-        background-color: #e30613;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    
-    .type-button:hover {
-        background-color: #b30000;
-    }
-    </style>
-    
     <script>
+    // Liens Google Forms et infos de départ de chaque Union Locale.
+    // Coller l'adresse du formulaire (lien "Envoyer" > "<>" ou lien viewform) dans "form".
+    const UNIONS_LOCALES = {
+        decazeville: {
+            form: '',
+            infos: 'Lieu et horaire de départ communiqués prochainement.'
+        },
+        millau: {
+            form: '',
+            infos: 'Lieu et horaire de départ communiqués prochainement.'
+        },
+        villefranche: {
+            form: 'https://forms.gle/Kdy8KTbzfdssi7579',
+            infos: 'Lieu et horaire de départ communiqués prochainement.'
+        }
+    };
+
     document.addEventListener('DOMContentLoaded', function() {
-        const typeButtons = document.querySelectorAll('.type-button');
-        const locationButtons = document.querySelectorAll('.location-button');
-        const typeSelection = document.getElementById('typeSelection');
-        const locationSelection = document.getElementById('locationSelection');
-        const formContainer = document.getElementById('formContainer');
-        const backButton = document.getElementById('backButton');
-        const backToTypeBtn = document.getElementById('backToTypeBtn');
-        const iframes = {
-            villefranche: document.getElementById('villefrancheForm')
-        };
-        
-        // Hide all forms initially
-        Object.values(iframes).forEach(iframe => {
-            iframe.style.display = 'none';
+        const tabs = document.querySelectorAll('.ul-tab');
+        const panels = document.querySelectorAll('.ul-panel');
+
+        // Prépare le contenu de chaque onglet
+        panels.forEach(function(panel) {
+            const ul = UNIONS_LOCALES[panel.dataset.ul];
+            panel.querySelector('.ul-infos').textContent = ul.infos;
+            const container = panel.querySelector('.ul-form-container');
+            if (ul.form && ul.form.includes('forms.gle')) {
+                // Les liens courts forms.gle ne s'intègrent pas : on ouvre le formulaire dans un nouvel onglet
+                container.innerHTML = '<a class="btn-submit" target="_blank" rel="noopener">Je m\'inscris au bus</a>';
+                container.querySelector('a').href = ul.form;
+            } else if (ul.form) {
+                const src = ul.form.includes('embedded=true') ? ul.form
+                    : ul.form + (ul.form.includes('?') ? '&' : '?') + 'embedded=true';
+                container.innerHTML = '<iframe class="ul-form" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>';
+                container.querySelector('iframe').dataset.src = src;
+                container.querySelector('iframe').title = 'Formulaire d\'inscription – ' + panel.querySelector('h2').textContent;
+            } else {
+                container.innerHTML = '<div class="ul-form-pending"><strong>Les inscriptions ouvrent bientôt.</strong><br>Le formulaire sera disponible ici très prochainement.</div>';
+            }
         });
-        
-        // Type selection buttons
-        typeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const type = this.getAttribute('data-type');
-                if (type === 'bus') {
-                    typeSelection.style.display = 'none';
-                    formContainer.style.display = 'block';
-                    backButton.style.display = 'block';
-                    document.getElementById('villefrancheForm').style.display = 'block';
-                }
+
+        function selectTab(name) {
+            if (!UNIONS_LOCALES[name]) name = 'decazeville';
+            tabs.forEach(function(tab) {
+                const active = tab.dataset.ul === name;
+                tab.setAttribute('aria-selected', active);
+                tab.tabIndex = active ? 0 : -1;
+            });
+            panels.forEach(function(panel) {
+                panel.hidden = panel.dataset.ul !== name;
+                // Le formulaire ne se charge que quand l'onglet est ouvert
+                const iframe = panel.querySelector('iframe[data-src]');
+                if (!panel.hidden && iframe && !iframe.src) iframe.src = iframe.dataset.src;
+            });
+        }
+
+        tabs.forEach(function(tab, index) {
+            tab.addEventListener('click', function() {
+                selectTab(tab.dataset.ul);
+                history.replaceState(null, '', '#' + tab.dataset.ul);
+            });
+            tab.addEventListener('keydown', function(e) {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                const next = tabs[(index + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+                next.focus();
+                next.click();
             });
         });
-        
-        // Plus de sélection de lieu, le bouton bus affiche directement le formulaire
-        
-        // Back button in form container
-        backButton.addEventListener('click', function() {
-            formContainer.style.display = 'none';
-            backButton.style.display = 'none';
-            typeSelection.style.display = 'block';
-            // Hide all forms initially
-            document.getElementById('villefrancheForm').style.display = 'none';
-        });
-        
-        // Back to type selection button
-        backToTypeBtn.addEventListener('click', function() {
-            locationSelection.style.display = 'none';
-            typeSelection.style.display = 'block';
-        });
+
+        // Lien direct possible : index.html#millau, #decazeville, #villefranche
+        selectTab(location.hash.slice(1));
     });
     </script>
+    <script src="js/cgt-rss.js"></script>
     <script src="js/accessibility.js"></script>
 </body>
 </html>

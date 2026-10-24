@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.share-email').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            window.location.href = `mailto:?subject=${pageTitle}&body=Je%20te%20partage%20cette%20information%20sur%20la%20mobilisation%20CGT%20Aveyron%20du%205%20juin%202025%20:%20${pageUrl}`;
+            window.location.href = `mailto:?subject=${pageTitle}&body=Je%20te%20partage%20cette%20information%20sur%20la%20mobilisation%20CGT%20Aveyron%20:%20${pageUrl}`;
         });
     });
 });

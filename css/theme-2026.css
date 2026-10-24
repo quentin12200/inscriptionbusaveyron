@@ -408,3 +408,143 @@ body.theme-2026 {
         height: 1100px;
     }
 }
+
+/* ---------- Affiche intersyndicale ---------- */
+.affiche-carte {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 28px;
+    align-items: center;
+}
+
+.affiche-lien {
+    display: block;
+}
+
+.theme-2026 .affiche-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 8px 8px 0 var(--encre);
+    transition: transform 0.2s;
+}
+
+.affiche-lien:hover .affiche-image {
+    transform: rotate(-1deg) scale(1.02);
+}
+
+.infos-manif {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.infos-manif li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 1.05rem;
+}
+
+.infos-manif i {
+    color: var(--rouge);
+    width: 18px;
+}
+
+.revendications {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.revendications li {
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: var(--blanc);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    line-height: 1.25;
+}
+
+.rev-salaires { background: #f26b1d; }
+.rev-emploi { background: var(--rose); }
+.rev-services { background: var(--bleu); }
+.rev-industrie { background: var(--rouge); }
+
+.slogan {
+    font-weight: 800;
+    font-style: italic;
+    color: var(--encre);
+    border-left: 5px solid var(--jaune);
+    padding-left: 12px;
+}
+
+@media (max-width: 760px) {
+    .affiche-carte {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---------- Tract confédéral ---------- */
+.tract-conf .chapeau {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 10px 0 24px;
+}
+
+.tract-grille {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 28px;
+}
+
+.tract-grille h3 {
+    color: var(--rouge);
+    font-size: 1.15rem;
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.tract-grille p,
+.tract-grille li {
+    margin-bottom: 8px;
+    font-size: 0.97rem;
+}
+
+.tract-grille ul {
+    padding-left: 20px;
+}
+
+.tract-conf mark {
+    background: linear-gradient(transparent 45%, rgba(247, 194, 46, 0.75) 45%);
+    color: inherit;
+    font-weight: 700;
+}
+
+.tract-encadre {
+    background: var(--creme);
+    border-left: 6px solid var(--jaune);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.tract-pied {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 2px dashed #e4ddd0;
+}
+
+.tract-pied p {
+    margin-bottom: 8px;
+}
+
+@media (max-width: 760px) {
+    .tract-grille {
+        grid-template-columns: 1fr;
+    }
+}

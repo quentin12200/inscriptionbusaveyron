@@ -89,7 +89,7 @@
             infos: 'Lieu et horaire de départ communiqués prochainement.'
         },
         villefranche: {
-            form: '',
+            form: 'https://forms.gle/Kdy8KTbzfdssi7579',
             infos: 'Lieu et horaire de départ communiqués prochainement.'
         }
     };
@@ -103,7 +103,11 @@
             const ul = UNIONS_LOCALES[panel.dataset.ul];
             panel.querySelector('.ul-infos').textContent = ul.infos;
             const container = panel.querySelector('.ul-form-container');
-            if (ul.form) {
+            if (ul.form && ul.form.includes('forms.gle')) {
+                // Les liens courts forms.gle ne s'intègrent pas : on ouvre le formulaire dans un nouvel onglet
+                container.innerHTML = '<a class="btn-submit" target="_blank" rel="noopener">Je m\'inscris au bus</a>';
+                container.querySelector('a').href = ul.form;
+            } else if (ul.form) {
                 const src = ul.form.includes('embedded=true') ? ul.form
                     : ul.form + (ul.form.includes('?') ? '&' : '?') + 'embedded=true';
                 container.innerHTML = '<iframe class="ul-form" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>';

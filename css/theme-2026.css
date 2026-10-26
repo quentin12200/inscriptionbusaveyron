@@ -273,7 +273,7 @@ html:has(body.theme-2026) {
 }
 
 .theme-2026 .ul-form {
-    height: 912px;
+    height: var(--hauteur, 912px);
     border-radius: 12px;
     background: var(--creme);
 }
@@ -411,7 +411,8 @@ html:has(body.theme-2026) {
     }
 
     .theme-2026 .ul-form {
-        height: 1100px;
+        /* Sur mobile, le texte passe sur plus de lignes */
+        height: calc(var(--hauteur, 912px) * 1.25);
     }
 }
 

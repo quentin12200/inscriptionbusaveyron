@@ -86,18 +86,22 @@
 
     <script>
     // Liens Google Forms et infos de départ de chaque Union Locale.
-    // Coller l'adresse du formulaire (lien "Envoyer" > "<>" ou lien viewform) dans "form".
+    // Coller l'adresse du formulaire (lien "Envoyer" > "<>" ou lien viewform) dans "form",
+    // et sa hauteur (attribut height du code <iframe> fourni par Google) dans "hauteur".
     const UNIONS_LOCALES = {
         decazeville: {
-            form: '',
-            infos: 'Lieu et horaire de départ communiqués prochainement.'
+            form: 'https://docs.google.com/forms/d/e/1FAIpQLScYtGIw7PRC0adOP5NPpziXab3MyI3LH03o0x8QtTyjKAygYg/viewform?embedded=true',
+            hauteur: 696,
+            infos: 'Départ à 13h30 – Laminoir, Decazeville.'
         },
         millau: {
-            form: '',
-            infos: 'Lieu et horaire de départ communiqués prochainement.'
+            form: 'https://docs.google.com/forms/d/e/1FAIpQLSe7lxYqbyRNwYehPfe4q5_rE-Wb3ILdEMrusdB_1JXTQ39QvA/viewform?embedded=true',
+            hauteur: 696,
+            infos: 'Départ à 13h00 – Parking du boulevard Jean Gabriac, Millau.'
         },
         villefranche: {
             form: 'https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true',
+            hauteur: 912,
             infos: 'Départ à 13h00 – Parking bas de Carrefour, Villefranche-de-Rouergue.'
         }
     };
@@ -120,6 +124,7 @@
                     : ul.form + (ul.form.includes('?') ? '&' : '?') + 'embedded=true';
                 container.innerHTML = '<iframe class="ul-form" frameborder="0" marginheight="0" marginwidth="0">Chargement…</iframe>';
                 container.querySelector('iframe').dataset.src = src;
+                if (ul.hauteur) container.querySelector('iframe').style.setProperty('--hauteur', ul.hauteur + 'px');
                 container.querySelector('iframe').title = 'Formulaire d\'inscription – ' + panel.querySelector('h2').textContent;
             } else {
                 container.innerHTML = '<div class="ul-form-pending"><strong>Les inscriptions ouvrent bientôt.</strong><br>Le formulaire sera disponible ici très prochainement.</div>';
@@ -156,6 +161,9 @@
 
         // Lien direct possible : index.html#millau, #decazeville, #villefranche
         selectTab(location.hash.slice(1));
+        window.addEventListener('hashchange', function() {
+            selectTab(location.hash.slice(1));
+        });
     });
     </script>
     <script src="js/cgt-rss.js"></script>

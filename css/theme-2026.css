@@ -902,3 +902,14 @@ html:has(body.theme-2026) {
     opacity: 1;
     transform: translateY(0);
 }
+
+.rss-debug {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--encre);
+    color: var(--blanc);
+    font-family: monospace;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+}

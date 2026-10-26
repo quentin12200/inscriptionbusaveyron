@@ -24,12 +24,14 @@ body.theme-2026 {
         radial-gradient(circle at 20% 100%, rgba(52, 214, 176, 0.15), transparent 40%);
     background-repeat: no-repeat;
     min-height: 100vh;
+    overflow-x: clip;
     color: var(--texte);
     font-family: 'Inter', Arial, sans-serif;
 }
 
 html:has(body.theme-2026) {
     background-color: var(--creme);
+    overflow-x: clip;
 }
 
 .theme-2026 * {
@@ -437,7 +439,23 @@ html:has(body.theme-2026) {
 }
 
 .affiche-lien:hover .affiche-image {
-    transform: rotate(-1deg) scale(1.02);
+    transform: rotate(0deg) scale(1.03);
+}
+
+/* L'affiche arrive penchée puis se pose légèrement inclinée */
+.affiche-carte.apparition .affiche-image {
+    transform: rotate(-8deg) scale(0.9);
+    transition: transform 0.9s cubic-bezier(.2, 1.4, .4, 1) 0.2s;
+}
+
+.affiche-carte.apparition.visible .affiche-image {
+    transform: rotate(-2deg);
+}
+
+.affiche-carte.apparition.visible .affiche-lien:hover .affiche-image {
+    transform: rotate(0deg) scale(1.03);
+    transition-duration: 0.25s;
+    transition-delay: 0s;
 }
 
 .infos-manif {
@@ -553,5 +571,255 @@ html:has(body.theme-2026) {
 @media (max-width: 760px) {
     .tract-grille {
         grid-template-columns: 1fr;
+    }
+}
+
+
+/* ---------- Compte à rebours ---------- */
+.compte-a-rebours {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.car-bloc {
+    min-width: 74px;
+    padding: 10px 8px 8px;
+    border-radius: 12px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.car-bloc:nth-child(1) { border-color: var(--jaune); }
+.car-bloc:nth-child(2) { border-color: var(--rose); }
+.car-bloc:nth-child(3) { border-color: var(--turquoise); }
+.car-bloc:nth-child(4) { border-color: var(--blanc); }
+
+.car-valeur {
+    display: block;
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: 2.3rem;
+    line-height: 1;
+    color: var(--blanc);
+    font-variant-numeric: tabular-nums;
+}
+
+.car-bloc:nth-child(1) .car-valeur { color: var(--jaune); }
+
+.car-label {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.car-tic {
+    animation: carTic 0.45s cubic-bezier(.2, 1.4, .4, 1);
+}
+
+@keyframes carTic {
+    from { transform: translateY(-40%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.theme-2026 .hero .car-legende {
+    flex-basis: 100%;
+    max-width: none;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.car-jour-j {
+    display: inline-block;
+    background: var(--jaune);
+    color: var(--encre);
+    font-weight: 800;
+    padding: 12px 18px;
+    border-radius: 12px;
+    animation: pulseJourJ 1.6s ease-in-out infinite;
+}
+
+.theme-2026 .hero .car-jour-j {
+    color: var(--encre);
+}
+
+@keyframes pulseJourJ {
+    50% { transform: scale(1.04); }
+}
+
+/* ---------- Bandeau de slogans ---------- */
+.defilement {
+    width: 100vw;
+    margin: 0 calc(50% - 50vw) 28px;
+    overflow: hidden;
+    background: var(--encre);
+    transform: rotate(-1.2deg);
+    box-shadow: 0 10px 25px -12px rgba(22, 21, 58, 0.6);
+}
+
+.defilement-piste {
+    display: flex;
+    width: max-content;
+    animation: defiler 40s linear infinite;
+}
+
+.defilement:hover .defilement-piste {
+    animation-play-state: paused;
+}
+
+.defilement span {
+    font-family: 'Anton', Impact, sans-serif;
+    text-transform: uppercase;
+    font-size: 1.15rem;
+    letter-spacing: 0.03em;
+    padding: 12px 22px;
+    white-space: nowrap;
+    color: var(--jaune);
+}
+
+.defilement span::after {
+    content: '✊';
+    margin-left: 44px;
+}
+
+.defilement span:nth-child(5n + 2) { color: var(--rose); }
+.defilement span:nth-child(5n + 3) { color: var(--turquoise); }
+.defilement span:nth-child(5n + 4) { color: var(--blanc); }
+.defilement span:nth-child(5n + 5) { color: #ff8a3d; }
+
+@keyframes defiler {
+    to { transform: translateX(-50%); }
+}
+
+/* ---------- Bus animé ---------- */
+.route {
+    position: relative;
+    height: 84px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+/* Route avec marquage au sol */
+.route::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 14px;
+    border-radius: 7px;
+    background:
+        repeating-linear-gradient(90deg, var(--jaune) 0 26px, transparent 26px 52px) center / 100% 3px no-repeat,
+        var(--encre);
+}
+
+.bus-anime {
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+    width: 140px;
+    height: 70px;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(.45, .05, .25, 1);
+    will-change: transform;
+}
+
+.bus-anime .drapeau {
+    transform-origin: 34px 6px;
+    animation: drapeau 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes drapeau {
+    to { transform: skewY(-8deg) scaleX(0.9); }
+}
+
+.route.en-route .roue {
+    animation: roue 0.35s linear infinite;
+}
+
+.route.en-route .bus-anime {
+    animation: cahot 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes roue {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes cahot {
+    to { translate: 0 -2px; }
+}
+
+/* ---------- Apparitions au défilement ---------- */
+.apparition {
+    opacity: 0;
+    translate: 0 28px;
+    transition: opacity 0.7s ease, translate 0.7s cubic-bezier(.2, .8, .2, 1);
+}
+
+.apparition.visible {
+    opacity: 1;
+    translate: 0 0;
+}
+
+.rss-item {
+    animation: apparitionCarte 0.6s cubic-bezier(.2, .8, .2, 1) backwards;
+}
+
+.rss-item:nth-child(2) { animation-delay: 0.08s; }
+.rss-item:nth-child(3) { animation-delay: 0.16s; }
+.rss-item:nth-child(4) { animation-delay: 0.24s; }
+.rss-item:nth-child(5) { animation-delay: 0.32s; }
+.rss-item:nth-child(n + 6) { animation-delay: 0.4s; }
+
+@keyframes apparitionCarte {
+    from { opacity: 0; transform: translateY(20px) scale(0.96); }
+}
+
+@media (max-width: 640px) {
+    .car-bloc {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .car-valeur {
+        font-size: 1.8rem;
+    }
+
+    .bus-anime {
+        width: 110px;
+        height: 55px;
+    }
+
+    .route {
+        height: 68px;
+    }
+}
+
+/* Respecte le réglage « réduire les animations » du téléphone ou de l'ordinateur */
+@media (prefers-reduced-motion: reduce) {
+    .defilement-piste,
+    .bus-anime,
+    .bus-anime .drapeau,
+    .route.en-route .roue,
+    .rss-item,
+    .car-jour-j {
+        animation: none !important;
+    }
+
+    .defilement {
+        overflow-x: auto;
+    }
+
+    .bus-anime,
+    .affiche-carte.apparition .affiche-image {
+        transition: none;
     }
 }

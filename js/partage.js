@@ -6,12 +6,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // On partage toujours la page d'inscription
     const url = 'https://inscriptioncgtbusaveyron.vercel.app/';
 
+    // Date du calendrier à Paris, en nombre de jours, pour compter « demain » et « aujourd'hui »
+    function jourAParis(instant) {
+        const morceaux = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Europe/Paris', year: 'numeric', month: '2-digit', day: '2-digit'
+        }).format(instant).split('-');
+        return Date.UTC(+morceaux[0], +morceaux[1] - 1, +morceaux[2]) / 86400000;
+    }
+
     function message(cible) {
-        const jours = Math.floor((cible - Date.now()) / 86400000);
+        const jours = jourAParis(cible) - jourAParis(Date.now());
         let accroche;
         if (jours >= 2) accroche = '⏳ J-' + jours + ' avant la mobilisation du jeudi 5 novembre !';
         else if (jours === 1) accroche = '⏳ C\'est demain : mobilisation le jeudi 5 novembre !';
-        else accroche = '📣 C\'est aujourd\'hui : tous mobilisés le 5 novembre !';
+        else if (jours === 0) accroche = '📣 C\'est aujourd\'hui : tous mobilisés le 5 novembre !';
+        else return 'Retrouve les bus CGT Aveyron pour les mobilisations :';
         return accroche + ' ✊ Manifestation à Rodez, 14h30, Jardin public. ' +
             'Inscris-toi au bus CGT au départ de Decazeville, Millau ou Villefranche-de-Rouergue :';
     }

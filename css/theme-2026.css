@@ -823,3 +823,82 @@ html:has(body.theme-2026) {
         transition: none;
     }
 }
+
+/* ---------- Boutons de partage ---------- */
+.partage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    position: relative;
+}
+
+.partage-titre {
+    font-weight: 800;
+    color: var(--jaune);
+    margin-right: 4px;
+}
+
+.theme-2026 .partage-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 12px;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--blanc);
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s, background-color 0.15s, color 0.15s;
+}
+
+.theme-2026 .partage-btn:hover,
+.theme-2026 .partage-btn:focus-visible {
+    transform: translateY(-3px) rotate(-4deg);
+    background: var(--blanc);
+    color: var(--encre);
+}
+
+.theme-2026 .partage-btn[data-reseau="facebook"]:hover { background: #1877f2; color: #fff; border-color: #1877f2; }
+.theme-2026 .partage-btn[data-reseau="whatsapp"]:hover { background: #25d366; color: #fff; border-color: #25d366; }
+.theme-2026 .partage-btn[data-reseau="x"]:hover { background: #000; color: #fff; border-color: #000; }
+.theme-2026 .partage-btn[data-reseau="telegram"]:hover { background: #229ed9; color: #fff; border-color: #229ed9; }
+
+.theme-2026 .partage-natif {
+    background: var(--jaune);
+    border-color: var(--jaune);
+    color: var(--encre);
+}
+
+.theme-2026 .partage-btn[hidden] {
+    display: none;
+}
+
+.partage-confirmation {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 8px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--turquoise);
+    color: var(--encre);
+    font-weight: 700;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+}
+
+.partage-confirmation.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

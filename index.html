@@ -28,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="img/favico.png" type="image/png">
     <meta name="description" content="Inscription à la mobilisation CGT Aveyron du jeudi 5 novembre 2026 - Réservez votre place dans les bus organisés par les Unions Locales">
     <meta name="theme-color" content="#ed1c24">
@@ -47,6 +47,17 @@
                 <div class="car-bloc"><span class="car-valeur" data-unite="minutes">--</span><span class="car-label">min</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="secondes">--</span><span class="car-label">sec</span></div>
                 <p class="car-legende">avant le départ de la manifestation à Rodez</p>
+            </div>
+            <div class="partage" data-cible="2026-11-05T14:30:00+01:00">
+                <span class="partage-titre"><i class="fas fa-bullhorn" aria-hidden="true"></i> Fais tourner&nbsp;!</span>
+                <button type="button" class="partage-btn partage-natif" data-reseau="natif" hidden><i class="fas fa-share-nodes" aria-hidden="true"></i><span>Partager</span></button>
+                <a class="partage-btn" data-reseau="facebook" href="#" target="_blank" rel="noopener" aria-label="Partager sur Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                <a class="partage-btn" data-reseau="whatsapp" href="#" target="_blank" rel="noopener" aria-label="Partager sur WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                <a class="partage-btn" data-reseau="x" href="#" target="_blank" rel="noopener" aria-label="Partager sur X (Twitter)"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+                <a class="partage-btn" data-reseau="telegram" href="#" target="_blank" rel="noopener" aria-label="Partager sur Telegram"><i class="fab fa-telegram" aria-hidden="true"></i></a>
+                <a class="partage-btn" data-reseau="email" href="#" aria-label="Partager par e-mail"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                <button type="button" class="partage-btn" data-reseau="copier" aria-label="Copier le message et le lien"><i class="fas fa-link" aria-hidden="true"></i></button>
+                <span class="partage-confirmation" role="status"></span>
             </div>
         </div>
     </header>
@@ -207,6 +218,7 @@
     </script>
     <script src="js/cgt-rss.js"></script>
     <script src="js/animations-2026.js"></script>
+    <script src="js/partage.js"></script>
     <script src="js/accessibility.js"></script>
 </body>
 </html>

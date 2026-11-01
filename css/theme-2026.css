@@ -275,6 +275,36 @@ html:has(body.theme-2026) {
     margin-bottom: 12px;
 }
 
+.theme-2026 .bus-consignes {
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: var(--blanc);
+    border: 3px solid var(--encre);
+    border-left: 10px solid var(--rouge);
+    border-radius: 14px;
+    color: var(--encre);
+}
+
+.theme-2026 .bus-consignes p {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 0 0 8px;
+}
+
+.theme-2026 .bus-consignes .fa-circle-info {
+    color: var(--rouge);
+}
+
+.theme-2026 .bus-consignes ul {
+    margin: 0;
+    padding-left: 22px;
+}
+
+.theme-2026 .bus-consignes li + li {
+    margin-top: 4px;
+}
+
 .theme-2026 .ul-infos {
     display: flex;
     gap: 10px;

@@ -6,6 +6,7 @@
     { "src": "css/**", "use": "@vercel/static" },
     { "src": "js/**", "use": "@vercel/static" },
     { "src": "img/**", "use": "@vercel/static" },
+    { "src": "*.mp3", "use": "@vercel/static" },
     { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
   "routes": [
@@ -19,6 +20,7 @@
         "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
       }
     },
+    { "src": "/music/?", "dest": "/music.html" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }

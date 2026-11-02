@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Playlist de la manif – CGT Aveyron</title>
+    <link rel="stylesheet" href="css/theme-2026.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="img/favico.png" type="image/png">
+    <meta name="theme-color" content="#ed1c24">
+    <style>
+        * { box-sizing: border-box; }
+        body.theme-2026 { margin: 0; }
+
+        .playlist {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 32px 16px 60px;
+        }
+
+        .playlist-entete {
+            background: var(--encre);
+            color: var(--blanc);
+            border-radius: var(--rayon);
+            padding: 28px 24px;
+            margin-bottom: 20px;
+        }
+
+        .playlist-entete img {
+            height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .playlist-entete h1 {
+            font-family: 'Anton', Impact, sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            line-height: 1.1;
+            margin: 0 0 10px;
+        }
+
+        .playlist-entete h1 span { color: var(--jaune); }
+
+        .playlist-entete p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+        }
+
+        .playlist-outils {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .playlist-resume {
+            font-weight: 700;
+            color: var(--encre);
+        }
+
+        .playlist-tri {
+            display: flex;
+            gap: 6px;
+        }
+
+        .playlist-tri button {
+            font: inherit;
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 2px solid var(--encre);
+            background: var(--blanc);
+            color: var(--encre);
+            cursor: pointer;
+        }
+
+        .playlist-tri button[aria-pressed="true"] {
+            background: var(--encre);
+            color: var(--blanc);
+        }
+
+        .playlist-alerte {
+            background: var(--blanc);
+            border-left: 6px solid var(--jaune);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .morceaux {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        .morceau {
+            background: var(--blanc);
+            border: 3px solid transparent;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: var(--ombre);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 4px 14px;
+            transition: border-color 0.2s;
+        }
+
+        .morceau.en-lecture { border-color: var(--rouge); }
+
+        .morceau-numero {
+            grid-row: span 2;
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--jaune);
+            color: var(--encre);
+            font-weight: 800;
+        }
+
+        .morceau-titre {
+            margin: 0;
+            font-size: 1.05rem;
+            color: var(--encre);
+        }
+
+        .morceau-artiste {
+            margin: 0;
+            color: var(--texte-doux);
+            font-size: 0.9rem;
+        }
+
+        .morceau audio {
+            grid-column: 1 / -1;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .morceau-vote {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .vote-btn {
+            font: inherit;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 2px solid var(--encre);
+            background: var(--blanc);
+            color: var(--encre);
+            cursor: pointer;
+            transition: background-color 0.15s, color 0.15s;
+        }
+
+        .vote-btn:disabled { opacity: 0.6; cursor: wait; }
+        .vote-btn .compte { font-variant-numeric: tabular-nums; }
+
+        .vote-btn[data-vote="garder"][aria-pressed="true"] {
+            background: #1f8a5b;
+            border-color: #1f8a5b;
+            color: var(--blanc);
+        }
+
+        .vote-btn[data-vote="retirer"][aria-pressed="true"] {
+            background: var(--rouge);
+            border-color: var(--rouge);
+            color: var(--blanc);
+        }
+
+        .vote-barre {
+            flex: 1 1 120px;
+            height: 8px;
+            border-radius: 999px;
+            background: #e9e7ef;
+            overflow: hidden;
+        }
+
+        .vote-barre span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: #1f8a5b;
+            transition: width 0.3s;
+        }
+
+        .playlist-pied {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .playlist-pied a { color: var(--encre); }
+
+        @media (max-width: 480px) {
+            .playlist-entete { padding: 22px 16px; }
+            .morceau { padding: 14px 12px; }
+        }
+    </style>
+</head>
+<body class="theme-2026">
+    <main class="playlist">
+        <header class="playlist-entete">
+            <img src="img/logo-cgt.png" alt="Logo CGT Aveyron">
+            <h1>La playlist <span>de la manif</span></h1>
+            <p>Écoute les morceaux proposés et vote : on le <strong>garde</strong> ou on le <strong>retire</strong>&nbsp;? Un vote par morceau, tu peux changer d'avis à tout moment.</p>
+        </header>
+
+        <div class="playlist-outils">
+            <p class="playlist-resume" aria-live="polite"></p>
+            <div class="playlist-tri" role="group" aria-label="Ordre d'affichage">
+                <button type="button" data-tri="liste" aria-pressed="true">Ordre de la liste</button>
+                <button type="button" data-tri="score" aria-pressed="false">Les plus gardés</button>
+            </div>
+        </div>
+
+        <p class="playlist-alerte" hidden></p>
+
+        <ol class="morceaux"></ol>
+
+        <p class="playlist-pied"><a href="index.html">← Retour aux inscriptions bus</a></p>
+    </main>
+
+    <script>
+    // Liste des morceaux : "fichier" = nom exact du MP3 à la racine du site.
+    const MORCEAUX = [
+        { fichier: 'A coup de batte de base ball.mp3', titre: 'À coup de batte de baseball', artiste: '' },
+        { fichier: 'Bella Ciao 🔥 Afro Deep House Remix 2026 Tribal Sunset Vibes.mp3', titre: 'Bella Ciao', artiste: 'Afro Deep House Remix 2026' },
+        { fichier: 'Cali 1000 Coeurs Debout.mp3', titre: '1000 cœurs debout', artiste: 'Cali' },
+        { fichier: 'Can t Hold Us Macklemore Ryan Lewis feat.Ray Dalton.mp3', titre: 'Can\'t Hold Us', artiste: 'Macklemore & Ryan Lewis feat. Ray Dalton' },
+        { fichier: 'Coffin Dance Official Music Video HD.mp3', titre: 'Coffin Dance', artiste: '' },
+        { fichier: 'Diam s La Boulette Clip officiel.mp3', titre: 'La Boulette', artiste: 'Diam\'s' },
+        { fichier: 'GALA Freed from desire Official 4K Video.mp3', titre: 'Freed from Desire', artiste: 'Gala' },
+        { fichier: 'Les Rita Mitsouko Marcia Baïla Clip Officiel.mp3', titre: 'Marcia Baïla', artiste: 'Les Rita Mitsouko' },
+        { fichier: 'Louise Attaque J t emmène au vent Clip Officiel remasterisé.mp3', titre: 'J\'t\'emmène au vent', artiste: 'Louise Attaque' },
+        { fichier: 'MAGIC SYSTEM Magic In The Air Feat.Chawki Clip Officiel.mp3', titre: 'Magic in the Air', artiste: 'Magic System feat. Chawki' },
+        { fichier: 'Mano Negra Mala Vida Official Music Video Remastered.mp3', titre: 'Mala Vida', artiste: 'Mano Negra' },
+        { fichier: 'Manu Chao.mp3', titre: 'Manu Chao', artiste: 'Manu Chao' },
+        { fichier: 'Matmatah Lambé An Dro clip officiel.mp3', titre: 'Lambé an dro', artiste: 'Matmatah' },
+        { fichier: 'One Piece OST Overtaken EPIC VERSION Drums of Liberation.mp3', titre: 'Overtaken (Epic Version)', artiste: 'One Piece OST' },
+        { fichier: 'OrelSan Basique CLIP OFFICIEL.mp3', titre: 'Basique', artiste: 'OrelSan' },
+        { fichier: 'POLO PAN — Ani Kuni.mp3', titre: 'Ani Kuni', artiste: 'Polo & Pan' },
+        { fichier: 'Personne peut nous stopper feat.Orchestre du Nouveau Monde.mp3', titre: 'Personne peut nous stopper', artiste: 'feat. Orchestre du Nouveau Monde' },
+        { fichier: 'Planète Boum Boum Grève Générale clip officiel.mp3', titre: 'Grève générale', artiste: 'Planète Boum Boum' },
+        { fichier: 'Ricchi E Poveri Sarà perché ti amo Thommys Popshow extra 17.12.1983.mp3', titre: 'Sarà perché ti amo', artiste: 'Ricchi e Poveri' },
+        { fichier: 'TAGADA JONES Mort aux cons Officiel.mp3', titre: 'Mort aux cons', artiste: 'Tagada Jones' },
+        { fichier: 'The Black Eyed Peas I Gotta Feeling Official Music Video.mp3', titre: 'I Gotta Feeling', artiste: 'The Black Eyed Peas' },
+        { fichier: 'The Clash Should I Stay or Should I Go Official Video.mp3', titre: 'Should I Stay or Should I Go', artiste: 'The Clash' },
+        { fichier: 'The Hanging Tree’ James Newton Howard ft.Jennifer Lawrence Official Audio.mp3', titre: 'The Hanging Tree', artiste: 'James Newton Howard feat. Jennifer Lawrence' },
+        { fichier: 'Vulves assassines La Retraite version live.mp3', titre: 'La Retraite (live)', artiste: 'Vulves Assassines' },
+        { fichier: 'Ça Crame Planète Boum Boum clip officiel La Lutte est Belle L album des 130 ans de la CGT.mp3', titre: 'Ça crame', artiste: 'Planète Boum Boum – album « La Lutte est belle »' },
+        { fichier: 'Ça ira La Lutte est belle clip officiel LaLutteEstBelle L Album des 130 ans de la CGT.mp3', titre: 'Ça ira', artiste: 'Album « La Lutte est belle » – 130 ans de la CGT' }
+    ];
+
+    const API = '/api/music-votes';
+    const CLE_MES_VOTES = 'playlist-mes-votes';
+
+    // Identifiant stable dérivé du nom de fichier (sert de clé pour les votes)
+    function identifiant(fichier) {
+        return fichier.replace(/\.mp3$/i, '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+            .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
+    }
+
+    MORCEAUX.forEach(function(m, i) { m.id = identifiant(m.fichier); m.rang = i; });
+
+    let votes = { garder: {}, retirer: {} };
+    let mesVotes = {};
+    try { mesVotes = JSON.parse(localStorage.getItem(CLE_MES_VOTES)) || {}; } catch (e) { mesVotes = {}; }
+
+    function enregistrerMesVotes() {
+        try { localStorage.setItem(CLE_MES_VOTES, JSON.stringify(mesVotes)); } catch (e) { /* stockage indisponible */ }
+    }
+
+    const liste = document.querySelector('.morceaux');
+    const alerte = document.querySelector('.playlist-alerte');
+    const resume = document.querySelector('.playlist-resume');
+
+    function afficherAlerte(message) {
+        alerte.textContent = message;
+        alerte.hidden = !message;
+    }
+
+    // Construction des cartes
+    MORCEAUX.forEach(function(m) {
+        const li = document.createElement('li');
+        li.className = 'morceau';
+        li.dataset.id = m.id;
+        li.innerHTML =
+            '<span class="morceau-numero"></span>' +
+            '<h2 class="morceau-titre"></h2>' +
+            '<p class="morceau-artiste"></p>' +
+            '<audio controls preload="none"></audio>' +
+            '<div class="morceau-vote">' +
+                '<button type="button" class="vote-btn" data-vote="garder" aria-pressed="false"><i class="fas fa-thumbs-up" aria-hidden="true"></i>On garde <span class="compte">0</span></button>' +
+                '<button type="button" class="vote-btn" data-vote="retirer" aria-pressed="false"><i class="fas fa-thumbs-down" aria-hidden="true"></i>On retire <span class="compte">0</span></button>' +
+                '<div class="vote-barre" aria-hidden="true"><span></span></div>' +
+            '</div>';
+        li.querySelector('.morceau-numero').textContent = m.rang + 1;
+        li.querySelector('.morceau-titre').textContent = m.titre;
+        li.querySelector('.morceau-artiste').textContent = m.artiste;
+        li.querySelector('.morceau-artiste').hidden = !m.artiste;
+        li.querySelector('audio').src = encodeURIComponent(m.fichier);
+        li.querySelectorAll('.vote-btn').forEach(function(btn) {
+            btn.setAttribute('aria-label', (btn.dataset.vote === 'garder' ? 'Garder ' : 'Retirer ') + m.titre);
+            btn.addEventListener('click', function() { voter(m, btn.dataset.vote); });
+        });
+        m.element = li;
+        liste.appendChild(li);
+    });
+
+    // Un seul morceau joue à la fois
+    liste.addEventListener('play', function(e) {
+        liste.querySelectorAll('audio').forEach(function(a) {
+            if (a !== e.target) a.pause();
+            a.closest('.morceau').classList.toggle('en-lecture', a === e.target);
+        });
+    }, true);
+    liste.addEventListener('pause', function(e) {
+        e.target.closest('.morceau').classList.remove('en-lecture');
+    }, true);
+
+    function score(m) {
+        return (votes.garder[m.id] || 0) - (votes.retirer[m.id] || 0);
+    }
+
+    function afficherVotes() {
+        let total = 0;
+        MORCEAUX.forEach(function(m) {
+            const garder = votes.garder[m.id] || 0;
+            const retirer = votes.retirer[m.id] || 0;
+            total += garder + retirer;
+            m.element.querySelectorAll('.vote-btn').forEach(function(btn) {
+                btn.querySelector('.compte').textContent = btn.dataset.vote === 'garder' ? garder : retirer;
+                btn.setAttribute('aria-pressed', mesVotes[m.id] === btn.dataset.vote);
+            });
+            m.element.querySelector('.vote-barre span').style.width =
+                (garder + retirer ? Math.round(garder / (garder + retirer) * 100) : 0) + '%';
+        });
+        const nbMesVotes = Object.keys(mesVotes).length;
+        resume.textContent = MORCEAUX.length + ' morceaux · ' + total + ' vote' + (total > 1 ? 's' : '') +
+            ' · tu as voté pour ' + nbMesVotes + '/' + MORCEAUX.length;
+        if (triActuel === 'score') trier();
+    }
+
+    let triActuel = 'liste';
+    function trier() {
+        const ordre = MORCEAUX.slice().sort(function(a, b) {
+            return triActuel === 'score' ? (score(b) - score(a)) || (a.rang - b.rang) : a.rang - b.rang;
+        });
+        ordre.forEach(function(m) { liste.appendChild(m.element); });
+    }
+
+    document.querySelectorAll('.playlist-tri button').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            triActuel = btn.dataset.tri;
+            document.querySelectorAll('.playlist-tri button').forEach(function(b) {
+                b.setAttribute('aria-pressed', b === btn);
+            });
+            trier();
+        });
+    });
+
+    async function appelerApi(options) {
+        const reponse = await fetch(API, options);
+        if (!reponse.ok) throw new Error(reponse.status);
+        return reponse.json();
+    }
+
+    async function voter(m, choix) {
+        const precedent = mesVotes[m.id] || null;
+        const vote = precedent === choix ? null : choix; // re-cliquer annule le vote
+        const boutons = m.element.querySelectorAll('.vote-btn');
+        boutons.forEach(function(b) { b.disabled = true; });
+        try {
+            votes = await appelerApi({
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: m.id, vote: vote, precedent: precedent })
+            });
+            if (vote) mesVotes[m.id] = vote; else delete mesVotes[m.id];
+            enregistrerMesVotes();
+            afficherAlerte('');
+        } catch (e) {
+            afficherAlerte('Ton vote n\'a pas pu être enregistré. Réessaie dans un instant.');
+        }
+        boutons.forEach(function(b) { b.disabled = false; });
+        afficherVotes();
+    }
+
+    afficherVotes();
+    appelerApi()
+        .then(function(donnees) { votes = donnees; afficherVotes(); })
+        .catch(function() { afficherAlerte('Les votes ne sont pas disponibles pour le moment. Tu peux quand même écouter les morceaux.'); });
+    </script>
+</body>
+</html>

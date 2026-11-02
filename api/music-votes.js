@@ -1,11 +1,19 @@
 // Fonction serverless Vercel : votes de la playlist (/music)
 // Les compteurs sont stockés dans Redis (Upstash) via son API REST.
-// Variables d'environnement : KV_REST_API_URL / KV_REST_API_TOKEN
-// (ou UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN), ajoutées automatiquement
-// par l'intégration Upstash du Marketplace Vercel.
+// Variables d'environnement ajoutées par l'intégration Upstash du Marketplace Vercel :
+// KV_REST_API_URL / KV_REST_API_TOKEN ou UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN,
+// éventuellement précédées d'un préfixe choisi lors de la connexion (ex. STORAGE_KV_REST_API_URL).
 
-const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+function variable(suffixes) {
+  for (const suffixe of suffixes) {
+    if (process.env[suffixe]) return process.env[suffixe];
+  }
+  const nom = Object.keys(process.env).find((cle) => suffixes.some((suffixe) => cle.endsWith('_' + suffixe)));
+  return nom ? process.env[nom] : undefined;
+}
+
+const REDIS_URL = variable(['KV_REST_API_URL', 'UPSTASH_REDIS_REST_URL']);
+const REDIS_TOKEN = variable(['KV_REST_API_TOKEN', 'UPSTASH_REDIS_REST_TOKEN']);
 const CLES = { garder: 'playlist:garder', retirer: 'playlist:retirer' };
 
 async function redis(commandes) {

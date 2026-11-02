@@ -187,8 +187,24 @@
             color: var(--blanc);
         }
 
+        .telecharger {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: var(--encre);
+            color: var(--blanc);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .telecharger:hover { background: var(--violet); }
+
         .vote-barre {
-            flex: 1 1 120px;
+            flex: 1 1 100%;
+            order: 1;
             height: 8px;
             border-radius: 999px;
             background: #e9e7ef;
@@ -222,7 +238,7 @@
         <header class="playlist-entete">
             <img src="img/logo-cgt.png" alt="Logo CGT Aveyron">
             <h1>La playlist <span>de la manif</span></h1>
-            <p>Écoute les morceaux proposés et vote : on le <strong>garde</strong> ou on le <strong>retire</strong>&nbsp;? Un vote par morceau, tu peux changer d'avis à tout moment.</p>
+            <p>Écoute les morceaux proposés et vote : on le <strong>garde</strong> ou on le <strong>retire</strong>&nbsp;? Un vote par morceau, tu peux changer d'avis à tout moment. Chaque morceau peut aussi être téléchargé en MP3.</p>
         </header>
 
         <div class="playlist-outils">
@@ -312,6 +328,7 @@
             '<div class="morceau-vote">' +
                 '<button type="button" class="vote-btn" data-vote="garder" aria-pressed="false"><i class="fas fa-thumbs-up" aria-hidden="true"></i>On garde <span class="compte">0</span></button>' +
                 '<button type="button" class="vote-btn" data-vote="retirer" aria-pressed="false"><i class="fas fa-thumbs-down" aria-hidden="true"></i>On retire <span class="compte">0</span></button>' +
+                '<a class="telecharger" download><i class="fas fa-download" aria-hidden="true"></i>Télécharger</a>' +
                 '<div class="vote-barre" aria-hidden="true"><span></span></div>' +
             '</div>';
         li.querySelector('.morceau-numero').textContent = m.rang + 1;
@@ -319,6 +336,10 @@
         li.querySelector('.morceau-artiste').textContent = m.artiste;
         li.querySelector('.morceau-artiste').hidden = !m.artiste;
         li.querySelector('audio').src = encodeURIComponent(m.fichier);
+        const lien = li.querySelector('.telecharger');
+        lien.href = encodeURIComponent(m.fichier);
+        lien.download = (m.artiste ? m.artiste + ' - ' : '') + m.titre + '.mp3';
+        lien.setAttribute('aria-label', 'Télécharger ' + m.titre);
         li.querySelectorAll('.vote-btn').forEach(function(btn) {
             btn.setAttribute('aria-label', (btn.dataset.vote === 'garder' ? 'Garder ' : 'Retirer ') + m.titre);
             btn.addEventListener('click', function() { voter(m, btn.dataset.vote); });

@@ -187,8 +187,82 @@
             color: var(--blanc);
         }
 
+        .telecharger {
+            margin-left: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: var(--encre);
+            color: var(--blanc);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .telecharger:hover { background: var(--violet); }
+
+        .code-dialog {
+            border: 3px solid var(--encre);
+            border-radius: var(--rayon);
+            padding: 24px;
+            width: min(360px, calc(100vw - 32px));
+            color: var(--encre);
+        }
+
+        .code-dialog::backdrop { background: rgba(22, 21, 58, 0.6); }
+
+        .code-dialog h2 {
+            margin: 0 0 8px;
+            font-size: 1.2rem;
+        }
+
+        .code-dialog p { margin: 0 0 14px; color: var(--texte-doux); }
+
+        .code-dialog input {
+            width: 100%;
+            font: inherit;
+            font-size: 1.3rem;
+            letter-spacing: 0.2em;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid var(--encre);
+            border-radius: 10px;
+        }
+
+        .code-dialog .code-erreur {
+            min-height: 1.4em;
+            margin: 8px 0 0;
+            color: var(--rouge);
+            font-weight: 700;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .code-actions button {
+            font: inherit;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 2px solid var(--encre);
+            background: var(--blanc);
+            color: var(--encre);
+            cursor: pointer;
+        }
+
+        .code-actions button[type="submit"] {
+            background: var(--encre);
+            color: var(--blanc);
+        }
+
         .vote-barre {
-            flex: 1 1 120px;
+            flex: 1 1 100%;
+            order: 1;
             height: 8px;
             border-radius: 999px;
             background: #e9e7ef;
@@ -222,7 +296,7 @@
         <header class="playlist-entete">
             <img src="img/logo-cgt.png" alt="Logo CGT Aveyron">
             <h1>La playlist <span>de la manif</span></h1>
-            <p>Écoute les morceaux proposés et vote : on le <strong>garde</strong> ou on le <strong>retire</strong>&nbsp;? Un vote par morceau, tu peux changer d'avis à tout moment.</p>
+            <p>Écoute les morceaux proposés et vote : on le <strong>garde</strong> ou on le <strong>retire</strong>&nbsp;? Un vote par morceau, tu peux changer d'avis à tout moment. Chaque morceau peut aussi être téléchargé en MP3 avec le code.</p>
         </header>
 
         <div class="playlist-outils">
@@ -239,6 +313,19 @@
 
         <p class="playlist-pied"><a href="index.html">← Retour aux inscriptions bus</a></p>
     </main>
+
+    <dialog class="code-dialog" aria-labelledby="code-titre">
+        <form method="dialog">
+            <h2 id="code-titre"><i class="fas fa-lock" aria-hidden="true"></i> Code de téléchargement</h2>
+            <p>Entre le code pour télécharger les morceaux.</p>
+            <input type="password" inputmode="numeric" autocomplete="off" aria-label="Code de téléchargement" required>
+            <p class="code-erreur" role="alert"></p>
+            <div class="code-actions">
+                <button type="button" value="annuler">Annuler</button>
+                <button type="submit">Valider</button>
+            </div>
+        </form>
+    </dialog>
 
     <script>
     // Liste des morceaux : "fichier" = nom exact du MP3 à la racine du site.
@@ -282,6 +369,47 @@
 
     MORCEAUX.forEach(function(m, i) { m.id = identifiant(m.fichier); m.rang = i; });
 
+    // Code de téléchargement (empreinte SHA-256, pour ne pas l'écrire en clair dans la page)
+    const EMPREINTE_CODE = '966ec83c308f36165d28b88a33f14af36f2ec44d6373bae55d2796644ea35e9d';
+    const CLE_DEBLOCAGE = 'playlist-telechargement';
+    const dialogue = document.querySelector('.code-dialog');
+    const champCode = dialogue.querySelector('input');
+    const erreurCode = dialogue.querySelector('.code-erreur');
+    let lienEnAttente = null;
+    let debloque = false;
+
+    function telechargementDebloque() {
+        if (debloque) return true;
+        try { return sessionStorage.getItem(CLE_DEBLOCAGE) === EMPREINTE_CODE; } catch (e) { return false; }
+    }
+
+    async function empreinte(texte) {
+        const octets = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(texte));
+        return Array.from(new Uint8Array(octets)).map(function(o) { return o.toString(16).padStart(2, '0'); }).join('');
+    }
+
+    function demanderCode(lien) {
+        lienEnAttente = lien;
+        champCode.value = '';
+        erreurCode.textContent = '';
+        dialogue.showModal();
+    }
+
+    dialogue.querySelector('button[value="annuler"]').addEventListener('click', function() { dialogue.close(); });
+
+    dialogue.querySelector('form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (await empreinte(champCode.value.trim()) !== EMPREINTE_CODE) {
+            erreurCode.textContent = 'Code incorrect.';
+            champCode.select();
+            return;
+        }
+        debloque = true;
+        try { sessionStorage.setItem(CLE_DEBLOCAGE, EMPREINTE_CODE); } catch (err) { /* stockage indisponible */ }
+        dialogue.close();
+        if (lienEnAttente) lienEnAttente.click();
+    });
+
     let votes = { garder: {}, retirer: {} };
     let mesVotes = {};
     try { mesVotes = JSON.parse(localStorage.getItem(CLE_MES_VOTES)) || {}; } catch (e) { mesVotes = {}; }
@@ -312,6 +440,7 @@
             '<div class="morceau-vote">' +
                 '<button type="button" class="vote-btn" data-vote="garder" aria-pressed="false"><i class="fas fa-thumbs-up" aria-hidden="true"></i>On garde <span class="compte">0</span></button>' +
                 '<button type="button" class="vote-btn" data-vote="retirer" aria-pressed="false"><i class="fas fa-thumbs-down" aria-hidden="true"></i>On retire <span class="compte">0</span></button>' +
+                '<a class="telecharger" download><i class="fas fa-download" aria-hidden="true"></i>Télécharger</a>' +
                 '<div class="vote-barre" aria-hidden="true"><span></span></div>' +
             '</div>';
         li.querySelector('.morceau-numero').textContent = m.rang + 1;
@@ -319,6 +448,15 @@
         li.querySelector('.morceau-artiste').textContent = m.artiste;
         li.querySelector('.morceau-artiste').hidden = !m.artiste;
         li.querySelector('audio').src = encodeURIComponent(m.fichier);
+        const lien = li.querySelector('.telecharger');
+        lien.href = encodeURIComponent(m.fichier);
+        lien.download = (m.artiste ? m.artiste + ' - ' : '') + m.titre + '.mp3';
+        lien.setAttribute('aria-label', 'Télécharger ' + m.titre);
+        lien.addEventListener('click', function(e) {
+            if (telechargementDebloque()) return;
+            e.preventDefault();
+            demanderCode(lien);
+        });
         li.querySelectorAll('.vote-btn').forEach(function(btn) {
             btn.setAttribute('aria-label', (btn.dataset.vote === 'garder' ? 'Garder ' : 'Retirer ') + m.titre);
             btn.addEventListener('click', function() { voter(m, btn.dataset.vote); });

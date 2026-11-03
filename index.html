@@ -153,6 +153,8 @@
     // Liens Google Forms et infos de départ de chaque Union Locale.
     // Coller l'adresse du formulaire (lien "Envoyer" > "<>" ou lien viewform) dans "form",
     // et sa hauteur (attribut height du code <iframe> fourni par Google) dans "hauteur".
+    // Mettre "complet: true" quand le bus est plein : le formulaire est remplacé par un message
+    // invitant à venir au point de rendez-vous pour organiser le covoiturage.
     const UNIONS_LOCALES = {
         decazeville: {
             form: 'https://docs.google.com/forms/d/e/1FAIpQLScYtGIw7PRC0adOP5NPpziXab3MyI3LH03o0x8QtTyjKAygYg/viewform?embedded=true',
@@ -162,7 +164,8 @@
         millau: {
             form: 'https://docs.google.com/forms/d/e/1FAIpQLSe7lxYqbyRNwYehPfe4q5_rE-Wb3ILdEMrusdB_1JXTQ39QvA/viewform?embedded=true',
             hauteur: 696,
-            infos: 'Départ à 13h00 – Parking du boulevard Jean Gabriac, Millau.'
+            infos: 'Départ à 13h00 – Parking du boulevard Jean Gabriac, Millau.',
+            complet: true
         },
         'saint-affrique': {
             form: 'https://docs.google.com/forms/d/e/1FAIpQLSfPvT7tCc0tzYsNXKEdHLcEcpjCsByqDnhDXXxJfQYkztYxqw/viewform?embedded=true',
@@ -185,7 +188,17 @@
             const ul = UNIONS_LOCALES[panel.dataset.ul];
             panel.querySelector('.ul-infos span').textContent = ul.infos;
             const container = panel.querySelector('.ul-form-container');
-            if (ul.form && ul.form.includes('forms.gle')) {
+            if (ul.complet) {
+                const tab = document.querySelector('.ul-tab[data-ul="' + panel.dataset.ul + '"]');
+                tab.classList.add('ul-tab-complet');
+                tab.querySelector('small').textContent = 'Bus complet !';
+                container.innerHTML =
+                    '<div class="ul-complet">' +
+                        '<p class="ul-complet-titre"><span aria-hidden="true">🎉</span> Bus complet&nbsp;: quelle mobilisation&nbsp;!</p>' +
+                        '<p>Toutes les places sont réservées. Merci à toutes et à tous, vous êtes nombreux à vous mobiliser et c\'est une excellente nouvelle pour le 5 novembre&nbsp;!</p>' +
+                        '<p><strong>Pas de place dans le bus&nbsp;? Viens quand même&nbsp;!</strong> Retrouve-nous un peu avant l\'heure au point de rendez-vous indiqué ci-dessus&nbsp;: on organisera sur place le covoiturage pour que personne ne reste sur le bord de la route.</p>' +
+                    '</div>';
+            } else if (ul.form && ul.form.includes('forms.gle')) {
                 // Les liens courts forms.gle ne s'intègrent pas : on ouvre le formulaire dans un nouvel onglet
                 container.innerHTML = '<a class="btn-submit" target="_blank" rel="noopener">Je m\'inscris au bus</a>';
                 container.querySelector('a').href = ul.form;

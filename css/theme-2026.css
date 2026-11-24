@@ -317,6 +317,21 @@ html:has(body.theme-2026) {
     color: var(--texte-doux);
 }
 
+.theme-2026 .ul-places {
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--couleur, var(--jaune)) 30%, white);
+    color: var(--encre);
+    font-weight: 800;
+}
+
+.theme-2026 .ul-places.ul-places-urgent {
+    background: var(--rouge);
+    color: var(--blanc);
+}
+
 .theme-2026 .ul-form {
     height: var(--hauteur, 912px);
     border-radius: 12px;

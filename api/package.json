@@ -1,9 +1,5 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "API pour l'envoi d'emails - CGT Aveyron",
-  "main": "send-email.js",
-  "dependencies": {
-    "resend": "^2.0.0"
-  }
+  "description": "Fonctions Vercel - CGT Aveyron (flux RSS, votes de la playlist)"
 }

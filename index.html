@@ -5,12 +5,12 @@
     <!-- Aperçu lors du partage sur les réseaux sociaux (Facebook, WhatsApp, X, LinkedIn…) -->
     <meta property="og:title" content="Mobilisation du mardi 1er décembre 2026 – Inscription aux bus CGT Aveyron">
     <meta property="og:description" content="Manifestation à Rodez, 14h30, Mail de Bourran. Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville, Millau, Saint-Affrique et Villefranche-de-Rouergue">
-    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-inscription-bus.jpg">
-    <meta property="og:image:secure_url" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-inscription-bus.jpg">
+    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre.jpg">
+    <meta property="og:image:secure_url" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="CGT Aveyron – Inscription bus – Ensemble, mobilisons-nous !">
+    <meta property="og:image:alt" content="CGT Aveyron – Mardi 1er décembre, grève et manif à Rodez, 14h30, Mail de Bourran – Inscris-toi au bus !">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="CGT Aveyron – Inscription bus">
@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Mobilisation du mardi 1er décembre 2026 – Inscription aux bus CGT Aveyron">
     <meta name="twitter:description" content="Manifestation à Rodez, 14h30, Mail de Bourran. Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville, Millau, Saint-Affrique et Villefranche-de-Rouergue">
-    <meta name="twitter:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-inscription-bus.jpg">
+    <meta name="twitter:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre.jpg">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobilisation du 1er décembre 2026 – Inscription aux bus CGT Aveyron</title>
@@ -113,24 +113,28 @@
             <section class="ul-panel carte" role="tabpanel" id="panel-decazeville" aria-labelledby="tab-decazeville" data-ul="decazeville" hidden>
                 <h2>Bus au départ de Decazeville</h2>
                 <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
+                <p class="ul-places" hidden></p>
                 <div class="ul-form-container"></div>
             </section>
 
             <section class="ul-panel carte" role="tabpanel" id="panel-millau" aria-labelledby="tab-millau" data-ul="millau" hidden>
                 <h2>Bus au départ de Millau</h2>
                 <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
+                <p class="ul-places" hidden></p>
                 <div class="ul-form-container"></div>
             </section>
 
             <section class="ul-panel carte" role="tabpanel" id="panel-saint-affrique" aria-labelledby="tab-saint-affrique" data-ul="saint-affrique" hidden>
                 <h2>Bus au départ de Saint-Affrique</h2>
                 <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
+                <p class="ul-places" hidden></p>
                 <div class="ul-form-container"></div>
             </section>
 
             <section class="ul-panel carte" role="tabpanel" id="panel-villefranche" aria-labelledby="tab-villefranche" data-ul="villefranche" hidden>
                 <h2>Bus au départ de Villefranche-de-Rouergue</h2>
                 <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
+                <p class="ul-places" hidden></p>
                 <div class="ul-form-container"></div>
             </section>
 
@@ -175,6 +179,12 @@
         }
     };
 
+    // Places restantes : lien CSV de la feuille « Places » du Google Sheets
+    // (Fichier > Partager > Publier sur le Web > feuille « Places » > CSV).
+    // Laisser vide pour ne pas afficher de compteur.
+    const PLACES_CSV = '';
+    const PLACES_PAR_BUS = 57; // sauf si la feuille donne un autre nombre dans la colonne « Places »
+
     document.addEventListener('DOMContentLoaded', function() {
         const tabs = document.querySelectorAll('.ul-tab');
         const panels = document.querySelectorAll('.ul-panel');
@@ -185,15 +195,7 @@
             panel.querySelector('.ul-infos span').textContent = ul.infos;
             const container = panel.querySelector('.ul-form-container');
             if (ul.complet) {
-                const tab = document.querySelector('.ul-tab[data-ul="' + panel.dataset.ul + '"]');
-                tab.classList.add('ul-tab-complet');
-                tab.querySelector('small').textContent = 'Bus complet !';
-                container.innerHTML =
-                    '<div class="ul-complet">' +
-                        '<p class="ul-complet-titre"><span aria-hidden="true">🎉</span> Bus complet&nbsp;: quelle mobilisation&nbsp;!</p>' +
-                        '<p>Toutes les places sont réservées. Merci à toutes et à tous, vous êtes nombreux à vous mobiliser et c\'est une excellente nouvelle pour le 1er décembre&nbsp;!</p>' +
-                        '<p><strong>Pas de place dans le bus&nbsp;? Viens quand même&nbsp;!</strong> Retrouve-nous un peu avant l\'heure au point de rendez-vous indiqué ci-dessus&nbsp;: on organisera sur place le covoiturage pour que personne ne reste sur le bord de la route.</p>' +
-                    '</div>';
+                afficherComplet(panel);
             } else if (ul.form && ul.form.includes('forms.gle')) {
                 // Les liens courts forms.gle ne s'intègrent pas : on ouvre le formulaire dans un nouvel onglet
                 container.innerHTML = '<a class="btn-submit" target="_blank" rel="noopener">Je m\'inscris au bus</a>';
@@ -209,6 +211,46 @@
                 container.innerHTML = '<div class="ul-form-pending"><strong>Les inscriptions ouvrent bientôt.</strong><br>Le formulaire sera disponible ici très prochainement.</div>';
             }
         });
+
+        function afficherComplet(panel) {
+            const tab = document.querySelector('.ul-tab[data-ul="' + panel.dataset.ul + '"]');
+            tab.classList.add('ul-tab-complet');
+            tab.querySelector('small').textContent = 'Bus complet !';
+            panel.querySelector('.ul-places').hidden = true;
+            panel.querySelector('.ul-form-container').innerHTML =
+                '<div class="ul-complet">' +
+                    '<p class="ul-complet-titre"><span aria-hidden="true">🎉</span> Bus complet&nbsp;: quelle mobilisation&nbsp;!</p>' +
+                    '<p>Toutes les places sont réservées. Merci à toutes et à tous, vous êtes nombreux à vous mobiliser et c\'est une excellente nouvelle pour le 1er décembre&nbsp;!</p>' +
+                    '<p><strong>Pas de place dans le bus&nbsp;? Viens quand même&nbsp;!</strong> Retrouve-nous un peu avant l\'heure au point de rendez-vous indiqué ci-dessus&nbsp;: on organisera sur place le covoiturage pour que personne ne reste sur le bord de la route.</p>' +
+                '</div>';
+        }
+
+        // Compteur de places restantes, lu dans le Google Sheets ; le bus passe en « complet » quand il est plein
+        function afficherPlaces(bus) {
+            panels.forEach(function(panel) {
+                const cle = panel.dataset.ul;
+                if (UNIONS_LOCALES[cle].complet) return;
+                const nom = Object.keys(bus).find(function(n) { return n.startsWith(cle) || cle.startsWith(n); });
+                if (!nom) return;
+                const restantes = Math.max(0, (bus[nom].places || PLACES_PAR_BUS) - bus[nom].inscrits);
+                if (restantes === 0) return afficherComplet(panel);
+                const texte = restantes === 1 ? 'Plus qu\'une place !'
+                    : (restantes <= 5 ? 'Plus que ' : '') + restantes + ' places restantes';
+                const tab = document.querySelector('.ul-tab[data-ul="' + cle + '"]');
+                tab.querySelector('small').textContent = texte;
+                const ligne = panel.querySelector('.ul-places');
+                ligne.textContent = texte;
+                ligne.classList.toggle('ul-places-urgent', restantes <= 5);
+                ligne.hidden = false;
+            });
+        }
+
+        if (PLACES_CSV) {
+            fetch('/api/places?url=' + encodeURIComponent(PLACES_CSV))
+                .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
+                .then(afficherPlaces)
+                .catch(function() { /* compteur indisponible : on garde l'affichage normal */ });
+        }
 
         function selectTab(name) {
             if (!UNIONS_LOCALES[name]) name = 'decazeville';

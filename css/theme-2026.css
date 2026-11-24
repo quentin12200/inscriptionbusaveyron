@@ -186,7 +186,7 @@ html:has(body.theme-2026) {
 /* ---------- Onglets des Unions Locales ---------- */
 .theme-2026 .ul-tabs {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--nb-bus, 4), 1fr);
     gap: 14px;
     border: none;
     margin-bottom: 24px;
@@ -195,6 +195,11 @@ html:has(body.theme-2026) {
 @media (max-width: 860px) {
     .theme-2026 .ul-tabs {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Nombre impair de bus : le dernier prend toute la largeur */
+    .theme-2026 .ul-tab:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
     }
 }
 

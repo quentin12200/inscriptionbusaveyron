@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else if (jours === 0) accroche = '📣 C\'est aujourd\'hui : tous mobilisés le 1er décembre !';
         else return 'Retrouve les bus CGT Aveyron pour les mobilisations :';
         return accroche + ' ✊ Manifestation à Rodez, 14h30, Mail de Bourran. ' +
-            'Inscris-toi au bus CGT au départ de Decazeville, Millau, Saint-Affrique ou Villefranche-de-Rouergue :';
+            'Inscris-toi au bus CGT au départ de Decazeville, Saint-Affrique ou Villefranche-de-Rouergue :';
     }
 
     document.querySelectorAll('.partage').forEach(function(bloc) {

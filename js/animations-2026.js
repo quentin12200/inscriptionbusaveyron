@@ -1,5 +1,5 @@
 /**
- * Animations de la mobilisation du 5 novembre 2026 :
+ * Animations de la mobilisation (compte à rebours vers la date de data-cible) :
  * compte à rebours, bus qui roule vers la ville choisie, apparitions au défilement
  * (le bandeau de slogans est en CSS pur)
  */
@@ -31,8 +31,8 @@
                 clearInterval(minuterie);
                 bloc.classList.add('car-termine');
                 bloc.innerHTML = reste > -6 * 3600 * 1000
-                    ? '<p class="car-jour-j">C\'est aujourd\'hui ! Tous à Rodez, 14h30, Jardin public</p>'
-                    : '<p class="car-jour-j">Merci à toutes et à tous pour la mobilisation du 5 novembre !</p>';
+                    ? '<p class="car-jour-j">C\'est aujourd\'hui ! Tous à Rodez, 14h30, Mail de Bourran</p>'
+                    : '<p class="car-jour-j">Merci à toutes et à tous pour la mobilisation du 1er décembre !</p>';
                 return;
             }
             const s = Math.floor(reste / 1000);

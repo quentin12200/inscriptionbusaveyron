@@ -1,6 +1,6 @@
 /**
  * Boutons de partage du compte à rebours sur les réseaux sociaux
- * Le message reprend le nombre de jours restants avant le 5 novembre
+ * Le message reprend le nombre de jours restants avant le 1er décembre
  */
 document.addEventListener('DOMContentLoaded', function() {
     // On partage toujours la page d'inscription
@@ -17,12 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function message(cible) {
         const jours = jourAParis(cible) - jourAParis(Date.now());
         let accroche;
-        if (jours >= 2) accroche = '⏳ J-' + jours + ' avant la mobilisation du jeudi 5 novembre !';
-        else if (jours === 1) accroche = '⏳ C\'est demain : mobilisation le jeudi 5 novembre !';
-        else if (jours === 0) accroche = '📣 C\'est aujourd\'hui : tous mobilisés le 5 novembre !';
+        if (jours >= 2) accroche = '⏳ J-' + jours + ' avant la mobilisation du mardi 1er décembre !';
+        else if (jours === 1) accroche = '⏳ C\'est demain : mobilisation le mardi 1er décembre !';
+        else if (jours === 0) accroche = '📣 C\'est aujourd\'hui : tous mobilisés le 1er décembre !';
         else return 'Retrouve les bus CGT Aveyron pour les mobilisations :';
-        return accroche + ' ✊ Manifestation à Rodez, 14h30, Jardin public. ' +
-            'Inscris-toi au bus CGT au départ de Decazeville, Millau ou Villefranche-de-Rouergue :';
+        return accroche + ' ✊ Manifestation à Rodez, 14h30, Mail de Bourran. ' +
+            'Inscris-toi au bus CGT au départ de Decazeville, Millau, Saint-Affrique ou Villefranche-de-Rouergue :';
     }
 
     document.querySelectorAll('.partage').forEach(function(bloc) {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 whatsapp: 'https://wa.me/?text=' + t + '%20' + u,
                 x: 'https://x.com/intent/post?text=' + t + '&url=' + u,
                 telegram: 'https://t.me/share/url?url=' + u + '&text=' + t,
-                email: 'mailto:?subject=' + encodeURIComponent('Mobilisation du 5 novembre : inscris-toi au bus CGT') +
+                email: 'mailto:?subject=' + encodeURIComponent('Mobilisation du 1er décembre : inscris-toi au bus CGT') +
                     '&body=' + t + '%0A%0A' + u,
                 texte: texte
             };

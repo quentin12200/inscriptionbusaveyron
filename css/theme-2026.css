@@ -49,7 +49,7 @@ html:has(body.theme-2026) {
     min-height: 440px;
     display: flex;
     align-items: flex-end;
-    background: var(--encre) url('../img/bandeau-salaires.webp') center / cover no-repeat;
+    background: var(--encre) url('../img/bandeau-1er-decembre.webp') center / cover no-repeat;
     overflow: hidden;
     text-align: left;
     margin: 0;
@@ -278,34 +278,6 @@ html:has(body.theme-2026) {
     line-height: 1.15;
     color: var(--encre);
     margin-bottom: 12px;
-}
-
-.theme-2026 .prochaine-manif {
-    border: 3px solid var(--encre);
-    border-left: 10px solid var(--rouge);
-    box-shadow: 6px 6px 0 var(--encre);
-    margin-bottom: 24px;
-}
-
-.theme-2026 .prochaine-manif p {
-    margin: 0 0 8px;
-    font-size: 1.05rem;
-}
-
-.theme-2026 .prochaine-manif p:last-child {
-    margin-bottom: 0;
-}
-
-.theme-2026 .prochaine-manif-type {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    font-weight: 800;
-    color: var(--encre);
-}
-
-.theme-2026 .prochaine-manif-type .fa-bullhorn {
-    color: var(--rouge);
 }
 
 .theme-2026 .bus-consignes {

@@ -4,7 +4,8 @@
  */
 document.addEventListener('DOMContentLoaded', function() {
     // On partage toujours la page d'inscription
-    const url = 'https://inscriptioncgtbusaveyron.vercel.app/';
+    // « ?v=2 » oblige les réseaux à recharger l'aperçu (même numéro que og:url dans index.html)
+    const url = 'https://inscriptioncgtbusaveyron.vercel.app/?v=2';
 
     // Date du calendrier à Paris, en nombre de jours, pour compter « demain » et « aujourd'hui »
     function jourAParis(instant) {

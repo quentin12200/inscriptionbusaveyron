@@ -6,9 +6,6 @@ Application web permettant de gérer les inscriptions à la mobilisation du 5 ju
 
 - Formulaire d'inscription public pour les camarades
 - Stockage des données en local via IndexedDB
-- Interface d'administration pour chaque Union Locale
-- Filtrage des inscriptions par Union Locale
-- Exportation des données en CSV
 
 ## Structure de la base de données
 
@@ -33,20 +30,8 @@ La base de données contient une table principale "Inscriptions" avec les colonn
 3. Cliquer sur "S'inscrire"
 4. Un message de confirmation s'affiche
 
-### Pour les administrateurs (Unions Locales)
-
-1. Ouvrir le fichier `admin.html` dans un navigateur web
-2. Se connecter avec les identifiants de l'Union Locale :
-   - Villefranche-de-Rouergue : cgt12villefranche
-   - Decazeville : cgt12decazeville
-   - Millau : cgt12millau
-3. Consulter les inscriptions filtrées pour votre Union Locale
-4. Exporter les données en CSV en cliquant sur le bouton "Exporter en CSV"
-
 ## Sécurité
 
-- Chaque Union Locale a accès uniquement à ses propres inscriptions
-- Les mots de passe sont stockés en dur dans le code (pour cette version simple)
 - Les données sont stockées localement dans le navigateur via IndexedDB
 
 ## Installation

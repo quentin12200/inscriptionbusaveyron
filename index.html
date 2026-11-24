@@ -22,6 +22,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobilisation du 1er décembre 2026 – Inscription aux bus CGT Aveyron</title>
+    <script src="js/config.js"></script>
+    <script src="js/mobilisation.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/theme-2026.css">
@@ -39,16 +41,16 @@
         <div class="hero-content">
             <img src="img/logo-cgt.png" alt="Logo CGT Aveyron" class="hero-logo">
             <div class="hero-kicker">CGT Aveyron · Bus départementaux</div>
-            <h1>Tous mobilisés le <span class="surligne">mardi 1er décembre</span></h1>
-            <p>Manifestation nationale interprofessionnelle à <strong>Rodez, 14h30, Mail de Bourran</strong>. Réserve ta place dans le bus de ton Union Locale : Decazeville, Millau, Saint-Affrique ou Villefranche-de-Rouergue.</p>
-            <div class="compte-a-rebours" data-cible="2026-12-01T14:30:00+01:00" aria-live="off">
+            <h1>Tous mobilisés le <span class="surligne" data-mob="jour"></span></h1>
+            <p><span data-mob="type"></span> à <strong data-mob="rendez-vous"></strong>. Réserve ta place dans le bus de ton Union Locale : <span data-mob="liste-bus"></span>.</p>
+            <div class="compte-a-rebours" data-cible="" aria-live="off">
                 <div class="car-bloc"><span class="car-valeur" data-unite="jours">--</span><span class="car-label">jours</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="heures">--</span><span class="car-label">heures</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="minutes">--</span><span class="car-label">min</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="secondes">--</span><span class="car-label">sec</span></div>
-                <p class="car-legende">avant le départ de la manifestation à Rodez</p>
+                <p class="car-legende">avant le départ de la manifestation à <span data-mob="ville"></span></p>
             </div>
-            <div class="partage" data-cible="2026-12-01T14:30:00+01:00">
+            <div class="partage" data-cible="">
                 <span class="partage-titre"><i class="fas fa-bullhorn" aria-hidden="true"></i> Fais tourner&nbsp;!</span>
                 <button type="button" class="partage-btn partage-natif" data-reseau="natif" hidden><i class="fas fa-share-nodes" aria-hidden="true"></i><span>Partager</span></button>
                 <a class="partage-btn" data-reseau="facebook" href="#" target="_blank" rel="noopener" aria-label="Partager sur Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
@@ -97,46 +99,11 @@
             </div>
             <div class="bus-consignes" role="note">
                 <p><i class="fas fa-circle-info" aria-hidden="true"></i><strong>À savoir avant de t'inscrire</strong></p>
-                <ul>
-                    <li>Aucun mineur ne sera pris dans le bus sans un accompagnant majeur.</li>
-                    <li>Les départs de Rodez pour le retour se feront au plus tard à 17h00. Les consignes précises seront données par les responsables de chaque bus.</li>
-                </ul>
+                <ul data-mob="consignes"></ul>
             </div>
 
-            <div class="ul-tabs" role="tablist" aria-label="Lieu de départ du bus">
-                <button type="button" class="ul-tab" role="tab" id="tab-decazeville" aria-controls="panel-decazeville" data-ul="decazeville"><i class="fas fa-bus" aria-hidden="true"></i>Decazeville<small>Départ en bus</small></button>
-                <button type="button" class="ul-tab" role="tab" id="tab-millau" aria-controls="panel-millau" data-ul="millau"><i class="fas fa-bus" aria-hidden="true"></i>Millau<small>Départ en bus</small></button>
-                <button type="button" class="ul-tab" role="tab" id="tab-saint-affrique" aria-controls="panel-saint-affrique" data-ul="saint-affrique"><i class="fas fa-bus" aria-hidden="true"></i>Saint-Affrique<small>Départ en bus</small></button>
-                <button type="button" class="ul-tab" role="tab" id="tab-villefranche" aria-controls="panel-villefranche" data-ul="villefranche"><i class="fas fa-bus" aria-hidden="true"></i>Villefranche-de-Rouergue<small>Départ en bus</small></button>
-            </div>
-
-            <section class="ul-panel carte" role="tabpanel" id="panel-decazeville" aria-labelledby="tab-decazeville" data-ul="decazeville" hidden>
-                <h2>Bus au départ de Decazeville</h2>
-                <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
-                <p class="ul-places" hidden></p>
-                <div class="ul-form-container"></div>
-            </section>
-
-            <section class="ul-panel carte" role="tabpanel" id="panel-millau" aria-labelledby="tab-millau" data-ul="millau" hidden>
-                <h2>Bus au départ de Millau</h2>
-                <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
-                <p class="ul-places" hidden></p>
-                <div class="ul-form-container"></div>
-            </section>
-
-            <section class="ul-panel carte" role="tabpanel" id="panel-saint-affrique" aria-labelledby="tab-saint-affrique" data-ul="saint-affrique" hidden>
-                <h2>Bus au départ de Saint-Affrique</h2>
-                <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
-                <p class="ul-places" hidden></p>
-                <div class="ul-form-container"></div>
-            </section>
-
-            <section class="ul-panel carte" role="tabpanel" id="panel-villefranche" aria-labelledby="tab-villefranche" data-ul="villefranche" hidden>
-                <h2>Bus au départ de Villefranche-de-Rouergue</h2>
-                <p class="ul-infos"><i class="fas fa-location-dot" aria-hidden="true"></i><span></span></p>
-                <p class="ul-places" hidden></p>
-                <div class="ul-form-container"></div>
-            </section>
+            <!-- Onglets et panneaux des bus : construits par js/mobilisation.js à partir de js/config.js -->
+            <div class="ul-tabs" role="tablist" aria-label="Lieu de départ du bus"></div>
 
             <section class="rss-section carte">
                 <h2 class="titre-section">Les dernières actus de la CGT</h2>
@@ -151,39 +118,10 @@
     </div>
 
     <script>
-    // Liens Google Forms et infos de départ de chaque Union Locale.
-    // Coller l'adresse du formulaire (lien "Envoyer" > "<>" ou lien viewform) dans "form",
-    // et sa hauteur (attribut height du code <iframe> fourni par Google) dans "hauteur".
-    // Mettre "complet: true" quand le bus est plein : le formulaire est remplacé par un message
-    // invitant à venir au point de rendez-vous pour organiser le covoiturage.
-    const UNIONS_LOCALES = {
-        decazeville: {
-            form: 'https://docs.google.com/forms/d/e/1FAIpQLScYtGIw7PRC0adOP5NPpziXab3MyI3LH03o0x8QtTyjKAygYg/viewform?embedded=true',
-            hauteur: 697,
-            infos: 'Départ à 13h45 – Laminoir, Decazeville.'
-        },
-        millau: {
-            form: 'https://docs.google.com/forms/d/e/1FAIpQLSe7lxYqbyRNwYehPfe4q5_rE-Wb3ILdEMrusdB_1JXTQ39QvA/viewform?embedded=true',
-            hauteur: 697,
-            infos: 'Départ à 13h00 – Parking du boulevard Jean Gabriac, Millau.'
-        },
-        'saint-affrique': {
-            form: 'https://docs.google.com/forms/d/e/1FAIpQLSfPvT7tCc0tzYsNXKEdHLcEcpjCsByqDnhDXXxJfQYkztYxqw/viewform?embedded=true',
-            hauteur: 697,
-            infos: 'Rendez-vous à 12h00 devant la piscine municipale pour un départ à midi, Saint-Affrique.'
-        },
-        villefranche: {
-            form: 'https://docs.google.com/forms/d/e/1FAIpQLSfAWE9pNvg6cZtNwPkeukbQGMNEQ3d55797-L_bFotwo4304A/viewform?embedded=true',
-            hauteur: 520,
-            infos: 'Départ à 13h00 – Parking bas de Carrefour, Villefranche-de-Rouergue.'
-        }
-    };
-
-    // Places restantes : lien CSV de la feuille « Places » du Google Sheets
-    // (Fichier > Partager > Publier sur le Web > feuille « Places » > CSV).
-    // Laisser vide pour ne pas afficher de compteur.
-    const PLACES_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS7BHbHv7XugW51VAmOWNuDzHGuq-I-A_-gFwsEiWpMhu42gFfxb-H41bE2WO9hYNhZPtfwfBsU_WNJ/pub?gid=1448973817&single=true&output=csv';
-    const PLACES_PAR_BUS = 57; // sauf si la feuille donne un autre nombre dans la colonne « Places »
+    // Bus, formulaires et compteur de places : voir js/config.js
+    const UNIONS_LOCALES = MOBILISATION.bus;
+    const PLACES_CSV = MOBILISATION.placesCsv;
+    const PLACES_PAR_BUS = MOBILISATION.placesParBus;
 
     document.addEventListener('DOMContentLoaded', function() {
         const tabs = document.querySelectorAll('.ul-tab');
@@ -220,7 +158,7 @@
             panel.querySelector('.ul-form-container').innerHTML =
                 '<div class="ul-complet">' +
                     '<p class="ul-complet-titre"><span aria-hidden="true">🎉</span> Bus complet&nbsp;: quelle mobilisation&nbsp;!</p>' +
-                    '<p>Toutes les places sont réservées. Merci à toutes et à tous, vous êtes nombreux à vous mobiliser et c\'est une excellente nouvelle pour le 1er décembre&nbsp;!</p>' +
+                    '<p>Toutes les places sont réservées. Merci à toutes et à tous, vous êtes nombreux à vous mobiliser et c\'est une excellente nouvelle pour le ' + MOBILISATION.jourCourt + '&nbsp;!</p>' +
                     '<p><strong>Pas de place dans le bus&nbsp;? Viens quand même&nbsp;!</strong> Retrouve-nous un peu avant l\'heure au point de rendez-vous indiqué ci-dessus&nbsp;: on organisera sur place le covoiturage pour que personne ne reste sur le bord de la route.</p>' +
                 '</div>';
         }
@@ -253,7 +191,7 @@
         }
 
         function selectTab(name) {
-            if (!UNIONS_LOCALES[name]) name = 'decazeville';
+            if (!UNIONS_LOCALES[name]) name = Object.keys(UNIONS_LOCALES)[0];
             tabs.forEach(function(tab) {
                 const active = tab.dataset.ul === name;
                 tab.setAttribute('aria-selected', active);
@@ -280,7 +218,7 @@
             });
         });
 
-        // Lien direct possible : index.html#millau, #decazeville, #saint-affrique, #villefranche
+        // Lien direct possible : index.html#millau, #decazeville… (clés des bus dans js/config.js)
         selectTab(location.hash.slice(1));
         window.addEventListener('hashchange', function() {
             selectTab(location.hash.slice(1));

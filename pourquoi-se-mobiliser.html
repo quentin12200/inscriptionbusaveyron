@@ -22,6 +22,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pourquoi faire grève le 1er décembre 2026 ? – CGT Aveyron</title>
+    <script src="js/config.js"></script>
+    <script src="js/mobilisation.js" defer></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/theme-2026.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,16 +37,16 @@
         <div class="hero-content">
             <img src="img/logo-cgt.png" alt="Logo CGT Aveyron" class="hero-logo">
             <div class="hero-kicker">Actualités de la CGT</div>
-            <h1>Pourquoi faire grève le <span class="surligne">1er décembre</span>&nbsp;?</h1>
+            <h1>Pourquoi faire grève le <span class="surligne" data-mob="jour-court"></span>&nbsp;?</h1>
             <p>Salaires et pensions&nbsp;: dans le public et dans le privé, on fait grève pour aller chercher les augmentations&nbsp;!</p>
-            <div class="compte-a-rebours" data-cible="2026-12-01T14:30:00+01:00" aria-live="off">
+            <div class="compte-a-rebours" data-cible="" aria-live="off">
                 <div class="car-bloc"><span class="car-valeur" data-unite="jours">--</span><span class="car-label">jours</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="heures">--</span><span class="car-label">heures</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="minutes">--</span><span class="car-label">min</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="secondes">--</span><span class="car-label">sec</span></div>
-                <p class="car-legende">avant le départ de la manifestation à Rodez</p>
+                <p class="car-legende">avant le départ de la manifestation à <span data-mob="ville"></span></p>
             </div>
-            <div class="partage" data-cible="2026-12-01T14:30:00+01:00">
+            <div class="partage" data-cible="">
                 <span class="partage-titre"><i class="fas fa-bullhorn" aria-hidden="true"></i> Fais tourner&nbsp;!</span>
                 <button type="button" class="partage-btn partage-natif" data-reseau="natif" hidden><i class="fas fa-share-nodes" aria-hidden="true"></i><span>Partager</span></button>
                 <a class="partage-btn" data-reseau="facebook" href="#" target="_blank" rel="noopener" aria-label="Partager sur Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
@@ -78,8 +80,8 @@
                     <h2 class="titre-section">Généralisons la grève&nbsp;!</h2>
                     <p class="sous-titre">Public – privé&nbsp;: le mardi 1er décembre, grève et manifestation pour les salaires et les pensions.</p>
                     <ul class="infos-manif">
-                        <li><i class="fas fa-location-dot" aria-hidden="true"></i><strong>Rodez</strong> – Mail de Bourran</li>
-                        <li><i class="fas fa-clock" aria-hidden="true"></i><strong>14h30</strong> – départ de la manifestation</li>
+                        <li><i class="fas fa-location-dot" aria-hidden="true"></i><strong data-mob="ville"></strong> – <span data-mob="lieu"></span></li>
+                        <li><i class="fas fa-clock" aria-hidden="true"></i><strong data-mob="heure"></strong> – départ de la manifestation</li>
                     </ul>
                     <ul class="revendications">
                         <li class="rev-salaires">Pour les salaires</li>
@@ -159,7 +161,7 @@
             </section>
 
             <div class="cta-section">
-                <a href="index.html" class="btn-submit">S'inscrire aux bus du mardi 1er décembre 2026</a>
+                <a href="index.html" class="btn-submit">S'inscrire aux bus du <span data-mob="jour"></span></a>
             </div>
         </main>
 

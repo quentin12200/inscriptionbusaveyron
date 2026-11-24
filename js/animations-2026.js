@@ -30,9 +30,10 @@
             if (reste <= 0) {
                 clearInterval(minuterie);
                 bloc.classList.add('car-termine');
-                bloc.innerHTML = reste > -6 * 3600 * 1000
-                    ? '<p class="car-jour-j">C\'est aujourd\'hui ! Tous à Rodez, 14h30, Mail de Bourran</p>'
-                    : '<p class="car-jour-j">Merci à toutes et à tous pour la mobilisation du 1er décembre !</p>';
+                bloc.innerHTML = '<p class="car-jour-j"></p>';
+                bloc.querySelector('.car-jour-j').textContent = reste > -6 * 3600 * 1000
+                    ? 'C\'est aujourd\'hui ! Tous à ' + MOBILISATION.ville + ', ' + MOBILISATION.heure + ', ' + MOBILISATION.lieu
+                    : 'Merci à toutes et à tous pour la mobilisation du ' + MOBILISATION.jourCourt + ' !';
                 return;
             }
             const s = Math.floor(reste / 1000);

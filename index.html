@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <!-- Aperçu lors du partage sur les réseaux sociaux (Facebook, WhatsApp, X, LinkedIn…)
-         Millau et Saint-Affrique sont masqués pour le moment : quand ils reviennent, reprendre img/partage-1er-decembre.jpg -->
+         Millau est masqué pour le moment : quand il revient, reprendre img/partage-1er-decembre.jpg -->
     <meta property="og:title" content="Mobilisation du mardi 1er décembre 2026 – Inscription aux bus CGT Aveyron">
-    <meta property="og:description" content="Manifestation à Rodez, 14h30, Mail de Bourran. Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville et Villefranche-de-Rouergue">
-    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre-decazeville-villefranche.jpg">
-    <meta property="og:image:secure_url" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre-decazeville-villefranche.jpg">
+    <meta property="og:description" content="Manifestation à Rodez, 14h30, Mail de Bourran. Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville, Saint-Affrique et Villefranche-de-Rouergue">
+    <meta property="og:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre-sans-millau.jpg">
+    <meta property="og:image:secure_url" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre-sans-millau.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -15,13 +15,13 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="CGT Aveyron – Inscription bus">
-    <!-- « ?v=2 » : changer le numéro quand l'image ou le texte d'aperçu change, pour que Facebook,
+    <!-- « ?v=3 » : changer le numéro quand l'image ou le texte d'aperçu change, pour que Facebook,
          WhatsApp… oublient l'ancien aperçu (même numéro dans js/partage.js) -->
-    <meta property="og:url" content="https://inscriptioncgtbusaveyron.vercel.app/?v=2">
+    <meta property="og:url" content="https://inscriptioncgtbusaveyron.vercel.app/?v=3">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Mobilisation du mardi 1er décembre 2026 – Inscription aux bus CGT Aveyron">
-    <meta name="twitter:description" content="Manifestation à Rodez, 14h30, Mail de Bourran. Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville et Villefranche-de-Rouergue">
-    <meta name="twitter:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre-decazeville-villefranche.jpg">
+    <meta name="twitter:description" content="Manifestation à Rodez, 14h30, Mail de Bourran. Inscris-toi pour réserver ta place dans les bus CGT au départ de Decazeville, Saint-Affrique et Villefranche-de-Rouergue">
+    <meta name="twitter:image" content="https://inscriptioncgtbusaveyron.vercel.app/img/partage-1er-decembre-sans-millau.jpg">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobilisation du 1er décembre 2026 – Inscription aux bus CGT Aveyron</title>
@@ -43,7 +43,7 @@
             <img src="img/logo-cgt.png" alt="Logo CGT Aveyron" class="hero-logo">
             <div class="hero-kicker">CGT Aveyron · Bus départementaux</div>
             <h1>Tous mobilisés le <span class="surligne">mardi 1er décembre</span></h1>
-            <p>Manifestation nationale interprofessionnelle à <strong>Rodez, 14h30, Mail de Bourran</strong>. Réserve ta place dans le bus de ton Union Locale : Decazeville ou Villefranche-de-Rouergue.</p>
+            <p>Manifestation nationale interprofessionnelle à <strong>Rodez, 14h30, Mail de Bourran</strong>. Réserve ta place dans le bus de ton Union Locale : Decazeville, Saint-Affrique ou Villefranche-de-Rouergue.</p>
             <div class="compte-a-rebours" data-cible="2026-12-01T14:30:00+01:00" aria-live="off">
                 <div class="car-bloc"><span class="car-valeur" data-unite="jours">--</span><span class="car-label">jours</span></div>
                 <div class="car-bloc"><span class="car-valeur" data-unite="heures">--</span><span class="car-label">heures</span></div>
@@ -174,7 +174,6 @@
             infos: 'Départ à 13h00 – Parking du boulevard Jean Gabriac, Millau.'
         },
         'saint-affrique': {
-            masque: true, // masqué pour le moment (pas de bus) : passer à false pour le réafficher
             form: 'https://docs.google.com/forms/d/e/1FAIpQLSfPvT7tCc0tzYsNXKEdHLcEcpjCsByqDnhDXXxJfQYkztYxqw/viewform?embedded=true',
             hauteur: 697,
             infos: 'Rendez-vous à 12h00 devant la piscine municipale pour un départ à midi, Saint-Affrique.'

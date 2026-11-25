@@ -4,8 +4,8 @@
  */
 document.addEventListener('DOMContentLoaded', function() {
     // On partage toujours la page d'inscription
-    // « ?v=2 » oblige les réseaux à recharger l'aperçu (même numéro que og:url dans index.html)
-    const url = 'https://inscriptioncgtbusaveyron.vercel.app/?v=2';
+    // « ?v=3 » oblige les réseaux à recharger l'aperçu (même numéro que og:url dans index.html)
+    const url = 'https://inscriptioncgtbusaveyron.vercel.app/?v=3';
 
     // Date du calendrier à Paris, en nombre de jours, pour compter « demain » et « aujourd'hui »
     function jourAParis(instant) {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         else if (jours === 0) accroche = '📣 C\'est aujourd\'hui : tous mobilisés le 1er décembre !';
         else return 'Retrouve les bus CGT Aveyron pour les mobilisations :';
         return accroche + ' ✊ Manifestation à Rodez, 14h30, Mail de Bourran. ' +
-            'Inscris-toi au bus CGT au départ de Decazeville ou Villefranche-de-Rouergue :';
+            'Inscris-toi au bus CGT au départ de Decazeville, Saint-Affrique ou Villefranche-de-Rouergue :';
     }
 
     document.querySelectorAll('.partage').forEach(function(bloc) {
